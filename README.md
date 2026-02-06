@@ -143,6 +143,9 @@ After loading data from fixture you can use following superuser:
   - Login: `admin.user`
   - Password: `1qazcde3`
 
+> This account is for local demo purposes only.  
+> Do not use these credentials in production.
+
 or create another one by yourself:
 
 ```bash
