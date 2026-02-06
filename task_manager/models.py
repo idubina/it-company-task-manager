@@ -55,3 +55,27 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Task(models.Model):
+
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    deadline = models.DateTimeField()
+    is_completed = models.BooleanField(default=False)
+
+    task_type = models.ForeignKey(
+        TaskType,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    assignees = models.ManyToManyField(
+        AUTH_USER_MODEL, related_name="tasks",
+        blank=True
+    )
+
+    def __str__(self):
+        return self.name
