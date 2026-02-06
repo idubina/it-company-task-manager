@@ -54,7 +54,7 @@ class Project(models.Model):
     description = models.TextField(blank=True)
     team = models.ForeignKey(
         Team,
-        on_delete=models.SET_NULL,
+        on_delete=models.PROTECT,
         null=True,
         blank=True
     )
