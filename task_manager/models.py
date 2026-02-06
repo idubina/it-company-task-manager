@@ -59,6 +59,18 @@ class Project(models.Model):
 
 class Task(models.Model):
 
+    class PriorityChoices(models.TextChoices):
+        URGENT = "URGENT", "Urgent"
+        HIGH = "HIGH", "High"
+        MEDIUM = "MEDIUM", "Medium"
+        LOW = "LOW", "Low"
+
+    priority = models.CharField(
+        max_length=10,
+        choices=PriorityChoices.choices,
+        default=PriorityChoices.MEDIUM
+    )
+
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     deadline = models.DateTimeField()
