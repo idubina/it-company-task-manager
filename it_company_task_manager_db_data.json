@@ -1,0 +1,1897 @@
+[
+  {
+    "model": "task_manager.position",
+    "pk": 1,
+    "fields": {
+      "name": "Backend Developer"
+    }
+  },
+  {
+    "model": "task_manager.position",
+    "pk": 2,
+    "fields": {
+      "name": "Frontend Developer"
+    }
+  },
+  {
+    "model": "task_manager.position",
+    "pk": 3,
+    "fields": {
+      "name": "Fullstack Developer"
+    }
+  },
+  {
+    "model": "task_manager.position",
+    "pk": 4,
+    "fields": {
+      "name": "QA Engineer"
+    }
+  },
+  {
+    "model": "task_manager.position",
+    "pk": 5,
+    "fields": {
+      "name": "DevOps Engineer"
+    }
+  },
+  {
+    "model": "task_manager.position",
+    "pk": 6,
+    "fields": {
+      "name": "Project Manager"
+    }
+  },
+  {
+    "model": "task_manager.position",
+    "pk": 7,
+    "fields": {
+      "name": "UI/UX Designer"
+    }
+  },
+  {
+    "model": "task_manager.position",
+    "pk": 8,
+    "fields": {
+      "name": "Business Analyst"
+    }
+  },
+  {
+    "model": "task_manager.position",
+    "pk": 9,
+    "fields": {
+      "name": "Data Engineer"
+    }
+  },
+  {
+    "model": "task_manager.position",
+    "pk": 10,
+    "fields": {
+      "name": "Team Lead"
+    }
+  },
+  {
+    "model": "task_manager.tasktype",
+    "pk": 1,
+    "fields": {
+      "name": "Bug"
+    }
+  },
+  {
+    "model": "task_manager.tasktype",
+    "pk": 2,
+    "fields": {
+      "name": "Feature"
+    }
+  },
+  {
+    "model": "task_manager.tasktype",
+    "pk": 3,
+    "fields": {
+      "name": "Refactoring"
+    }
+  },
+  {
+    "model": "task_manager.tasktype",
+    "pk": 4,
+    "fields": {
+      "name": "Research"
+    }
+  },
+  {
+    "model": "task_manager.tasktype",
+    "pk": 5,
+    "fields": {
+      "name": "QA"
+    }
+  },
+  {
+    "model": "task_manager.tasktype",
+    "pk": 6,
+    "fields": {
+      "name": "Documentation"
+    }
+  },
+  {
+    "model": "task_manager.tasktype",
+    "pk": 7,
+    "fields": {
+      "name": "Hotfix"
+    }
+  },
+  {
+    "model": "task_manager.tasktype",
+    "pk": 8,
+    "fields": {
+      "name": "Chore"
+    }
+  },
+  {
+    "model": "task_manager.tag",
+    "pk": 1,
+    "fields": {
+      "name": "landing-page-layout"
+    }
+  },
+  {
+    "model": "task_manager.tag",
+    "pk": 2,
+    "fields": {
+      "name": "python-refactoring"
+    }
+  },
+  {
+    "model": "task_manager.tag",
+    "pk": 3,
+    "fields": {
+      "name": "api-auth"
+    }
+  },
+  {
+    "model": "task_manager.tag",
+    "pk": 4,
+    "fields": {
+      "name": "db-migration"
+    }
+  },
+  {
+    "model": "task_manager.tag",
+    "pk": 5,
+    "fields": {
+      "name": "ui-polish"
+    }
+  },
+  {
+    "model": "task_manager.tag",
+    "pk": 6,
+    "fields": {
+      "name": "ux-research"
+    }
+  },
+  {
+    "model": "task_manager.tag",
+    "pk": 7,
+    "fields": {
+      "name": "unit-tests"
+    }
+  },
+  {
+    "model": "task_manager.tag",
+    "pk": 8,
+    "fields": {
+      "name": "integration-tests"
+    }
+  },
+  {
+    "model": "task_manager.tag",
+    "pk": 9,
+    "fields": {
+      "name": "ci-cd-pipeline"
+    }
+  },
+  {
+    "model": "task_manager.tag",
+    "pk": 10,
+    "fields": {
+      "name": "docker-optimization"
+    }
+  },
+  {
+    "model": "task_manager.tag",
+    "pk": 11,
+    "fields": {
+      "name": "security-patch"
+    }
+  },
+  {
+    "model": "task_manager.tag",
+    "pk": 12,
+    "fields": {
+      "name": "performance-tuning"
+    }
+  },
+  {
+    "model": "task_manager.tag",
+    "pk": 13,
+    "fields": {
+      "name": "release-prep"
+    }
+  },
+  {
+    "model": "task_manager.tag",
+    "pk": 14,
+    "fields": {
+      "name": "payment-integration"
+    }
+  },
+  {
+    "model": "task_manager.tag",
+    "pk": 15,
+    "fields": {
+      "name": "notifications-service"
+    }
+  },
+  {
+    "model": "task_manager.tag",
+    "pk": 16,
+    "fields": {
+      "name": "error-monitoring"
+    }
+  },
+  {
+    "model": "task_manager.tag",
+    "pk": 17,
+    "fields": {
+      "name": "access-control"
+    }
+  },
+  {
+    "model": "task_manager.tag",
+    "pk": 18,
+    "fields": {
+      "name": "code-cleanup"
+    }
+  },
+  {
+    "model": "task_manager.tag",
+    "pk": 19,
+    "fields": {
+      "name": "docs-update"
+    }
+  },
+  {
+    "model": "task_manager.tag",
+    "pk": 20,
+    "fields": {
+      "name": "analytics-event-tracking"
+    }
+  },
+  {
+    "model": "task_manager.worker",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$glV8vw92yZz7$mSWwuDup8aP3/Ttwb7ih87EFAvRbW0XZrWuRtFITokQ=",
+      "last_login": null,
+      "is_superuser": true,
+      "username": "admin.user",
+      "first_name": "Admin",
+      "last_name": "User",
+      "email": "admin@itcompany.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-01-10T10:00:00Z",
+      "position": 6,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "task_manager.worker",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "joyce.byers",
+      "first_name": "Joyce",
+      "last_name": "Byers",
+      "email": "joyce@itcompany.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-10T10:00:00Z",
+      "position": 4,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "task_manager.worker",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "jim.hopper",
+      "first_name": "Jim",
+      "last_name": "Hopper",
+      "email": "jim@itcompany.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-10T10:00:00Z",
+      "position": 1,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "task_manager.worker",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "jonathan.byers",
+      "first_name": "Jonathan",
+      "last_name": "Byers",
+      "email": "jonathan@itcompany.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-10T10:00:00Z",
+      "position": 2,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "task_manager.worker",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "dustin.henderson",
+      "first_name": "Dustin",
+      "last_name": "Henderson",
+      "email": "dustin@itcompany.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-10T10:00:00Z",
+      "position": 3,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "task_manager.worker",
+    "pk": 6,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "mike.wheeler",
+      "first_name": "Mike",
+      "last_name": "Wheeler",
+      "email": "mike@itcompany.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-10T10:00:00Z",
+      "position": 5,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "task_manager.worker",
+    "pk": 7,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "lucas.sinclair",
+      "first_name": "Lucas",
+      "last_name": "Sinclair",
+      "email": "lucas@itcompany.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-10T10:00:00Z",
+      "position": 2,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "task_manager.worker",
+    "pk": 8,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "nancy.wheeler",
+      "first_name": "Nancy",
+      "last_name": "Wheeler",
+      "email": "nancy@itcompany.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-10T10:00:00Z",
+      "position": 4,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "task_manager.worker",
+    "pk": 9,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "martin.brenner",
+      "first_name": "Martin",
+      "last_name": "Brenner",
+      "email": "martin@itcompany.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-10T10:00:00Z",
+      "position": 8,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "task_manager.worker",
+    "pk": 10,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "billy.hargrove",
+      "first_name": "Billy",
+      "last_name": "Hargrove",
+      "email": "billy@itcompany.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-10T10:00:00Z",
+      "position": 10,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "task_manager.worker",
+    "pk": 11,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "bob.newby",
+      "first_name": "Bob",
+      "last_name": "Newby",
+      "email": "bob@itcompany.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-10T10:00:00Z",
+      "position": 7,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "task_manager.worker",
+    "pk": 12,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "max.mayfield",
+      "first_name": "Max",
+      "last_name": "Mayfield",
+      "email": "max@itcompany.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-10T10:00:00Z",
+      "position": 2,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "task_manager.worker",
+    "pk": 13,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "steve.harrington",
+      "first_name": "Steve",
+      "last_name": "Harrington",
+      "email": "steve@itcompany.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-10T10:00:00Z",
+      "position": 3,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "task_manager.worker",
+    "pk": 14,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "robin.buckley",
+      "first_name": "Robin",
+      "last_name": "Buckley",
+      "email": "robin@itcompany.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-10T10:00:00Z",
+      "position": 9,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "task_manager.worker",
+    "pk": 15,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "eddie.munson",
+      "first_name": "Eddie",
+      "last_name": "Munson",
+      "email": "eddie@itcompany.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-10T10:00:00Z",
+      "position": 1,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "task_manager.worker",
+    "pk": 16,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "argyle.california",
+      "first_name": "Argyle",
+      "last_name": "California",
+      "email": "argyle@itcompany.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-10T10:00:00Z",
+      "position": 5,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "task_manager.worker",
+    "pk": 17,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "karen.wheeler",
+      "first_name": "Karen",
+      "last_name": "Wheeler",
+      "email": "karen@itcompany.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-10T10:00:00Z",
+      "position": 8,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "task_manager.worker",
+    "pk": 18,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "murray.bauman",
+      "first_name": "Murray",
+      "last_name": "Bauman",
+      "email": "murray@itcompany.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-10T10:00:00Z",
+      "position": 6,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "task_manager.worker",
+    "pk": 19,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "sam.owens",
+      "first_name": "Sam",
+      "last_name": "Owens",
+      "email": "sam@itcompany.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-01-10T10:00:00Z",
+      "position": 10,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "task_manager.worker",
+    "pk": 20,
+    "fields": {
+      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "vickie.arcade",
+      "first_name": "Vickie",
+      "last_name": "Arcade",
+      "email": "vickie@itcompany.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-10T10:00:00Z",
+      "position": 7,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "task_manager.team",
+    "pk": 1,
+    "fields": {
+      "name": "Core Platform Team",
+      "members": [
+        1,
+        3,
+        15,
+        18,
+        19
+      ]
+    }
+  },
+  {
+    "model": "task_manager.team",
+    "pk": 2,
+    "fields": {
+      "name": "Web Product Team",
+      "members": [
+        4,
+        5,
+        7,
+        12,
+        13
+      ]
+    }
+  },
+  {
+    "model": "task_manager.team",
+    "pk": 3,
+    "fields": {
+      "name": "Mobile Team",
+      "members": [
+        6,
+        10,
+        20
+      ]
+    }
+  },
+  {
+    "model": "task_manager.team",
+    "pk": 4,
+    "fields": {
+      "name": "Data & Analytics Team",
+      "members": [
+        9,
+        14,
+        17
+      ]
+    }
+  },
+  {
+    "model": "task_manager.team",
+    "pk": 5,
+    "fields": {
+      "name": "DevOps & SRE Team",
+      "members": [
+        1,
+        6,
+        16,
+        19
+      ]
+    }
+  },
+  {
+    "model": "task_manager.team",
+    "pk": 6,
+    "fields": {
+      "name": "QA Guild",
+      "members": [
+        2,
+        8,
+        11,
+        13
+      ]
+    }
+  },
+  {
+    "model": "task_manager.team",
+    "pk": 7,
+    "fields": {
+      "name": "Design Team",
+      "members": [
+        11,
+        14,
+        20
+      ]
+    }
+  },
+  {
+    "model": "task_manager.team",
+    "pk": 8,
+    "fields": {
+      "name": "Security Team",
+      "members": [
+        1,
+        9,
+        18,
+        19
+      ]
+    }
+  },
+  {
+    "model": "task_manager.project",
+    "pk": 1,
+    "fields": {
+      "name": "TaskFlow Web",
+      "description": "Main web app for task management",
+      "team": 2
+    }
+  },
+  {
+    "model": "task_manager.project",
+    "pk": 2,
+    "fields": {
+      "name": "Auth Gateway",
+      "description": "Centralized authentication and SSO service",
+      "team": 1
+    }
+  },
+  {
+    "model": "task_manager.project",
+    "pk": 3,
+    "fields": {
+      "name": "Payment Integration",
+      "description": "Billing and subscription integrations",
+      "team": 1
+    }
+  },
+  {
+    "model": "task_manager.project",
+    "pk": 4,
+    "fields": {
+      "name": "Mobile Companion",
+      "description": "Mobile app for managers and workers",
+      "team": 3
+    }
+  },
+  {
+    "model": "task_manager.project",
+    "pk": 5,
+    "fields": {
+      "name": "CI/CD Automation",
+      "description": "Pipelines, quality gates and deployments",
+      "team": 5
+    }
+  },
+  {
+    "model": "task_manager.project",
+    "pk": 6,
+    "fields": {
+      "name": "Analytics Dashboard",
+      "description": "Metrics, reports and product analytics",
+      "team": 4
+    }
+  },
+  {
+    "model": "task_manager.project",
+    "pk": 7,
+    "fields": {
+      "name": "Design System",
+      "description": "Reusable UI components and tokens",
+      "team": 7
+    }
+  },
+  {
+    "model": "task_manager.project",
+    "pk": 8,
+    "fields": {
+      "name": "Security Hardening",
+      "description": "AppSec, audits and vulnerability fixes",
+      "team": 8
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 1,
+    "fields": {
+      "priority": "URGENT",
+      "name": "Fix email notification duplicates",
+      "description": "Coordinate with frontend and backend teams.",
+      "deadline": "2026-05-22T10:00:00Z",
+      "is_completed": true,
+      "task_type": 2,
+      "project": 1,
+      "assignees": [
+        19
+      ],
+      "tags": [
+        1,
+        2,
+        3,
+        7
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 2,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Add audit log for task updates",
+      "description": "Coordinate with frontend and backend teams.",
+      "deadline": "2026-03-31T17:00:00Z",
+      "is_completed": false,
+      "task_type": 7,
+      "project": 1,
+      "assignees": [
+        15,
+        19
+      ],
+      "tags": [
+        1,
+        6,
+        14
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 3,
+    "fields": {
+      "priority": "HIGH",
+      "name": "Set up Sentry error tracking",
+      "description": "Needs backward compatibility and migration notes.",
+      "deadline": "2026-04-14T13:00:00Z",
+      "is_completed": true,
+      "task_type": 2,
+      "project": 1,
+      "assignees": [
+        2,
+        9,
+        12
+      ],
+      "tags": [
+        3,
+        4,
+        13,
+        18
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 4,
+    "fields": {
+      "priority": "LOW",
+      "name": "Design task card component",
+      "description": "Cover edge cases and add tests.",
+      "deadline": "2026-05-11T13:00:00Z",
+      "is_completed": false,
+      "task_type": 2,
+      "project": 1,
+      "assignees": [
+        8
+      ],
+      "tags": [
+        3,
+        4,
+        8
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 5,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Improve Docker build caching",
+      "description": "Coordinate with frontend and backend teams.",
+      "deadline": "2026-04-19T13:00:00Z",
+      "is_completed": false,
+      "task_type": 4,
+      "project": 1,
+      "assignees": [
+        3,
+        6,
+        18
+      ],
+      "tags": [
+        6,
+        15
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 6,
+    "fields": {
+      "priority": "LOW",
+      "name": "Add unit tests for serializers",
+      "description": "Prioritize security and performance.",
+      "deadline": "2026-04-19T13:00:00Z",
+      "is_completed": true,
+      "task_type": 6,
+      "project": 1,
+      "assignees": [
+        8
+      ],
+      "tags": [
+        11
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 7,
+    "fields": {
+      "priority": "URGENT",
+      "name": "Improve search performance",
+      "description": "Cover edge cases and add tests.",
+      "deadline": "2026-04-22T13:00:00Z",
+      "is_completed": true,
+      "task_type": 8,
+      "project": 2,
+      "assignees": [
+        5,
+        9,
+        15,
+        19
+      ],
+      "tags": [
+        18,
+        20
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 8,
+    "fields": {
+      "priority": "LOW",
+      "name": "Add role-based access checks",
+      "description": "Cover edge cases and add tests.",
+      "deadline": "2026-04-04T15:00:00Z",
+      "is_completed": true,
+      "task_type": 3,
+      "project": 2,
+      "assignees": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "tags": [
+        3,
+        14
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 9,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Implement task comments feature",
+      "description": "Prioritize security and performance.",
+      "deadline": "2026-04-20T15:00:00Z",
+      "is_completed": true,
+      "task_type": 1,
+      "project": 2,
+      "assignees": [
+        18
+      ],
+      "tags": [
+        4,
+        10,
+        11
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 10,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Implement project archive action",
+      "description": "Cover edge cases and add tests.",
+      "deadline": "2026-04-26T11:00:00Z",
+      "is_completed": false,
+      "task_type": 3,
+      "project": 2,
+      "assignees": [
+        10
+      ],
+      "tags": [
+        5,
+        6,
+        7,
+        12,
+        20
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 11,
+    "fields": {
+      "priority": "LOW",
+      "name": "Design task card component",
+      "description": "Cover edge cases and add tests.",
+      "deadline": "2026-05-10T17:00:00Z",
+      "is_completed": false,
+      "task_type": 2,
+      "project": 2,
+      "assignees": [
+        2,
+        8,
+        10
+      ],
+      "tags": [
+        3,
+        19
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 12,
+    "fields": {
+      "priority": "LOW",
+      "name": "Add audit log for task updates",
+      "description": "Coordinate with frontend and backend teams.",
+      "deadline": "2026-03-12T16:00:00Z",
+      "is_completed": true,
+      "task_type": 8,
+      "project": 2,
+      "assignees": [
+        9,
+        17
+      ],
+      "tags": [
+        7,
+        10,
+        14,
+        18,
+        19
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 13,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Create release checklist template",
+      "description": "Follow coding standards and update docs.",
+      "deadline": "2026-04-22T14:00:00Z",
+      "is_completed": true,
+      "task_type": 4,
+      "project": 3,
+      "assignees": [
+        11
+      ],
+      "tags": [
+        19
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 14,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Fix login redirect loop",
+      "description": "Needs backward compatibility and migration notes.",
+      "deadline": "2026-05-11T12:00:00Z",
+      "is_completed": false,
+      "task_type": 1,
+      "project": 3,
+      "assignees": [
+        2,
+        3
+      ],
+      "tags": [
+        3,
+        8,
+        17
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 15,
+    "fields": {
+      "priority": "HIGH",
+      "name": "Write API tests for task endpoints",
+      "description": "Prioritize security and performance.",
+      "deadline": "2026-04-06T16:00:00Z",
+      "is_completed": false,
+      "task_type": 4,
+      "project": 3,
+      "assignees": [
+        4,
+        7,
+        14,
+        18
+      ],
+      "tags": [
+        12,
+        14,
+        15,
+        19
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 16,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Add unit tests for serializers",
+      "description": "Needs backward compatibility and migration notes.",
+      "deadline": "2026-06-20T09:00:00Z",
+      "is_completed": true,
+      "task_type": 6,
+      "project": 3,
+      "assignees": [
+        8
+      ],
+      "tags": [
+        7,
+        18
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 17,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Fix email notification duplicates",
+      "description": "Follow coding standards and update docs.",
+      "deadline": "2026-04-28T11:00:00Z",
+      "is_completed": true,
+      "task_type": 2,
+      "project": 3,
+      "assignees": [
+        1,
+        2,
+        4,
+        18
+      ],
+      "tags": [
+        8
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 18,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Update onboarding documentation",
+      "description": "Follow coding standards and update docs.",
+      "deadline": "2026-03-23T15:00:00Z",
+      "is_completed": false,
+      "task_type": 3,
+      "project": 3,
+      "assignees": [
+        1,
+        9,
+        13,
+        15
+      ],
+      "tags": [
+        14,
+        16,
+        18
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 19,
+    "fields": {
+      "priority": "HIGH",
+      "name": "Implement Google OAuth button",
+      "description": "Prioritize security and performance.",
+      "deadline": "2026-03-21T12:00:00Z",
+      "is_completed": false,
+      "task_type": 1,
+      "project": 4,
+      "assignees": [
+        2,
+        16,
+        20
+      ],
+      "tags": [
+        2,
+        3,
+        6,
+        17,
+        20
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 20,
+    "fields": {
+      "priority": "URGENT",
+      "name": "Refactor task filtering query",
+      "description": "Coordinate with frontend and backend teams.",
+      "deadline": "2026-06-18T11:00:00Z",
+      "is_completed": false,
+      "task_type": 4,
+      "project": 4,
+      "assignees": [
+        20
+      ],
+      "tags": [
+        14
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 21,
+    "fields": {
+      "priority": "HIGH",
+      "name": "Fix email notification duplicates",
+      "description": "Coordinate with frontend and backend teams.",
+      "deadline": "2026-05-25T17:00:00Z",
+      "is_completed": false,
+      "task_type": 6,
+      "project": 4,
+      "assignees": [
+        9,
+        13
+      ],
+      "tags": [
+        10,
+        15
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 22,
+    "fields": {
+      "priority": "URGENT",
+      "name": "Design task card component",
+      "description": "Prioritize security and performance.",
+      "deadline": "2026-04-11T10:00:00Z",
+      "is_completed": false,
+      "task_type": 2,
+      "project": 4,
+      "assignees": [
+        9,
+        17
+      ],
+      "tags": [
+        3,
+        12
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 23,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Optimize dashboard SQL queries",
+      "description": "Follow coding standards and update docs.",
+      "deadline": "2026-06-22T12:00:00Z",
+      "is_completed": false,
+      "task_type": 5,
+      "project": 4,
+      "assignees": [
+        18
+      ],
+      "tags": [
+        4,
+        5,
+        9
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 24,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Write API tests for task endpoints",
+      "description": "Cover edge cases and add tests.",
+      "deadline": "2026-03-16T10:00:00Z",
+      "is_completed": false,
+      "task_type": 4,
+      "project": 4,
+      "assignees": [
+        7,
+        9,
+        17
+      ],
+      "tags": [
+        2,
+        3,
+        9,
+        14
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 25,
+    "fields": {
+      "priority": "URGENT",
+      "name": "Set up Sentry error tracking",
+      "description": "Coordinate with frontend and backend teams.",
+      "deadline": "2026-06-16T13:00:00Z",
+      "is_completed": false,
+      "task_type": 5,
+      "project": 5,
+      "assignees": [
+        15,
+        18
+      ],
+      "tags": [
+        1,
+        3,
+        4,
+        18
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 26,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Improve Docker build caching",
+      "description": "Prioritize security and performance.",
+      "deadline": "2026-06-23T11:00:00Z",
+      "is_completed": false,
+      "task_type": 7,
+      "project": 5,
+      "assignees": [
+        2,
+        10
+      ],
+      "tags": [
+        2,
+        7,
+        12
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 27,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Improve Docker build caching",
+      "description": "Prioritize security and performance.",
+      "deadline": "2026-05-28T12:00:00Z",
+      "is_completed": false,
+      "task_type": 7,
+      "project": 5,
+      "assignees": [
+        6,
+        8
+      ],
+      "tags": [
+        1,
+        14
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 28,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Migrate old migrations cleanup",
+      "description": "Coordinate with frontend and backend teams.",
+      "deadline": "2026-03-24T14:00:00Z",
+      "is_completed": true,
+      "task_type": 2,
+      "project": 5,
+      "assignees": [
+        2,
+        7,
+        8,
+        16
+      ],
+      "tags": [
+        8,
+        10,
+        12,
+        18
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 29,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Fix email notification duplicates",
+      "description": "Needs backward compatibility and migration notes.",
+      "deadline": "2026-03-05T12:00:00Z",
+      "is_completed": false,
+      "task_type": 5,
+      "project": 5,
+      "assignees": [
+        13,
+        17,
+        18
+      ],
+      "tags": [
+        1,
+        4,
+        9
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 30,
+    "fields": {
+      "priority": "URGENT",
+      "name": "Design task card component",
+      "description": "Follow coding standards and update docs.",
+      "deadline": "2026-03-24T13:00:00Z",
+      "is_completed": false,
+      "task_type": 6,
+      "project": 5,
+      "assignees": [
+        4,
+        13,
+        17,
+        20
+      ],
+      "tags": [
+        1,
+        2,
+        7,
+        9,
+        14
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 31,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Implement project archive action",
+      "description": "Coordinate with frontend and backend teams.",
+      "deadline": "2026-05-07T17:00:00Z",
+      "is_completed": false,
+      "task_type": 2,
+      "project": 6,
+      "assignees": [
+        4,
+        11,
+        20
+      ],
+      "tags": [
+        10,
+        14,
+        17
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 32,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Add audit log for task updates",
+      "description": "Coordinate with frontend and backend teams.",
+      "deadline": "2026-04-12T15:00:00Z",
+      "is_completed": true,
+      "task_type": 7,
+      "project": 6,
+      "assignees": [
+        19,
+        20
+      ],
+      "tags": [
+        1,
+        13,
+        18
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 33,
+    "fields": {
+      "priority": "HIGH",
+      "name": "Improve search performance",
+      "description": "Prioritize security and performance.",
+      "deadline": "2026-04-09T13:00:00Z",
+      "is_completed": false,
+      "task_type": 8,
+      "project": 6,
+      "assignees": [
+        7,
+        15,
+        16,
+        17
+      ],
+      "tags": [
+        3,
+        10
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 34,
+    "fields": {
+      "priority": "URGENT",
+      "name": "Create dark mode toggle",
+      "description": "Cover edge cases and add tests.",
+      "deadline": "2026-05-06T14:00:00Z",
+      "is_completed": true,
+      "task_type": 4,
+      "project": 6,
+      "assignees": [
+        1,
+        2
+      ],
+      "tags": [
+        3,
+        16
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 35,
+    "fields": {
+      "priority": "LOW",
+      "name": "Improve search performance",
+      "description": "Coordinate with frontend and backend teams.",
+      "deadline": "2026-04-29T15:00:00Z",
+      "is_completed": false,
+      "task_type": 7,
+      "project": 6,
+      "assignees": [
+        1,
+        5,
+        8,
+        13
+      ],
+      "tags": [
+        14
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 36,
+    "fields": {
+      "priority": "LOW",
+      "name": "Fix flaky integration test",
+      "description": "Prioritize security and performance.",
+      "deadline": "2026-03-30T11:00:00Z",
+      "is_completed": false,
+      "task_type": 4,
+      "project": 6,
+      "assignees": [
+        15
+      ],
+      "tags": [
+        15,
+        17
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 37,
+    "fields": {
+      "priority": "LOW",
+      "name": "Implement task comments feature",
+      "description": "Prioritize security and performance.",
+      "deadline": "2026-05-12T14:00:00Z",
+      "is_completed": false,
+      "task_type": 7,
+      "project": 7,
+      "assignees": [
+        6,
+        9,
+        15,
+        16
+      ],
+      "tags": [
+        9,
+        17
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 38,
+    "fields": {
+      "priority": "HIGH",
+      "name": "Refactor task filtering query",
+      "description": "Cover edge cases and add tests.",
+      "deadline": "2026-05-03T12:00:00Z",
+      "is_completed": true,
+      "task_type": 6,
+      "project": 7,
+      "assignees": [
+        3,
+        5,
+        18
+      ],
+      "tags": [
+        8,
+        13
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 39,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Refactor task filtering query",
+      "description": "Follow coding standards and update docs.",
+      "deadline": "2026-05-29T11:00:00Z",
+      "is_completed": false,
+      "task_type": 8,
+      "project": 7,
+      "assignees": [
+        2,
+        7,
+        13,
+        14
+      ],
+      "tags": [
+        1,
+        13,
+        16,
+        19,
+        20
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 40,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Migrate old migrations cleanup",
+      "description": "Prioritize security and performance.",
+      "deadline": "2026-04-16T13:00:00Z",
+      "is_completed": false,
+      "task_type": 4,
+      "project": 7,
+      "assignees": [
+        8,
+        9,
+        14,
+        16
+      ],
+      "tags": [
+        13
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 41,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Implement task comments feature",
+      "description": "Coordinate with frontend and backend teams.",
+      "deadline": "2026-04-14T15:00:00Z",
+      "is_completed": false,
+      "task_type": 1,
+      "project": 7,
+      "assignees": [
+        1,
+        3,
+        19,
+        20
+      ],
+      "tags": [
+        2,
+        5,
+        6,
+        15
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 42,
+    "fields": {
+      "priority": "HIGH",
+      "name": "Implement task comments feature",
+      "description": "Cover edge cases and add tests.",
+      "deadline": "2026-04-04T15:00:00Z",
+      "is_completed": false,
+      "task_type": 7,
+      "project": 7,
+      "assignees": [
+        3,
+        9,
+        14
+      ],
+      "tags": [
+        1,
+        2,
+        12,
+        18
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 43,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Add unit tests for serializers",
+      "description": "Needs backward compatibility and migration notes.",
+      "deadline": "2026-03-30T10:00:00Z",
+      "is_completed": false,
+      "task_type": 4,
+      "project": 8,
+      "assignees": [
+        1,
+        5
+      ],
+      "tags": [
+        5,
+        16
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 44,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Update onboarding documentation",
+      "description": "Follow coding standards and update docs.",
+      "deadline": "2026-05-26T10:00:00Z",
+      "is_completed": false,
+      "task_type": 6,
+      "project": 8,
+      "assignees": [
+        4,
+        20
+      ],
+      "tags": [
+        4,
+        10
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 45,
+    "fields": {
+      "priority": "LOW",
+      "name": "Improve search performance",
+      "description": "Follow coding standards and update docs.",
+      "deadline": "2026-05-15T09:00:00Z",
+      "is_completed": false,
+      "task_type": 4,
+      "project": 8,
+      "assignees": [
+        19
+      ],
+      "tags": [
+        4,
+        10
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 46,
+    "fields": {
+      "priority": "MEDIUM",
+      "name": "Improve search performance",
+      "description": "Needs backward compatibility and migration notes.",
+      "deadline": "2026-06-18T10:00:00Z",
+      "is_completed": false,
+      "task_type": 7,
+      "project": 8,
+      "assignees": [
+        3,
+        11,
+        17
+      ],
+      "tags": [
+        14
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 47,
+    "fields": {
+      "priority": "HIGH",
+      "name": "Improve Docker build caching",
+      "description": "Follow coding standards and update docs.",
+      "deadline": "2026-06-15T16:00:00Z",
+      "is_completed": false,
+      "task_type": 7,
+      "project": 8,
+      "assignees": [
+        9,
+        17
+      ],
+      "tags": [
+        9,
+        14,
+        15,
+        16,
+        18
+      ]
+    }
+  },
+  {
+    "model": "task_manager.task",
+    "pk": 48,
+    "fields": {
+      "priority": "LOW",
+      "name": "Refactor task filtering query",
+      "description": "Cover edge cases and add tests.",
+      "deadline": "2026-04-12T12:00:00Z",
+      "is_completed": false,
+      "task_type": 4,
+      "project": 8,
+      "assignees": [
+        1,
+        11,
+        13,
+        19
+      ],
+      "tags": [
+        6,
+        7,
+        11,
+        16
+      ]
+    }
+  }
+]
