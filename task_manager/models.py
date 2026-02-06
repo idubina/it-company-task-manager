@@ -18,3 +18,14 @@ class Position(models.Model):
 
 class Worker(AbstractUser):
     position = models.ForeignKey(Position, on_delete=models.PROTECT)
+
+    class Meta:
+        verbose_name = "worker"
+        verbose_name_plural = "workers"
+
+    def __str__(self):
+        return (
+            f"{self.username} "
+            f"({self.first_name} {self.last_name}) "
+            f"[{self.position.name}]"
+        )
