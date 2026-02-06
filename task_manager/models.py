@@ -19,7 +19,10 @@ class Position(models.Model):
 
 
 class Worker(AbstractUser):
-    position = models.ForeignKey(Position, on_delete=models.PROTECT)
+    position = models.ForeignKey(
+        Position, on_delete=models.PROTECT,
+        null=True, blank=True
+    )
 
     class Meta:
         verbose_name = "worker"
@@ -36,7 +39,8 @@ class Worker(AbstractUser):
 class Team(models.Model):
     name = models.CharField(max_length=255, unique=True)
     members = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, related_name="teams"
+        settings.AUTH_USER_MODEL, related_name="teams",
+        blank=True
     )
 
     def __str__(self):
