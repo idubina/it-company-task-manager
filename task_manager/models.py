@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from it_company_task_manager.settings import AUTH_USER_MODEL
+from django.conf import settings
 
 
 class TaskType(models.Model):
@@ -36,7 +36,7 @@ class Worker(AbstractUser):
 class Team(models.Model):
     name = models.CharField(max_length=255, unique=True)
     members = models.ManyToManyField(
-        AUTH_USER_MODEL, related_name="teams"
+        settings.AUTH_USER_MODEL, related_name="teams"
     )
 
     def __str__(self):
@@ -85,7 +85,7 @@ class Task(models.Model):
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     assignees = models.ManyToManyField(
-        AUTH_USER_MODEL, related_name="tasks",
+        settings.AUTH_USER_MODEL, related_name="tasks",
         blank=True
     )
 
