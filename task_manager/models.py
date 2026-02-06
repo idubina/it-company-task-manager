@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from it_company_task_manager.settings import AUTH_USER_MODEL
+
 
 class TaskType(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -29,3 +31,13 @@ class Worker(AbstractUser):
             f"({self.first_name} {self.last_name}) "
             f"[{self.position.name}]"
         )
+
+
+class Team(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    members = models.ManyToManyField(
+        AUTH_USER_MODEL, related_name="teams"
+    )
+
+    def __str__(self):
+        return self.name
