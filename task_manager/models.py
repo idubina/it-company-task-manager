@@ -86,7 +86,10 @@ class Task(models.Model):
 
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    deadline = models.DateTimeField()
+    deadline = models.DateTimeField(
+        null=True,
+        blank=True
+    )
     is_completed = models.BooleanField(default=False)
 
     task_type = models.ForeignKey(
@@ -96,7 +99,12 @@ class Task(models.Model):
         blank=True
     )
 
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
     assignees = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="tasks",
         blank=True
