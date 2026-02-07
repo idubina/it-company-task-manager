@@ -1,4 +1,6 @@
+from django.contrib.auth import get_user_model
 from django.shortcuts import render
+from django.views import generic
 
 from task_manager.models import (
     Task,
@@ -24,3 +26,7 @@ def index(request):
     }
 
     return render(request, "task_manager/index.html", context=context)
+
+
+class WorkerListView(generic.ListView):
+    model = get_user_model()
