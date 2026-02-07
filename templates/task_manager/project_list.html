@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>
+    Project List
+  </h1>
+  {% if project_list %}
+  <div class="list-group">
+  {% for project in project_list %}
+    <div class="list-group-item">
+    <h3 class="mb-0">
+      <a href="#">
+        {{ project }}
+      </a>
+    </h3>
+    {% with tc=project.task_set.count %}
+      <small class="text-muted">{{ tc }} task{{ tc|pluralize }}</small>
+    {% endwith %}
+    <p class="lead mb-0">{{ project.description }}</p>
+    </div>
+  {% endfor %}
+  </div>
+  {% else %}
+    <p>There are no projects in the manager.</p>
+  {% endif %}
+{% endblock %}
