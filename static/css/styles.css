@@ -1,3 +1,17 @@
 body {
     margin-top: 20px;
 }
+
+.task-col {
+  width: 480px;
+  max-width: 480px;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.task_type-col {
+  width: 160px;
+  max-width: 160px;
+  word-wrap: break-word;
+  white-space: normal;
+}
