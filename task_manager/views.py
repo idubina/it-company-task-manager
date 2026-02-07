@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import render
 from django.views import generic
 
-from task_manager.forms import WorkerUsernameSearchForm
+from task_manager.forms import WorkerUsernameSearchForm, TaskNameSearchForm
 from task_manager.models import (
     Task,
     Project,
@@ -55,3 +55,22 @@ class WorkerListView(generic.ListView):
 class TaskListView(generic.ListView):
     model = Task
     paginate_by = 5
+
+    def get_context_data(
+        self, *, object_list=None, **kwargs
+    ):
+        context = super(TaskListView, self).get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = TaskNameSearchForm(initial={"name": name})
+        return context
+
+    def get_queryset(self):
+        queryset = (
+            Task.objects
+            .select_related("task_type", "project")
+            .prefetch_related("tags")
+        )
+        form = TaskNameSearchForm(self.request.GET)
+        if form.is_valid():
+            return queryset.filter(name__icontains=form.cleaned_data["name"])
+        return queryset
