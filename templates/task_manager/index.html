@@ -5,17 +5,29 @@
   <title>IT Task Manager</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
 <body>
-<h1>Task Manager Home</h1>
-<p>Welcome to IT Task Manager Ever!</p>
-<h2>Dynamic content</h2>
-<p>The Task Manager has the following record counts:</p>
-<ul>
-  <li><strong>Positions:</strong> {{ num_positions }}</li>
-  <li><strong>Workers:</strong> {{ num_workers }}</li>
-  <li><strong>Tasks:</strong> {{ num_tasks }}</li>
-  <li><strong>Teams:</strong> {{ num_teams }}</li>
-  <li><strong>Projects:</strong> {{ num_projects }}</li>
-</ul>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-2">
+      Sidebar
+    </div>
+    <div class="col-sm-10 ">
+      <h1>Task Manager Home</h1>
+      <p>Welcome to IT Task Manager Ever!</p>
+      <h2>Dynamic content</h2>
+      <p>The Task Manager has the following record counts:</p>
+      <ul>
+        <li><strong>Positions:</strong> {{ num_positions }}</li>
+        <li><strong>Workers:</strong> {{ num_workers }}</li>
+        <li><strong>Tasks:</strong> {{ num_tasks }}</li>
+        <li><strong>Teams:</strong> {{ num_teams }}</li>
+        <li><strong>Projects:</strong> {{ num_projects }}</li>
+      </ul>
+    </div>
+  </div>
+</div>
 </body>
 </html>
