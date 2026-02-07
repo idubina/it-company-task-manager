@@ -27,10 +27,16 @@
               </p>
             {% endif %}
           </td>
-          <td>{{ task.is_completed }}</td>
+          <td>
+            {% if task.is_completed %}
+              <span style="color: green">Completed</span>
+            {% else %}
+              <span style="color: darkviolet">In work</span>
+            {% endif %}
+          </td>
           <td>{{ task.priority }}</td>
-          <td>{{ task.deadline }}</td>
-          <td>{{ task.project }}</td>
+          <td>{% if task.deadline %}{{ task.deadline }}{% else %}-{% endif %}</td>
+          <td>{% if task.project %}<a href="#">{{ task.project }}</a>{% else %}-{% endif %}</td>
         </tr>
       {% endfor %}
 
