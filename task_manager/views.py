@@ -31,6 +31,7 @@ def index(request):
 
 class WorkerListView(generic.ListView):
     model = get_user_model()
+    paginate_by = 5
 
     def get_context_data(
         self, *, object_list=None, **kwargs
