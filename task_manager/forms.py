@@ -6,3 +6,6 @@ class WorkerUsernameSearchForm(forms.Form):
 
 class TaskNameSearchForm(forms.Form):
     name = forms.CharField(max_length=255, required=False, label="")
+
+class ProjectNameSearchForm(forms.Form):
+    name = forms.CharField(max_length=255, required=False, label="")

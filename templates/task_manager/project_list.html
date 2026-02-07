@@ -4,6 +4,7 @@
     Project List
   </h1>
   {% if project_list %}
+    {% include 'includes/search.html' %}
   <div class="list-group">
   {% for project in project_list %}
     <div class="list-group-item">
