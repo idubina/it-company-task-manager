@@ -51,3 +51,7 @@ class WorkerListView(generic.ListView):
                 username__icontains=form.cleaned_data["username"]
             )
         return queryset
+
+class TaskListView(generic.ListView):
+    model = Task
+    paginate_by = 5
