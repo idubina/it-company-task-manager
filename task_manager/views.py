@@ -46,7 +46,7 @@ class WorkerListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = super().get_queryset().order_by("username")
+        queryset = super().get_queryset().order_by("id")
         form = WorkerUsernameSearchForm(self.request.GET)
         if form.is_valid():
             return queryset.filter(
