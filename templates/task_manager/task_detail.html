@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    {{ task }}
+    </h1>
+      <h2>
+        Type:{% if task.task_type %} {{ task.task_type }}{% else %} No type{% endif %}
+        {% if task.is_completed %}
+          <small style="color: green;">(Completed)</small>
+        {% else %}
+          <small style="color: darkviolet;">(In work)</small>
+        {% endif %}
+      </h2>
+      {% if task.description %}
+        <p class="lead mb-0">{{ task.description }}</p>
+      {% endif %}
+      <p>
+        {% for tag in task.tags.all %}
+          <small class="text-muted">#{{ tag }}</small>
+        {% endfor %}
+      </p>
+      <br>
+      <h3>
+        Assignees
+      </h3>
+      <hr>
+      {% if task.assignees.all %}
+        <ul class="list-unstyled">
+          {% for assignee in task.assignees.all %}
+            <li>
+              <a class="lead" href="#">
+                {{ assignee.username }} ({{ assignee.first_name }} {{ assignee.last_name }}) [{{ assignee.position }}]
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>There aro no assignees in this task</p>
+      {% endif %}
+      <br>
+      <p class="lead">Priority: {{ task.priority }}</p>
+      <hr>
+      <br>
+      <p class="lead">Deadline:{% if task.deadline %} {{ task.deadline }}{% else %} No deadline{% endif %}</p>
+    <hr>
+    <br>
+    <h3>
+        Project:
+      </h3>
+    <hr>
+      {% if task.project %}
+              <a class="lead" href="#">{{ task.project }}</a>
+      {% else %}
+        <p class="lead">This task not in a project.</p>
+      {% endif %}
+{% endblock %}

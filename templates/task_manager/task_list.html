@@ -18,13 +18,18 @@
         <tr>
         <td>{{ task.task_type }}</td>
           <td>
-            <a href="#">{{ task.name }}</a>
+            <a href="{% url 'task-manager:task-detail' pk=task.id %}">{{ task.name }}</a>
             {% if task.tags %}
-              <p>
+              <p class="mb-0">
               {% for tag in task.tags.all %}
                 <small class="text-muted">#{{ tag }}</small>
               {% endfor %}
               </p>
+              {% with ac=task.assignees.count %}
+              <span class="text-muted">
+                {{ ac }} Assignee{{ ac|pluralize }}
+              </span>
+              {% endwith %}
             {% endif %}
           </td>
           <td>

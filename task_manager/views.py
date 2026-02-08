@@ -70,7 +70,8 @@ class TaskListView(generic.ListView):
         queryset = (
             Task.objects
             .select_related("task_type", "project")
-            .prefetch_related("tags")
+            .prefetch_related("assignees", "tags")
+            .order_by("name")
         )
         form = TaskNameSearchForm(self.request.GET)
         if form.is_valid():
@@ -97,6 +98,10 @@ class TaskListView(generic.ListView):
                 )
 
         return queryset
+
+
+class TaskDetailView(generic.DetailView):
+    model = Task
 
 
 class ProjectListView(generic.ListView):
