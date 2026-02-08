@@ -46,7 +46,7 @@ class WorkerListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().order_by("username")
         form = WorkerUsernameSearchForm(self.request.GET)
         if form.is_valid():
             return queryset.filter(
@@ -119,7 +119,7 @@ class ProjectListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().order_by("name")
         form = ProjectNameSearchForm(self.request.GET)
         if form.is_valid():
             return queryset.filter(
@@ -143,7 +143,7 @@ class PositionListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().order_by("name")
         form = PositionNameSearchForm(self.request.GET)
         if form.is_valid():
             return queryset.filter(
@@ -167,7 +167,7 @@ class TeamListView(generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = Team.objects.prefetch_related("members")
+        queryset = Team.objects.prefetch_related("members").order_by("name")
         form = TeamNameSearchForm(self.request.GET)
         if form.is_valid():
             return queryset.filter(
