@@ -4,12 +4,16 @@
   <h1>
     Project: {{ project.name }}
   </h1>
-   <p class="lead"><strong>Team:</strong> <a href="#">{{ project.team }}</a></p>
+  <p class="lead"><strong>Team:</strong>
+    <a href="{% url 'task-manager:team-detail' pk=project.team.id %}">
+      {{ project.team }}
+    </a>
+  </p>
   {% if project.description %}
     <p class="lead mb-0">{{ project.description }}</p>
   {% endif %}
   <p>
-  <br>
+    <br>
   <div class="ml-3">
     <h4>Tasks in progress</h4>
     <hr>

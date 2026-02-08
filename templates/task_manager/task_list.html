@@ -41,7 +41,11 @@
           </td>
           <td>{{ task.priority }}</td>
           <td>{% if task.deadline %}{{ task.deadline }}{% else %}-{% endif %}</td>
-          <td>{% if task.project %}<a href="#">{{ task.project }}</a>{% else %}-{% endif %}</td>
+          <td>
+            {% if task.project %}<a href="{% url 'task-manager:project-detail' pk=task.project.id %}">
+              {{ task.project }}
+            </a>{% else %}-{% endif %}
+          </td>
         </tr>
       {% endfor %}
 

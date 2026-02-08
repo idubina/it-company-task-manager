@@ -233,3 +233,8 @@ class TeamListView(generic.ListView):
                 name__icontains=form.cleaned_data["name"]
             )
         return queryset
+
+
+class TeamDetailView(generic.DetailView):
+    model = Team
+    queryset = Team.objects.prefetch_related("members", "project_set")

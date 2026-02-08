@@ -9,7 +9,7 @@
       {% for team in team_list %}
         <div class="list-group-item">
           <h3 class="mb-0">
-            <a href="#">
+            <a href="{% url 'task-manager:team-detail' pk=team.id %}">
               {{ team }}
             </a>
           </h3>

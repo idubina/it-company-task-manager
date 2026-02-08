@@ -40,7 +40,7 @@
     <hr>
     <ul class="list-unstyled">
       {% for team in teams %}
-        <li><a class="lead" href="#">{{ team }}</a></li>
+        <li><a class="lead" href="{% url 'task-manager:team-detail' pk=team.id %}">{{ team }}</a></li>
       {% empty %}
         <li class="lead">This user has no team.</li>
       {% endfor %}

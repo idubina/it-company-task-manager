@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Team: {{ team }}
+  </h1>
+  <br>
+  <div class="ml-3">
+    <h4>Members</h4>
+    <hr>
+    <ul class="list-unstyled">
+      {% for member in team.members.all %}
+        <li>
+          <a class="lead" href="{% url 'task-manager:worker-detail' pk=member.id %}">{{ member }}</a>
+        </li>
+      {% empty %}
+        <li class="lead">There are no members in this team.</li>
+      {% endfor %}
+    </ul>
+    <br>
+    <h4>Projects</h4>
+    <hr>
+    <ul class="list-unstyled">
+      {% for project in team.project_set.all %}
+        <li>
+          <a class="lead" href="{% url 'task-manager:project-detail' pk=project.id %}">{{ project }}</a>
+        </li>
+
+      {% empty %}
+        <li class="lead">This team does not have projects.</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}
