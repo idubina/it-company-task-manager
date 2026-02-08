@@ -123,3 +123,9 @@ class PositionListView(generic.ListView):
                 name__icontains=form.cleaned_data["name"]
             )
         return queryset
+
+
+class TeamListView(generic.ListView):
+    model = Team
+    paginate_by = 5
+    queryset = Team.objects.prefetch_related("members")
