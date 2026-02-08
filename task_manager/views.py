@@ -54,6 +54,33 @@ class WorkerListView(generic.ListView):
             )
         return queryset
 
+
+class WorkerDetailView(generic.DetailView):
+    model = Worker
+
+    def get_queryset(self):
+        return (
+        Worker.objects
+        .select_related("position")
+        .prefetch_related("teams")
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["tasks_in_progress"] = (
+            self.object.tasks
+            .filter(is_completed=False)
+            .order_by("name")
+        )
+        context["tasks_completed"] = (
+            self.object.tasks
+            .filter(is_completed=True)
+            .order_by("name")
+        )
+        context["teams"] = self.object.teams.order_by("name")
+        return context
+
+
 class TaskListView(generic.ListView):
     model = Task
     paginate_by = 5

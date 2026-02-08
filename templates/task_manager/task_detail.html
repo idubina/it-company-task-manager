@@ -29,7 +29,7 @@
         <ul class="list-unstyled">
           {% for assignee in task.assignees.all %}
             <li>
-              <a class="lead" href="#">
+              <a class="lead" href="{% url 'task-manager:worker-detail' pk=task.id %}">
                 {{ assignee.username }} ({{ assignee.first_name }} {{ assignee.last_name }}) [{{ assignee.position }}]
               </a>
             </li>

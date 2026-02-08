@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Username: {{ worker.username }}
+  </h1>
+
+  <p class="lead"><strong>First name:</strong> {{ worker.first_name }}</p>
+  <p class="lead"><strong>Last name:</strong> {{ worker.last_name }}</p>
+  <p class="lead"><strong>Position:</strong> {{ worker.position }}</p>
+  <br>
+  <div class="ml-3">
+    <h4>Tasks in progress</h4>
+    <hr>
+    <ul class="list-unstyled">
+      {% for task in tasks_in_progress %}
+        <li>
+          <a class="lead" href="{% url 'task-manager:task-detail' pk=task.id %}">{{ task }}</a>
+        </li>
+
+      {% empty %}
+        <li class="lead">No tasks in progress.</li>
+      {% endfor %}
+    </ul>
+    <br>
+    <h4>Completed tasks</h4>
+    <hr>
+    <ul class="list-unstyled">
+      {% for task in tasks_completed %}
+        <li>
+          <a class="lead" href="{% url 'task-manager:task-detail' pk=task.id %}">{{ task }}</a>
+        </li>
+
+      {% empty %}
+        <li class="lead">No completed tasks.</li>
+      {% endfor %}
+    </ul>
+    <br>
+    <h4>Teams</h4>
+    <hr>
+    <ul class="list-unstyled">
+      {% for team in teams %}
+        <li><a class="lead" href="#">{{ team }}</a></li>
+      {% empty %}
+        <li class="lead">This user has no team.</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}
