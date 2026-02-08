@@ -98,3 +98,8 @@ class ProjectListView(generic.ListView):
                 name__icontains=form.cleaned_data["name"]
             )
         return queryset
+
+
+class PositionListView(generic.ListView):
+    model = Position
+    paginate_by = 5
