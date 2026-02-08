@@ -102,6 +102,11 @@ class TaskListView(generic.ListView):
 
 class TaskDetailView(generic.DetailView):
     model = Task
+    queryset = (
+        Task.objects
+        .select_related("task_type", "project")
+        .prefetch_related("tags", "assignees")
+    )
 
 
 class ProjectListView(generic.ListView):
