@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Project: {{ project.name }}
+  </h1>
+   <p class="lead"><strong>Team:</strong> <a href="#">{{ project.team }}</a></p>
+  {% if project.description %}
+    <p class="lead mb-0">{{ project.description }}</p>
+  {% endif %}
+  <p>
+  <br>
+  <div class="ml-3">
+    <h4>Tasks in progress</h4>
+    <hr>
+    <ul class="list-unstyled">
+      {% for task in tasks_in_progress %}
+        <li>
+          <a class="lead" href="{% url 'task-manager:task-detail' pk=task.id %}">{{ task }}</a>
+        </li>
+
+      {% empty %}
+        <li class="lead">No tasks in progress.</li>
+      {% endfor %}
+    </ul>
+    <br>
+    <h4>Completed tasks</h4>
+    <hr>
+    <ul class="list-unstyled">
+      {% for task in tasks_completed %}
+        <li>
+          <a class="lead" href="{% url 'task-manager:task-detail' pk=task.id %}">{{ task }}</a>
+        </li>
+
+      {% empty %}
+        <li class="lead">No completed tasks.</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}

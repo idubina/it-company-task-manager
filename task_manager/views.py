@@ -160,6 +160,24 @@ class ProjectListView(generic.ListView):
         return queryset
 
 
+class ProjectDetailView(generic.DetailView):
+    model = Project
+    queryset = Project.objects.select_related("team")
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectDetailView, self).get_context_data(**kwargs)
+        context["tasks_in_progress"] = (
+            self.object.tasks
+            .filter(is_completed=False)
+            .order_by("name")
+        )
+        context["tasks_completed"] = (
+            self.object.tasks
+            .filter(is_completed=True)
+            .order_by("name")
+        )
+        return context
+
 class PositionListView(generic.ListView):
     model = Position
     paginate_by = 5

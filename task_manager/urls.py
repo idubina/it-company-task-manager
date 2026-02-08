@@ -8,7 +8,8 @@ from task_manager.views import (
     TeamListView,
     TaskDetailView,
     WorkerDetailView,
-    PositionDetailView
+    PositionDetailView,
+    ProjectDetailView
 )
 
 urlpatterns = [
@@ -18,6 +19,7 @@ urlpatterns = [
     path("tasks/", TaskListView.as_view(), name="task-list"),
     path("tasks/<int:pk>/", TaskDetailView.as_view(), name="task-detail"),
     path("projects/", ProjectListView.as_view(), name="project-list"),
+    path("projects/<int:pk>/", ProjectDetailView.as_view(), name="project-detail"),
     path("positions/<int:pk>/", PositionDetailView.as_view(), name="position-detail"),
     path("positions/", PositionListView.as_view(), name="position-list"),
     path("teams/", TeamListView.as_view(), name="team-list"),

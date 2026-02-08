@@ -50,7 +50,7 @@
       </h3>
     <hr>
       {% if task.project %}
-              <a class="lead" href="#">{{ task.project }}</a>
+              <a class="lead" href="{% url 'task-manager:project-detail' pk=task.project.id %}">{{ task.project }}</a>
       {% else %}
         <p class="lead">This task not in a project.</p>
       {% endif %}
