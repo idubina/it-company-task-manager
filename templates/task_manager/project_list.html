@@ -13,7 +13,7 @@
         {{ project }}
       </a>
     </h3>
-    {% with tc=project.task_set.count %}
+    {% with tc=project.tasks.count %}
       <small class="text-muted">{{ tc }} task{{ tc|pluralize }}</small>
     {% endwith %}
     <p class="lead mb-0">{{ project.description }}</p>
