@@ -184,6 +184,15 @@ class PositionListView(generic.ListView):
         return queryset
 
 
+class PositionDetailView(generic.DetailView):
+    model = Position
+    queryset = (
+        Position.objects
+        .prefetch_related("workers")
+        .order_by("workers__username")
+    )
+
+
 class TeamListView(generic.ListView):
     model = Team
     paginate_by = 5

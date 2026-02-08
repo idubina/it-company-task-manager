@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+  {{ position }}
+  </h1>
+  <hr>
+  <ul class="list-unstyled">
+  {% for worker in position.workers.all %}
+    <li>
+      <h4>
+        <a href="{% url 'task-manager:worker-detail' pk=worker.id %}">
+          {{ worker.username }} ({{ worker.first_name }} {{ worker.last_name }})
+        </a>
+      </h4>
+    </li>
+  {% empty %}
+    <p class="lead">There are no workers on this position.</p>
+  {% endfor %}
+  </ul>
+{% endblock %}
