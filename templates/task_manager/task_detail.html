@@ -25,7 +25,7 @@
         Assignees
       </h3>
       <hr>
-      {% if task.assignees.all %}
+      {% if task.assignees.count %}
         <ul class="list-unstyled">
           {% for assignee in task.assignees.all %}
             <li>
