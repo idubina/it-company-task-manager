@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.db.models import Q, When, Value, Case, IntegerField
 from django.shortcuts import render
 from django.views import generic
 
@@ -73,7 +74,28 @@ class TaskListView(generic.ListView):
         )
         form = TaskNameSearchForm(self.request.GET)
         if form.is_valid():
-            return queryset.filter(name__icontains=form.cleaned_data["name"])
+            query = form.cleaned_data.get("name")
+            if query:
+                queryset = (
+                    queryset
+                    .filter(
+                        Q(name__icontains=query) |
+                        Q(task_type__name__icontains=query) |
+                        Q(tags__name__icontains=query)
+                    )
+                    .annotate(
+                        search_rank=Case(
+                            When(name__icontains=query, then=Value(1)),
+                            When(task_type__name__icontains=query, then=Value(2)),
+                            When(tags__name__icontains=query, then=Value(3)),
+                            default=Value(4),
+                            output_field=IntegerField(),
+                        )
+                    )
+                    .order_by("search_rank", "name")
+                    .distinct()
+                )
+
         return queryset
 
 
