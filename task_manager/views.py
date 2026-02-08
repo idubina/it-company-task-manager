@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views import generic
 
 from task_manager.forms import WorkerUsernameSearchForm, TaskNameSearchForm, ProjectNameSearchForm, \
-    PositionNameSearchForm
+    PositionNameSearchForm, TeamNameSearchForm
 from task_manager.models import (
     Task,
     Project,
@@ -128,4 +128,22 @@ class PositionListView(generic.ListView):
 class TeamListView(generic.ListView):
     model = Team
     paginate_by = 5
-    queryset = Team.objects.prefetch_related("members")
+
+    def get_context_data(
+        self, *, object_list=None, **kwargs
+    ):
+        context = super(TeamListView, self).get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = TeamNameSearchForm(
+            initial={"name": name}
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = Team.objects.prefetch_related("members")
+        form = TeamNameSearchForm(self.request.GET)
+        if form.is_valid():
+            return queryset.filter(
+                name__icontains=form.cleaned_data["name"]
+            )
+        return queryset

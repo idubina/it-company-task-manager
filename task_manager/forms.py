@@ -15,3 +15,7 @@ class ProjectNameSearchForm(forms.Form):
 
 class PositionNameSearchForm(forms.Form):
     name = forms.CharField(max_length=255, required=False, label="")
+
+
+class TeamNameSearchForm(forms.Form):
+    name = forms.CharField(max_length=255, required=False, label="")

@@ -4,21 +4,21 @@
     Team List
   </h1>
   {% if team_list %}
-  
-  <div class="list-group">
-  {% for team in team_list %}
-    <div class="list-group-item">
-    <h3 class="mb-0">
-      <a href="#">
-        {{ team }}
-      </a>
-    </h3>
-    {% with mc=team.members.count %}
-      <p class="lead mb-0">{{ mc }} member{{ mc|pluralize }}</p>
-    {% endwith %}
+    {% include 'includes/search.html' %}
+    <div class="list-group">
+      {% for team in team_list %}
+        <div class="list-group-item">
+          <h3 class="mb-0">
+            <a href="#">
+              {{ team }}
+            </a>
+          </h3>
+          {% with mc=team.members.count %}
+            <p class="lead mb-0">{{ mc }} member{{ mc|pluralize }}</p>
+          {% endwith %}
+        </div>
+      {% endfor %}
     </div>
-  {% endfor %}
-  </div>
   {% else %}
     <p>There are no members in the manager.</p>
   {% endif %}
