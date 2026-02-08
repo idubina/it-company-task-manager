@@ -22,7 +22,7 @@
             {% if task.tags %}
               <p>
               {% for tag in task.tags.all %}
-                #<a class="text-muted" href="#">{{ tag }}</a>
+                <small class="text-muted">#{{ tag }}</small>
               {% endfor %}
               </p>
             {% endif %}
