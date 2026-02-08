@@ -21,7 +21,8 @@ class Position(models.Model):
 class Worker(AbstractUser):
     position = models.ForeignKey(
         Position, on_delete=models.PROTECT,
-        null=True, blank=True
+        null=True, blank=True,
+        related_name="workers"
     )
 
     class Meta:
@@ -56,7 +57,7 @@ class Project(models.Model):
         Team,
         on_delete=models.PROTECT,
         null=True,
-        blank=True
+        blank=True,
     )
 
     def __str__(self):
@@ -103,7 +104,8 @@ class Task(models.Model):
         Project,
         on_delete=models.CASCADE,
         null=True,
-        blank=True
+        blank=True,
+        related_name="tasks"
     )
     assignees = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="tasks",
