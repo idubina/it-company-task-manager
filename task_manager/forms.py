@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm
 
 from task_manager.models import Team
 
@@ -11,6 +12,17 @@ class WorkerUsernameSearchForm(forms.Form):
         label="",
         widget=forms.TextInput(attrs={"placeholder": "username..."})
     )
+
+
+class WorkerCreationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = get_user_model()
+        fields = UserCreationForm.Meta.fields + (
+            "first_name",
+            "last_name",
+            "email",
+            "position",
+        )
 
 
 class TaskNameSearchForm(forms.Form):
