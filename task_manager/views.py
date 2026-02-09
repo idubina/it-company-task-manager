@@ -1,4 +1,6 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q, When, Value, Case, IntegerField
 from django.shortcuts import render
 from django.views import generic
@@ -12,6 +14,9 @@ from task_manager.models import (
     Team,
     Position
 )
+
+
+@login_required
 def index(request):
 
     num_teams = Team.objects.count()
@@ -31,7 +36,7 @@ def index(request):
     return render(request, "task_manager/index.html", context=context)
 
 
-class WorkerListView(generic.ListView):
+class WorkerListView(LoginRequiredMixin, generic.ListView):
     model = get_user_model()
     paginate_by = 5
 
@@ -55,7 +60,7 @@ class WorkerListView(generic.ListView):
         return queryset
 
 
-class WorkerDetailView(generic.DetailView):
+class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
     model = Worker
 
     def get_queryset(self):
@@ -81,7 +86,7 @@ class WorkerDetailView(generic.DetailView):
         return context
 
 
-class TaskListView(generic.ListView):
+class TaskListView(LoginRequiredMixin, generic.ListView):
     model = Task
     paginate_by = 5
 
@@ -127,7 +132,7 @@ class TaskListView(generic.ListView):
         return queryset
 
 
-class TaskDetailView(generic.DetailView):
+class TaskDetailView(LoginRequiredMixin, generic.DetailView):
     model = Task
     queryset = (
         Task.objects
@@ -136,7 +141,7 @@ class TaskDetailView(generic.DetailView):
     )
 
 
-class ProjectListView(generic.ListView):
+class ProjectListView(LoginRequiredMixin, generic.ListView):
     model = Project
     paginate_by = 5
 
@@ -160,7 +165,7 @@ class ProjectListView(generic.ListView):
         return queryset
 
 
-class ProjectDetailView(generic.DetailView):
+class ProjectDetailView(LoginRequiredMixin, generic.DetailView):
     model = Project
     queryset = Project.objects.select_related("team")
 
@@ -178,7 +183,7 @@ class ProjectDetailView(generic.DetailView):
         )
         return context
 
-class PositionListView(generic.ListView):
+class PositionListView(LoginRequiredMixin, generic.ListView):
     model = Position
     paginate_by = 5
 
@@ -202,7 +207,7 @@ class PositionListView(generic.ListView):
         return queryset
 
 
-class PositionDetailView(generic.DetailView):
+class PositionDetailView(LoginRequiredMixin, generic.DetailView):
     model = Position
     queryset = (
         Position.objects
@@ -211,7 +216,7 @@ class PositionDetailView(generic.DetailView):
     )
 
 
-class TeamListView(generic.ListView):
+class TeamListView(LoginRequiredMixin, generic.ListView):
     model = Team
     paginate_by = 5
 
@@ -235,6 +240,6 @@ class TeamListView(generic.ListView):
         return queryset
 
 
-class TeamDetailView(generic.DetailView):
+class TeamDetailView(LoginRequiredMixin, generic.DetailView):
     model = Team
     queryset = Team.objects.prefetch_related("members", "project_set")
