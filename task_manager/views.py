@@ -2,18 +2,19 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q, When, Value, Case, IntegerField
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 
 from task_manager.forms import WorkerUsernameSearchForm, TaskNameSearchForm, ProjectNameSearchForm, \
-    PositionNameSearchForm, TeamNameSearchForm, TeamForm, WorkerCreationForm
+    PositionNameSearchForm, TeamNameSearchForm, TeamForm, WorkerCreationForm, TaskTypeNameSearchForm, \
+    TagNameSearchForm
 from task_manager.models import (
     Task,
     Project,
     Worker,
     Team,
-    Position
+    Position, Tag, TaskType
 )
 
 
@@ -269,3 +270,160 @@ class TeamCreateView(LoginRequiredMixin, generic.CreateView):
     model = Team
     form_class = TeamForm
     success_url = reverse_lazy("task-manager:team-list")
+
+
+class TagListView(LoginRequiredMixin, generic.ListView):
+    model = Tag
+    paginate_by = 5
+
+    def get_context_data(
+        self, *, object_list=None, **kwargs
+    ):
+        context = super(TagListView, self).get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = TagNameSearchForm(
+            initial={"name": name}
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = Tag.objects.order_by("name")
+        form = TagNameSearchForm(self.request.GET)
+        if form.is_valid():
+            return queryset.filter(
+                name__icontains=form.cleaned_data["name"]
+            )
+        return queryset
+
+
+class TagDetailView(LoginRequiredMixin, generic.ListView):
+    model = Task
+    template_name = "task_manager/task_list.html"
+    context_object_name = "task_list"
+    paginate_by = 5
+
+    def get_queryset(self):
+        self.tag = get_object_or_404(Tag, pk=self.kwargs["pk"])
+
+        queryset = (
+            Task.objects
+            .filter(tags=self.tag)
+            .select_related("task_type", "project")
+            .prefetch_related("assignees", "tags")
+            .order_by("name")
+            .distinct()
+        )
+
+        form = TaskNameSearchForm(self.request.GET)
+        if form.is_valid():
+            query = form.cleaned_data.get("name")
+            if query:
+                queryset = (
+                    queryset
+                    .filter(
+                        Q(name__icontains=query) |
+                        Q(task_type__name__icontains=query) |
+                        Q(tags__name__icontains=query)
+                    )
+                    .annotate(
+                        search_rank=Case(
+                            When(name__icontains=query, then=Value(1)),
+                            When(task_type__name__icontains=query, then=Value(2)),
+                            When(tags__name__icontains=query, then=Value(3)),
+                            default=Value(4),
+                            output_field=IntegerField(),
+                        )
+                    )
+                    .order_by("search_rank", "name")
+                    .distinct()
+                )
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = TaskNameSearchForm(initial={"name": name})
+        context["page_title"] = f"Task with tag: {self.tag.name}"
+        context["empty_message"] = "There are no tasks with this tag."
+        return context
+
+
+class TaskTypeListView(LoginRequiredMixin, generic.ListView):
+    model = TaskType
+    context_object_name = "task_type_list"
+    template_name = "task_manager/task_type_list.html"
+    paginate_by = 5
+
+
+    def get_context_data(
+        self, *, object_list=None, **kwargs
+    ):
+        context = super(TaskTypeListView, self).get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = TaskTypeNameSearchForm(
+            initial={"name": name}
+        )
+        return context
+
+
+    def get_queryset(self):
+        queryset = TaskType.objects.order_by("name")
+        form = TaskTypeNameSearchForm(self.request.GET)
+        if form.is_valid():
+            return queryset.filter(
+                name__icontains=form.cleaned_data["name"]
+            )
+        return queryset
+
+
+class TaskTypeDetailView(LoginRequiredMixin, generic.ListView):
+    model = TaskType
+    context_object_name = "task_list"
+    template_name = "task_manager/task_list.html"
+    paginate_by = 5
+
+    def get_queryset(self):
+        self.task_type = get_object_or_404(TaskType, pk=self.kwargs["pk"])
+
+        queryset = (
+            Task.objects
+            .filter(task_type=self.task_type)
+            .select_related("task_type", "project")
+            .prefetch_related("assignees", "tags")
+            .order_by("name")
+        )
+
+        form = TaskNameSearchForm(self.request.GET)
+        if form.is_valid():
+            query = form.cleaned_data.get("name")
+            if query:
+                queryset = (
+                    queryset
+                    .filter(
+                        Q(name__icontains=query) |
+                        Q(task_type__name__icontains=query) |
+                        Q(tags__name__icontains=query)
+                    )
+                    .annotate(
+                        search_rank=Case(
+                            When(name__icontains=query, then=Value(1)),
+                            When(task_type__name__icontains=query, then=Value(2)),
+                            When(tags__name__icontains=query, then=Value(3)),
+                            default=Value(4),
+                            output_field=IntegerField(),
+                        )
+                    )
+                    .order_by("search_rank", "name")
+                    .distinct()
+                )
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = TaskNameSearchForm(initial={"name": name})
+        context["page_title"] = f"Task with task type: {self.task_type.name}"
+        context["empty_message"] = "There are no tasks with this task type."
+        return context

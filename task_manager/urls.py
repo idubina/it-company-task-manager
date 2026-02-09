@@ -15,6 +15,10 @@ from task_manager.views import (
     TeamCreateView,
     ProjectCreateView,
     WorkerCreateView,
+    TagListView,
+    TagDetailView,
+    TaskTypeListView,
+    TaskTypeDetailView
 )
 
 urlpatterns = [
@@ -33,6 +37,10 @@ urlpatterns = [
     path("teams/", TeamListView.as_view(), name="team-list"),
     path("teams/create/", TeamCreateView.as_view(), name="team-create"),
     path("teams/<int:pk>/", TeamDetailView.as_view(), name="team-detail"),
+    path("tasks/tags/", TagListView.as_view(), name="tag-list"),
+    path("tasks/tags/<int:pk>/", TagDetailView.as_view(), name="tag-detail"),
+    path("tasks/task-type/", TaskTypeListView.as_view(), name="task-type-list"),
+    path("tasks/task-type/<int:pk>/", TaskTypeDetailView.as_view(), name="task-type-detail")
 ]
 
 

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Task tag List
+  </h1>
+
+  {% if tag_list %}
+    {% include 'includes/search.html' %}
+    <table class="table">
+      <tr>
+        <th>Tag</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+
+      {% for tag in tag_list %}
+        <tr>
+          <td>
+            <a href="{% url 'task-manager:tag-detail' pk=tag.id %}">
+              #{{ tag }}
+            </a>
+          </td>
+          <td>
+            <a href="#">
+              Update
+            </a>
+          </td>
+          <td>
+            <a style="color: red"
+               href="#">
+              Delete
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+  {% else %}
+    <p>There are no task tags in the manager.</p>
+  {% endif %}
+{% endblock %}
+
