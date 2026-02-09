@@ -2,23 +2,26 @@
 {% block content %}
   <h1>
     Position List
+    <a href="{% url 'task-manager:position-create' %}" class="btn btn-primary link-to-page">
+      +
+    </a>
   </h1>
   {% if position_list %}
     {% include 'includes/search.html' %}
-  <div class="list-group">
-  {% for position in position_list %}
-    <div class="list-group-item">
-    <h3 class="mb-0">
-      <a href="{% url 'task-manager:position-detail' pk=position.id %}">
-        {{ position }}
-      </a>
-    </h3>
-    {% with wc=position.workers.count %}
-      <p class="lead mb-0">{{ wc }} worker{{ wc|pluralize }}</p>
-    {% endwith %}
+    <div class="list-group">
+      {% for position in position_list %}
+        <div class="list-group-item">
+          <h3 class="mb-0">
+            <a href="{% url 'task-manager:position-detail' pk=position.id %}">
+              {{ position }}
+            </a>
+          </h3>
+          {% with wc=position.workers.count %}
+            <p class="lead mb-0">{{ wc }} worker{{ wc|pluralize }}</p>
+          {% endwith %}
+        </div>
+      {% endfor %}
     </div>
-  {% endfor %}
-  </div>
   {% else %}
     <p>There are no positions in the manager.</p>
   {% endif %}
