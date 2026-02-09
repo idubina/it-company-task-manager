@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 from django.conf import settings
+from django.urls import reverse
 
 
 class TaskType(models.Model):
@@ -37,6 +38,9 @@ class Worker(AbstractUser):
         if self.position:
             return f"{worker} [{self.position.name}]"
         return worker
+
+    def get_absolute_url(self):
+        return reverse("task-manager:worker-detail", kwargs={"pk": self.pk})
 
 
 class Team(models.Model):

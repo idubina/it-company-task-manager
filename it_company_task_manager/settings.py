@@ -122,3 +122,5 @@ STATICFILES_DIRS = [
 ]
 
 AUTH_USER_MODEL = "task_manager.Worker"
+
+LOGIN_REDIRECT_URL = "/"
