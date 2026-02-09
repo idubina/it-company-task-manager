@@ -2,24 +2,27 @@
 {% block content %}
   <h1>
     Project List
+    <a href="{% url 'task-manager:project-create' %}" class="btn btn-primary link-to-page">
+      +
+    </a>
   </h1>
   {% if project_list %}
     {% include 'includes/search.html' %}
-  <div class="list-group">
-  {% for project in project_list %}
-    <div class="list-group-item">
-    <h3 class="mb-0">
-      <a href="{% url 'task-manager:project-detail' pk=project.id %}">
-        {{ project }}
-      </a>
-    </h3>
-    {% with tc=project.tasks.count %}
-      <small class="text-muted">{{ tc }} task{{ tc|pluralize }}</small>
-    {% endwith %}
-    <p class="lead mb-0">{{ project.description }}</p>
+    <div class="list-group">
+      {% for project in project_list %}
+        <div class="list-group-item">
+          <h3 class="mb-0">
+            <a href="{% url 'task-manager:project-detail' pk=project.id %}">
+              {{ project }}
+            </a>
+          </h3>
+          {% with tc=project.tasks.count %}
+            <small class="text-muted">{{ tc }} task{{ tc|pluralize }}</small>
+          {% endwith %}
+          <p class="lead mb-0">{{ project.description }}</p>
+        </div>
+      {% endfor %}
     </div>
-  {% endfor %}
-  </div>
   {% else %}
     <p>There are no projects in the manager.</p>
   {% endif %}
