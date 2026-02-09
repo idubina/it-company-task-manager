@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from task_manager.forms import WorkerUsernameSearchForm, TaskNameSearchForm, ProjectNameSearchForm, \
-    PositionNameSearchForm, TeamNameSearchForm
+    PositionNameSearchForm, TeamNameSearchForm, TeamForm
 from task_manager.models import (
     Task,
     Project,
@@ -250,3 +250,9 @@ class TeamListView(LoginRequiredMixin, generic.ListView):
 class TeamDetailView(LoginRequiredMixin, generic.DetailView):
     model = Team
     queryset = Team.objects.prefetch_related("members", "project_set")
+
+
+class TeamCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Team
+    form_class = TeamForm
+    success_url = reverse_lazy("task-manager:team-list")

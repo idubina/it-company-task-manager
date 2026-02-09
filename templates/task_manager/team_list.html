@@ -2,6 +2,9 @@
 {% block content %}
   <h1>
     Team List
+    <a href="{% url 'task-manager:team-create' %}" class="btn btn-primary link-to-page">
+      +
+    </a>
   </h1>
   {% if team_list %}
     {% include 'includes/search.html' %}

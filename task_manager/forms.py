@@ -1,4 +1,7 @@
 from django import forms
+from django.contrib.auth import get_user_model
+
+from task_manager.models import Team
 
 
 class WorkerUsernameSearchForm(forms.Form):
@@ -44,3 +47,15 @@ class TeamNameSearchForm(forms.Form):
         label="",
         widget=forms.TextInput(attrs={"placeholder": "team name..."})
     )
+
+
+class TeamForm(forms.ModelForm):
+    members = forms.ModelMultipleChoiceField(
+        queryset=get_user_model().objects.all().order_by("username"),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
+
+    class Meta:
+        model = Team
+        fields = "__all__"
