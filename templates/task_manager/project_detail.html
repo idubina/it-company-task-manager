@@ -3,11 +3,18 @@
 {% block content %}
   <h1>
     Project: {{ project.name }}
+    <a href="{% url 'task-manager:project-update' pk=project.id %}" class="btn btn-secondary link-to-page">
+      Update
+    </a>
   </h1>
   <p class="lead"><strong>Team:</strong>
+    {% if project.team %}
     <a href="{% url 'task-manager:team-detail' pk=project.team.id %}">
       {{ project.team }}
     </a>
+  {% else %}
+       <span class="text-muted lead">No team assigned</span>
+  {% endif %}
   </p>
   {% if project.description %}
     <p class="lead mb-0">{{ project.description }}</p>

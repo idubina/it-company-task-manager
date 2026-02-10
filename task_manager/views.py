@@ -3,12 +3,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q, When, Value, Case, IntegerField
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 
 from task_manager.forms import WorkerUsernameSearchForm, TaskNameSearchForm, ProjectNameSearchForm, \
     PositionNameSearchForm, TeamNameSearchForm, TeamForm, WorkerCreationForm, TaskTypeNameSearchForm, \
-    TagNameSearchForm, TaskForm
+    TagNameSearchForm, TaskForm, WorkerPositionUpdateForm
 from task_manager.mixins import NextUrlRedirectMixin
 from task_manager.models import (
     Task,
@@ -95,6 +95,14 @@ class WorkerCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateV
     success_url = reverse_lazy("task-manager:worker-list")
 
 
+class WorkerPositionUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = get_user_model()
+    form_class = WorkerPositionUpdateForm
+
+    def get_success_url(self):
+        return reverse("task-manager:worker-detail", kwargs={"pk": self.object.pk})
+
+
 class TaskListView(LoginRequiredMixin, generic.ListView):
     model = Task
     paginate_by = 5
@@ -156,6 +164,13 @@ class TaskCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateVie
     success_url = reverse_lazy("task-manager:task-list")
 
 
+class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Task
+    form_class = TaskForm
+
+    def get_success_url(self):
+        return reverse("task-manager:task-detail", kwargs={"pk": self.object.pk})
+
 class ProjectListView(LoginRequiredMixin, generic.ListView):
     model = Project
     paginate_by = 5
@@ -205,6 +220,14 @@ class ProjectCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.Create
     success_url = reverse_lazy("task-manager:project-list")
 
 
+class ProjectUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Project
+    fields = "__all__"
+
+    def get_success_url(self):
+        return reverse("task-manager:project-detail", kwargs={"pk": self.object.pk})
+
+
 class PositionListView(LoginRequiredMixin, generic.ListView):
     model = Position
     paginate_by = 5
@@ -234,6 +257,13 @@ class PositionCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.Creat
     fields = "__all__"
     success_url = reverse_lazy("task-manager:position-list")
 
+
+class PositionUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Position
+    fields = "__all__"
+
+    def get_success_url(self):
+        return reverse("task-manager:position-detail", kwargs={"pk": self.object.pk})
 
 class PositionDetailView(LoginRequiredMixin, generic.DetailView):
     model = Position
@@ -278,6 +308,13 @@ class TeamCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateVie
     form_class = TeamForm
     success_url = reverse_lazy("task-manager:team-list")
 
+
+class TeamUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Team
+    form_class = TeamForm
+
+    def get_success_url(self):
+        return reverse("task-manager:team-detail", kwargs={"pk": self.object.pk})
 
 class TagListView(LoginRequiredMixin, generic.ListView):
     model = Tag
@@ -357,6 +394,12 @@ class TagDetailView(LoginRequiredMixin, generic.ListView):
 
 
 class TagCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
+    model = Tag
+    fields = "__all__"
+    success_url = reverse_lazy("task-manager:tag-list")
+
+
+class TagUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Tag
     fields = "__all__"
     success_url = reverse_lazy("task-manager:tag-list")
@@ -443,6 +486,13 @@ class TaskTypeDetailView(LoginRequiredMixin, generic.ListView):
 
 
 class TaskTypeCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
+    model = TaskType
+    fields = "__all__"
+    success_url = reverse_lazy("task-manager:task-type-list")
+    template_name = "task_manager/task_type_form.html"
+
+
+class TaskTypeUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = TaskType
     fields = "__all__"
     success_url = reverse_lazy("task-manager:task-type-list")

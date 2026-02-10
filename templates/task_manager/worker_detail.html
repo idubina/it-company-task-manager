@@ -3,6 +3,9 @@
 {% block content %}
   <h1>
     Username: {{ worker.username }}
+    <a href="{% url 'task-manager:worker-update-position' pk=worker.id %}" class="btn btn-secondary link-to-page">
+      Update position
+    </a>
   </h1>
 
   <p class="lead"><strong>First name:</strong> {{ worker.first_name }}</p>

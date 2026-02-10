@@ -21,33 +21,46 @@ from task_manager.views import (
     TaskTypeDetailView,
     TagCreateView,
     TaskTypeCreateView,
-    TaskCreateView
-
+    TaskCreateView,
+    TaskUpdateView,
+    ProjectUpdateView,
+    PositionUpdateView,
+    TeamUpdateView,
+    TagUpdateView,
+    TaskTypeUpdateView,
+    WorkerPositionUpdateView
 )
 
 urlpatterns = [
     path("", index, name="index"),
     path("workers/", WorkerListView.as_view(), name="worker-list"),
     path("workers/<int:pk>/", WorkerDetailView.as_view(), name="worker-detail"),
+    path("workers/<int:pk>/update-position", WorkerPositionUpdateView.as_view(), name="worker-update-position"),
     path("workers/create/", WorkerCreateView.as_view(), name="worker-create"),
     path("tasks/", TaskListView.as_view(), name="task-list"),
     path("tasks/<int:pk>/", TaskDetailView.as_view(), name="task-detail"),
     path("tasks/create/", TaskCreateView.as_view(), name="task-create"),
+    path("tasks/<int:pk>/update/", TaskUpdateView.as_view(), name="task-update"),
     path("projects/", ProjectListView.as_view(), name="project-list"),
     path("projects/<int:pk>/", ProjectDetailView.as_view(), name="project-detail"),
     path("projects/create", ProjectCreateView.as_view(), name="project-create"),
+    path("projects/<int:pk>/update/", ProjectUpdateView.as_view(), name="project-update"),
     path("positions/<int:pk>/", PositionDetailView.as_view(), name="position-detail"),
     path("positions/", PositionListView.as_view(), name="position-list"),
     path("positions/create/", PositionCreateView.as_view(), name="position-create"),
+    path("positions/<int:pk>/update/", PositionUpdateView.as_view(), name="position-update"),
     path("teams/", TeamListView.as_view(), name="team-list"),
     path("teams/create/", TeamCreateView.as_view(), name="team-create"),
     path("teams/<int:pk>/", TeamDetailView.as_view(), name="team-detail"),
+    path("teams/<int:pk>/update/", TeamUpdateView.as_view(), name="team-update"),
     path("tasks/tags/", TagListView.as_view(), name="tag-list"),
     path("tasks/tags/<int:pk>/", TagDetailView.as_view(), name="tag-detail"),
     path("tasks/tags/create/", TagCreateView.as_view(), name="tag-create"),
+    path("tasks/tags/<int:pk>/update/", TagUpdateView.as_view(), name="tag-update"),
     path("tasks/task-type/", TaskTypeListView.as_view(), name="task-type-list"),
     path("tasks/task-type/<int:pk>/", TaskTypeDetailView.as_view(), name="task-type-detail"),
     path("tasks/task-type/create/", TaskTypeCreateView.as_view(), name="task-type-create"),
+    path("tasks/task-type/<int:pk>/update/", TaskTypeUpdateView.as_view(), name="task-type-update"),
 ]
 
 

@@ -2,20 +2,23 @@
 
 {% block content %}
   <h1>
-  {{ position }}
+    {{ position }}
+    <a href="{% url 'task-manager:position-update' pk=position.id %}" class="btn btn-secondary link-to-page">
+      Update
+    </a>
   </h1>
   <hr>
   <ul class="list-unstyled">
-  {% for worker in position.workers.all %}
-    <li>
-      <h4>
-        <a href="{% url 'task-manager:worker-detail' pk=worker.id %}">
-          {{ worker.username }} ({{ worker.first_name }} {{ worker.last_name }})
-        </a>
-      </h4>
-    </li>
-  {% empty %}
-    <p class="lead">There are no workers on this position.</p>
-  {% endfor %}
+    {% for worker in position.workers.all %}
+      <li>
+        <h4>
+          <a href="{% url 'task-manager:worker-detail' pk=worker.id %}">
+            {{ worker.username }} ({{ worker.first_name }} {{ worker.last_name }})
+          </a>
+        </h4>
+      </li>
+    {% empty %}
+      <p class="lead">There are no workers on this position.</p>
+    {% endfor %}
   </ul>
 {% endblock %}
