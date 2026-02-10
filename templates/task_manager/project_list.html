@@ -2,7 +2,8 @@
 {% block content %}
   <h1>
     Project List
-    <a href="{% url 'task-manager:project-create' %}" class="btn btn-primary link-to-page">
+    <a href="{% url 'task-manager:project-create' %}?next={{ request.get_full_path|urlencode }}"
+       class="btn btn-primary link-to-page">
       +
     </a>
   </h1>

@@ -2,5 +2,6 @@
 <form action="" method="post" novalidate>
   {% csrf_token %}
   {{ form|crispy }}
+  <input type="hidden" name="next" value="{{ request.GET.next|default:'' }}">
   <input type="submit" value="Submit" class="btn btn-primary">
 </form>

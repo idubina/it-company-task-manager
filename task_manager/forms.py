@@ -70,6 +70,22 @@ class TaskTypeNameSearchForm(forms.Form):
     )
 
 
+class TaskForm(forms.ModelForm):
+    assignees = forms.ModelMultipleChoiceField(
+        queryset=get_user_model().objects.all().order_by("username"),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
+    tags = forms.ModelMultipleChoiceField(
+        queryset=Tag.objects.all().order_by("name"),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
+    class Meta:
+        model = Task
+        fields = "__all__"
+
+
 class TeamNameSearchForm(forms.Form):
     name = forms.CharField(
         max_length=255,

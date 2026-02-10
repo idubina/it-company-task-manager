@@ -8,7 +8,8 @@ from django.views import generic
 
 from task_manager.forms import WorkerUsernameSearchForm, TaskNameSearchForm, ProjectNameSearchForm, \
     PositionNameSearchForm, TeamNameSearchForm, TeamForm, WorkerCreationForm, TaskTypeNameSearchForm, \
-    TagNameSearchForm
+    TagNameSearchForm, TaskForm
+from task_manager.mixins import NextUrlRedirectMixin
 from task_manager.models import (
     Task,
     Project,
@@ -88,7 +89,7 @@ class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
         return context
 
 
-class WorkerCreateView(LoginRequiredMixin, generic.CreateView):
+class WorkerCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
     model = get_user_model()
     form_class = WorkerCreationForm
     success_url = reverse_lazy("task-manager:worker-list")
@@ -149,6 +150,12 @@ class TaskDetailView(LoginRequiredMixin, generic.DetailView):
     )
 
 
+class TaskCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
+    model = Task
+    form_class = TaskForm
+    success_url = reverse_lazy("task-manager:task-list")
+
+
 class ProjectListView(LoginRequiredMixin, generic.ListView):
     model = Project
     paginate_by = 5
@@ -192,7 +199,7 @@ class ProjectDetailView(LoginRequiredMixin, generic.DetailView):
         return context
 
 
-class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
+class ProjectCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
     model = Project
     fields = "__all__"
     success_url = reverse_lazy("task-manager:project-list")
@@ -222,7 +229,7 @@ class PositionListView(LoginRequiredMixin, generic.ListView):
         return queryset
 
 
-class PositionCreateView(LoginRequiredMixin, generic.CreateView):
+class PositionCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
     model = Position
     fields = "__all__"
     success_url = reverse_lazy("task-manager:position-list")
@@ -266,7 +273,7 @@ class TeamDetailView(LoginRequiredMixin, generic.DetailView):
     queryset = Team.objects.prefetch_related("members", "project_set")
 
 
-class TeamCreateView(LoginRequiredMixin, generic.CreateView):
+class TeamCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
     model = Team
     form_class = TeamForm
     success_url = reverse_lazy("task-manager:team-list")
@@ -349,6 +356,12 @@ class TagDetailView(LoginRequiredMixin, generic.ListView):
         return context
 
 
+class TagCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
+    model = Tag
+    fields = "__all__"
+    success_url = reverse_lazy("task-manager:tag-list")
+
+
 class TaskTypeListView(LoginRequiredMixin, generic.ListView):
     model = TaskType
     context_object_name = "task_type_list"
@@ -427,3 +440,10 @@ class TaskTypeDetailView(LoginRequiredMixin, generic.ListView):
         context["page_title"] = f"Task with task type: {self.task_type.name}"
         context["empty_message"] = "There are no tasks with this task type."
         return context
+
+
+class TaskTypeCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
+    model = TaskType
+    fields = "__all__"
+    success_url = reverse_lazy("task-manager:task-type-list")
+    template_name = "task_manager/task_type_form.html"

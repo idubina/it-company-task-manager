@@ -3,8 +3,11 @@
 {% block content %}
   <h1>
     Task tag List
+    <a href="{% url 'task-manager:tag-create' %}?next={{ request.get_full_path|urlencode }}"
+       class="btn btn-primary link-to-page">
+      +
+    </a>
   </h1>
-
   {% if tag_list %}
     {% include 'includes/search.html' %}
     <table class="table">

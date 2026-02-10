@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <h1>Create task</h1>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.name|as_crispy_field }}
+    {{ form.task_type|as_crispy_field }}
+    <div class="mb-1">
+      <a href="{% url 'task-manager:task-type-create' %}?next={{ request.get_full_path|urlencode }}"
+         class="btn-sm btn-secondary link-to-page">
+        Add new task type
+      </a>
+    </div>
+    {{ form.description|as_crispy_field }}
+    {{ form.priority|as_crispy_field }}
+    {{ form.assignees|as_crispy_field }}
+    {{ form.deadline|as_crispy_field }}
+    {{ form.project|as_crispy_field }}
+    {{ form.tags|as_crispy_field }}
+    <div class="mb-1">
+    <a href="{% url 'task-manager:tag-create' %}?next={{ request.get_full_path|urlencode }}"
+       class="btn-sm btn-secondary link-to-page">
+      Add new tag
+    </a>
+      </div>
+    <br>
+    <input type="hidden" name="next" value="{{ request.GET.next|default:'' }}">
+    <input type="submit" value="Submit" class="btn btn-primary">
+  </form>
+{% endblock %}

@@ -2,12 +2,16 @@
 {% block content %}
   <h1>
     {{ page_title|default:"Task List" }}
+    <a href="{% url 'task-manager:task-create' %}?next={{ request.get_full_path|urlencode }}"
+       class="btn btn-primary link-to-page">
+      +
+    </a>
   </h1>
   {% if task_list %}
     {% include 'includes/search.html' %}
     <table class="table">
       <tr>
-        <th class="task_type-col">Task Type</th>
+        <th class="task_type-col">Type</th>
         <th class="task-col">Task</th>
         <th>Status</th>
         <th>Priority</th>
@@ -19,11 +23,11 @@
           <td>
             {% with task_type=task.task_type %}
               {% if task_type %}
-            <a href="{% url 'task-manager:task-type-detail' pk=task.task_type.id %}">
-              {{ task.task_type }}
-            </a>
+                <a href="{% url 'task-manager:task-type-detail' pk=task.task_type.id %}">
+                  {{ task.task_type }}
+                </a>
               {% else %}
-              -
+                -
               {% endif %}
             {% endwith %}
           </td>

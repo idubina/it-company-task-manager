@@ -2,7 +2,8 @@
 {% block content %}
   <h1>
     Position List
-    <a href="{% url 'task-manager:position-create' %}" class="btn btn-primary link-to-page">
+    <a href="{% url 'task-manager:position-create' %}?next={{ request.get_full_path|urlencode }}"
+       class="btn btn-primary link-to-page">
       +
     </a>
   </h1>
