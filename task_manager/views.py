@@ -153,9 +153,16 @@ class TaskDetailView(LoginRequiredMixin, generic.DetailView):
     model = Task
     queryset = (
         Task.objects
-        .select_related("task_type", "project")
+        .select_related("task_type", "project", "project__team")
         .prefetch_related("tags", "assignees")
     )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["task_in_project_user_team"] = self.object.project.team.members.filter(
+            pk=self.request.user.pk
+        ).exists()
+        return context
 
 
 class TaskCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
@@ -196,22 +203,18 @@ class ProjectListView(LoginRequiredMixin, generic.ListView):
 
 
 class ProjectDetailView(LoginRequiredMixin, generic.DetailView):
-    model = Project
-    queryset = Project.objects.select_related("team")
+    class ProjectDetailView(LoginRequiredMixin, generic.DetailView):
+        model = Project
+        queryset = Project.objects.select_related("team")
 
-    def get_context_data(self, **kwargs):
-        context = super(ProjectDetailView, self).get_context_data(**kwargs)
-        context["tasks_in_progress"] = (
-            self.object.tasks
-            .filter(is_completed=False)
-            .order_by("name")
-        )
-        context["tasks_completed"] = (
-            self.object.tasks
-            .filter(is_completed=True)
-            .order_by("name")
-        )
-        return context
+        def get_context_data(self, **kwargs):
+            context = super().get_context_data(**kwargs)
+            context["tasks_in_progress"] = self.object.tasks.filter(is_completed=False)
+            context["tasks_completed"] = self.object.tasks.filter(is_completed=True)
+            context["project_in_user_team"] = self.object.team.members.filter(
+                pk=self.request.user.pk
+            ).exists()
+            return context
 
 
 class ProjectCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
@@ -300,7 +303,12 @@ class TeamListView(LoginRequiredMixin, generic.ListView):
 
 class TeamDetailView(LoginRequiredMixin, generic.DetailView):
     model = Team
-    queryset = Team.objects.prefetch_related("members", "project_set")
+    queryset = Team.objects.prefetch_related("members", "projects")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_in_team"] = self.object.members.filter(pk=self.request.user.pk).exists()
+        return context
 
 
 class TeamCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
