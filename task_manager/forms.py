@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 
-from task_manager.models import Team, Task, Tag
+from task_manager.models import Team, Task, Tag, Project
 
 
 class WorkerUsernameSearchForm(forms.Form):
@@ -78,18 +78,41 @@ class TaskTypeNameSearchForm(forms.Form):
 
 class TaskForm(forms.ModelForm):
     assignees = forms.ModelMultipleChoiceField(
-        queryset=get_user_model().objects.all().order_by("username"),
+        queryset=get_user_model().objects.none(),
         widget=forms.CheckboxSelectMultiple,
         required=False
     )
     tags = forms.ModelMultipleChoiceField(
-        queryset=Tag.objects.all().order_by("name"),
+        queryset=Tag.objects.all(),
         widget=forms.CheckboxSelectMultiple,
         required=False
     )
     class Meta:
         model = Task
         fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        self.project = kwargs.pop("project", None)
+        super().__init__(*args, **kwargs)
+
+        if self.project is None and self.instance and self.instance.pk:
+            self.project = self.instance.project
+
+        if self.project:
+            self.fields["assignees"].queryset = self.project.team.members
+
+    def clean_assignees(self):
+        assignees = self.cleaned_data.get("assignees")
+        if not self.project:
+            return assignees
+
+        team_member_ids = set(self.project.team.members.values_list("id", flat=True))
+        invalid = [u.username for u in assignees if u.id not in team_member_ids]
+        if invalid:
+            raise forms.ValidationError(
+                f"Only team members can be assignees. Invalid: {', '.join(invalid)}"
+            )
+        return assignees
 
 
 class TeamNameSearchForm(forms.Form):
@@ -101,13 +124,21 @@ class TeamNameSearchForm(forms.Form):
     )
 
 
-class TeamForm(forms.ModelForm):
+class TeamCreateForm(forms.ModelForm):
     members = forms.ModelMultipleChoiceField(
-        queryset=get_user_model().objects.all().order_by("username"),
+        queryset=get_user_model().objects.all(),
         widget=forms.CheckboxSelectMultiple,
         required=False
     )
 
     class Meta:
         model = Team
-        fields = "__all__"
+        fields = ("name", "members")
+
+
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ("name", "description")
+
+

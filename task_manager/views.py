@@ -8,7 +8,7 @@ from django.views import generic
 
 from task_manager.forms import WorkerUsernameSearchForm, TaskNameSearchForm, ProjectNameSearchForm, \
     PositionNameSearchForm, TeamNameSearchForm, TeamForm, WorkerCreationForm, TaskTypeNameSearchForm, \
-    TagNameSearchForm, TaskForm, WorkerPositionUpdateForm
+    TagNameSearchForm, TaskForm, WorkerPositionUpdateForm, TeamCreateForm, ProjectForm
 from task_manager.mixins import NextUrlRedirectMixin
 from task_manager.models import (
     Task,
@@ -78,14 +78,12 @@ class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
         context["tasks_in_progress"] = (
             self.object.tasks
             .filter(is_completed=False)
-            .order_by("name")
         )
         context["tasks_completed"] = (
             self.object.tasks
             .filter(is_completed=True)
-            .order_by("name")
         )
-        context["teams"] = self.object.teams.order_by("name")
+        context["teams"] = self.object.teams
         return context
 
 
@@ -120,7 +118,6 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
             Task.objects
             .select_related("task_type", "project")
             .prefetch_related("assignees", "tags")
-            .order_by("name")
         )
         form = TaskNameSearchForm(self.request.GET)
         if form.is_valid():
@@ -165,10 +162,28 @@ class TaskDetailView(LoginRequiredMixin, generic.DetailView):
         return context
 
 
-class TaskCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
+class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     model = Task
     form_class = TaskForm
-    success_url = reverse_lazy("task-manager:task-list")
+
+    def dispatch(self, request, *args, **kwargs):
+        self.project = get_object_or_404(
+            Project.objects.select_related("team").filter(team__members=request.user).distinct(),
+            pk=self.kwargs["project_pk"]
+        )
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["project"] = self.project
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.project = self.project
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse("task-manager:project-detail", kwargs={"pk": self.project.pk})
 
 
 class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
@@ -193,7 +208,7 @@ class ProjectListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = super().get_queryset().order_by("name")
+        queryset = super().get_queryset()
         form = ProjectNameSearchForm(self.request.GET)
         if form.is_valid():
             return queryset.filter(
@@ -217,10 +232,23 @@ class ProjectDetailView(LoginRequiredMixin, generic.DetailView):
             return context
 
 
-class ProjectCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
+class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
     model = Project
-    fields = "__all__"
-    success_url = reverse_lazy("task-manager:project-list")
+    form_class = ProjectForm
+
+    def dispatch(self, request, *args, **kwargs):
+        self.team = get_object_or_404(
+            Team.objects.filter(members=request.user).distinct(),
+            pk=self.kwargs["team_pk"]
+        )
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        form.instance.team = self.team
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse("task-manager:team-detail", kwargs={"pk": self.team.pk})
 
 
 class ProjectUpdateView(LoginRequiredMixin, generic.UpdateView):
@@ -246,7 +274,7 @@ class PositionListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = super().get_queryset().order_by("name")
+        queryset = super().get_queryset()
         form = PositionNameSearchForm(self.request.GET)
         if form.is_valid():
             return queryset.filter(
@@ -273,7 +301,6 @@ class PositionDetailView(LoginRequiredMixin, generic.DetailView):
     queryset = (
         Position.objects
         .prefetch_related("workers")
-        .order_by("workers__username")
     )
 
 
@@ -292,7 +319,7 @@ class TeamListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = Team.objects.prefetch_related("members").order_by("name")
+        queryset = Team.objects.prefetch_related("members")
         form = TeamNameSearchForm(self.request.GET)
         if form.is_valid():
             return queryset.filter(
@@ -313,8 +340,14 @@ class TeamDetailView(LoginRequiredMixin, generic.DetailView):
 
 class TeamCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
     model = Team
-    form_class = TeamForm
+    form_class = TeamCreateForm
     success_url = reverse_lazy("task-manager:team-list")
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        if self.object.members.count() == 0:
+            self.object.members.add(self.request.user)
+        return response
 
 
 class TeamUpdateView(LoginRequiredMixin, generic.UpdateView):
@@ -339,7 +372,7 @@ class TagListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = Tag.objects.order_by("name")
+        queryset = Tag.objects
         form = TagNameSearchForm(self.request.GET)
         if form.is_valid():
             return queryset.filter(
@@ -362,7 +395,6 @@ class TagDetailView(LoginRequiredMixin, generic.ListView):
             .filter(tags=self.tag)
             .select_related("task_type", "project")
             .prefetch_related("assignees", "tags")
-            .order_by("name")
             .distinct()
         )
 
@@ -432,7 +464,7 @@ class TaskTypeListView(LoginRequiredMixin, generic.ListView):
 
 
     def get_queryset(self):
-        queryset = TaskType.objects.order_by("name")
+        queryset = TaskType.objects
         form = TaskTypeNameSearchForm(self.request.GET)
         if form.is_valid():
             return queryset.filter(
@@ -455,7 +487,6 @@ class TaskTypeDetailView(LoginRequiredMixin, generic.ListView):
             .filter(task_type=self.task_type)
             .select_related("task_type", "project")
             .prefetch_related("assignees", "tags")
-            .order_by("name")
         )
 
         form = TaskNameSearchForm(self.request.GET)
