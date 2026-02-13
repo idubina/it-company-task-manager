@@ -8,6 +8,9 @@ from django.urls import reverse
 class TaskType(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
+    class Meta:
+        ordering = ("name",)
+
     def __str__(self):
         return self.name
 
@@ -15,20 +18,26 @@ class TaskType(models.Model):
 class Position(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
+    class Meta:
+        ordering = ("name",)
+
     def __str__(self):
         return self.name
 
 
 class Worker(AbstractUser):
     position = models.ForeignKey(
-        Position, on_delete=models.PROTECT,
-        null=True, blank=True,
+        Position,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
         related_name="workers"
     )
 
     class Meta:
         verbose_name = "worker"
         verbose_name_plural = "workers"
+        ordering = ("username",)
 
     def __str__(self):
         worker = (
@@ -46,9 +55,13 @@ class Worker(AbstractUser):
 class Team(models.Model):
     name = models.CharField(max_length=255, unique=True)
     members = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, related_name="teams",
-        blank=True
+        settings.AUTH_USER_MODEL,
+        related_name="teams",
+        blank=True,
     )
+
+    class Meta:
+        ordering = ("name",)
 
     def __str__(self):
         return self.name
@@ -59,10 +72,12 @@ class Project(models.Model):
     description = models.TextField(blank=True)
     team = models.ForeignKey(
         Team,
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True,
+        on_delete=models.CASCADE,
+        related_name="projects",
     )
+
+    class Meta:
+        ordering = ("name",)
 
     def __str__(self):
         return self.name
@@ -71,11 +86,17 @@ class Project(models.Model):
 class Tag(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
+    class Meta:
+        ordering = ("name",)
+
     def __str__(self):
         return self.name
 
 
 class Task(models.Model):
+
+    class Meta:
+        ordering = ("is_completed", "name")
 
     class PriorityChoices(models.TextChoices):
         URGENT = "URGENT", "Urgent"
@@ -101,16 +122,15 @@ class Task(models.Model):
         TaskType,
         on_delete=models.SET_NULL,
         null=True,
-        blank=True
+        blank=True,
     )
 
     project = models.ForeignKey(
         Project,
         on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-        related_name="tasks"
+        related_name="tasks",
     )
+
     assignees = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="tasks",
         blank=True
