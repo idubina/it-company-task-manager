@@ -145,6 +145,24 @@ class TeamCreateForm(forms.ModelForm):
         fields = ("name", "members")
 
 
+class TeamUpdateForm(forms.ModelForm):
+    members = forms.ModelMultipleChoiceField(
+        queryset=get_user_model().objects.all().order_by("username"),
+        widget=forms.CheckboxSelectMultiple,
+        required=True
+    )
+
+    class Meta:
+        model = Team
+        fields = ("name", "members")
+
+    def clean_members(self):
+        members = self.cleaned_data.get("members")
+        if not members:
+            raise forms.ValidationError("Team must have at least one member.")
+        return members
+
+
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project

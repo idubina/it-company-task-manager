@@ -3,9 +3,11 @@
 {% block content %}
   <h1>
     Team: {{ team }}
-{#    <a href="{% url 'task-manager:team-update' pk=team.id %}" class="btn btn-secondary link-to-page">#}
-{#      Update#}
-{#    </a>#}
+    {% if user_in_team %}
+      <a href="{% url 'task-manager:team-update' pk=team.id %}" class="btn btn-secondary link-to-page">
+        Update
+      </a>
+    {% endif %}
   </h1>
   <br>
   <div class="ml-3">
@@ -24,10 +26,10 @@
     <h4>
       Projects
       {% if user_in_team %}
-      <a href="{% url 'task-manager:project-create' team_pk=team.id %}?next={{ request.get_full_path|urlencode }}"
-       class="btn btn-primary link-to-page">
-      +
-    </a>
+        <a href="{% url 'task-manager:project-create' team_pk=team.id %}?next={{ request.get_full_path|urlencode }}"
+           class="btn btn-primary link-to-page">
+          +
+        </a>
       {% endif %}
     </h4>
     <hr>

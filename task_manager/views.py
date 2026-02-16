@@ -6,9 +6,21 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 
-from task_manager.forms import WorkerUsernameSearchForm, TaskNameSearchForm, ProjectNameSearchForm, \
-    PositionNameSearchForm, TeamNameSearchForm, TeamForm, WorkerCreationForm, TaskTypeNameSearchForm, \
-    TagNameSearchForm, TaskForm, WorkerPositionUpdateForm, TeamCreateForm, ProjectForm
+from task_manager.forms import (
+    WorkerUsernameSearchForm,
+    TaskNameSearchForm,
+    ProjectNameSearchForm,
+    PositionNameSearchForm,
+    TeamNameSearchForm,
+    WorkerCreationForm,
+    TaskTypeNameSearchForm,
+    TagNameSearchForm,
+    TaskForm,
+    WorkerPositionUpdateForm,
+    TeamCreateForm,
+    ProjectForm,
+    TeamUpdateForm
+)
 from task_manager.mixins import NextUrlRedirectMixin
 from task_manager.models import (
     Task,
@@ -190,8 +202,19 @@ class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Task
     form_class = TaskForm
 
+    def get_queryset(self):
+        return Task.objects.select_related("project", "project__team").filter(
+            project__team__members=self.request.user
+        ).distinct()
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["project"] = self.get_object().project
+        return kwargs
+
     def get_success_url(self):
         return reverse("task-manager:task-detail", kwargs={"pk": self.object.pk})
+
 
 class ProjectListView(LoginRequiredMixin, generic.ListView):
     model = Project
@@ -218,18 +241,17 @@ class ProjectListView(LoginRequiredMixin, generic.ListView):
 
 
 class ProjectDetailView(LoginRequiredMixin, generic.DetailView):
-    class ProjectDetailView(LoginRequiredMixin, generic.DetailView):
-        model = Project
-        queryset = Project.objects.select_related("team")
+    model = Project
+    queryset = Project.objects.select_related("team")
 
-        def get_context_data(self, **kwargs):
-            context = super().get_context_data(**kwargs)
-            context["tasks_in_progress"] = self.object.tasks.filter(is_completed=False)
-            context["tasks_completed"] = self.object.tasks.filter(is_completed=True)
-            context["project_in_user_team"] = self.object.team.members.filter(
-                pk=self.request.user.pk
-            ).exists()
-            return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["tasks_in_progress"] = self.object.tasks.filter(is_completed=False)
+        context["tasks_completed"] = self.object.tasks.filter(is_completed=True)
+        context["project_in_user_team"] = self.object.team.members.filter(
+            pk=self.request.user.pk
+        ).exists()
+        return context
 
 
 class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
@@ -253,7 +275,10 @@ class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
 
 class ProjectUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Project
-    fields = "__all__"
+    form_class = ProjectForm
+
+    def get_queryset(self):
+        return Project.objects.select_related("team").filter(team__members=self.request.user).distinct()
 
     def get_success_url(self):
         return reverse("task-manager:project-detail", kwargs={"pk": self.object.pk})
@@ -295,6 +320,7 @@ class PositionUpdateView(LoginRequiredMixin, generic.UpdateView):
 
     def get_success_url(self):
         return reverse("task-manager:position-detail", kwargs={"pk": self.object.pk})
+
 
 class PositionDetailView(LoginRequiredMixin, generic.DetailView):
     model = Position
@@ -352,7 +378,29 @@ class TeamCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateVie
 
 class TeamUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Team
-    form_class = TeamForm
+    form_class = TeamUpdateForm
+
+    def get_queryset(self):
+        return Team.objects.prefetch_related("members").filter(members=self.request.user).distinct()
+
+    def form_valid(self, form):
+        team = self.get_object()
+        old_member_ids = set(team.members.values_list("id", flat=True))
+
+        response = super().form_valid(form)
+
+        new_member_ids = set(self.object.members.values_list("id", flat=True))
+        removed_member_ids = old_member_ids - new_member_ids
+
+        if removed_member_ids:
+            tasks = Task.objects.filter(
+                project__team=self.object,
+                assignees__id__in=removed_member_ids
+            ).distinct()
+            for task in tasks:
+                task.assignees.remove(*removed_member_ids)
+
+        return response
 
     def get_success_url(self):
         return reverse("task-manager:team-detail", kwargs={"pk": self.object.pk})

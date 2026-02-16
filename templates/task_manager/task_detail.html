@@ -3,9 +3,11 @@
 {% block content %}
   <h1>
     {{ task }}
-    {#    <a href="{% url 'task-manager:task-update' pk=task.id %}" class="btn btn-secondary link-to-page">#}
-    {#      Update#}
-    {#    </a>#}
+    {% if task_in_project_user_team %}
+      <a href="{% url 'task-manager:task-update' pk=task.id %}" class="btn btn-secondary link-to-page">
+        Update
+      </a>
+    {% endif %}
   </h1>
   <p class="lead">
     <strong>Type</strong>:{% if task.task_type %} {{ task.task_type }}{% else %} No type{% endif %}
