@@ -2,10 +2,6 @@
 {% block content %}
   <h1>
     Project List
-    <a href="{% url 'task-manager:project-create' %}?next={{ request.get_full_path|urlencode }}"
-       class="btn btn-primary link-to-page">
-      +
-    </a>
   </h1>
   {% if project_list %}
     {% include 'includes/search.html' %}
@@ -14,7 +10,7 @@
         <div class="list-group-item">
           <h3 class="mb-0">
             <a href="{% url 'task-manager:project-detail' pk=project.id %}">
-              {{ project }}
+              {{ project }} (Team: {{ project.team }})
             </a>
           </h3>
           {% with tc=project.tasks.count %}

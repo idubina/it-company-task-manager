@@ -17,7 +17,6 @@
     {{ form.priority|as_crispy_field }}
     {{ form.assignees|as_crispy_field }}
     {{ form.deadline|as_crispy_field }}
-    {{ form.project|as_crispy_field }}
     {{ form.tags|as_crispy_field }}
     <div class="mb-1">
     <a href="{% url 'task-manager:tag-create' %}?next={{ request.get_full_path|urlencode }}"

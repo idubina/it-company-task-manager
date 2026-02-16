@@ -42,7 +42,7 @@
     <h4>Teams</h4>
     <hr>
     <ul class="list-unstyled">
-      {% for team in teams %}
+      {% for team in teams.all %}
         <li><a class="lead" href="{% url 'task-manager:team-detail' pk=team.id %}">{{ team }}</a></li>
       {% empty %}
         <li class="lead">This user has no team.</li>

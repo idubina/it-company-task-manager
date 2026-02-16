@@ -3,10 +3,7 @@
   <h1>
     {{ page_title|default:"Task List" }}
     {% if not page_title %}
-      <a href="{% url 'task-manager:task-create' %}?next={{ request.get_full_path|urlencode }}"
-         class="btn btn-primary link-to-page">
-        +
-      </a>
+
     {% endif %}
   </h1>
   {% if task_list %}
