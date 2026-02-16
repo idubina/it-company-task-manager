@@ -89,7 +89,16 @@ class TaskForm(forms.ModelForm):
     )
     class Meta:
         model = Task
-        fields = "__all__"
+        fields = (
+            "name",
+            "task_type",
+            "description",
+            "priority",
+            "assignees",
+            "deadline",
+            "tags",
+            "is_completed",
+        )
 
     def __init__(self, *args, **kwargs):
         self.project = kwargs.pop("project", None)
