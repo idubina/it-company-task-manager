@@ -40,10 +40,9 @@ class Worker(AbstractUser):
         ordering = ("username",)
 
     def __str__(self):
-        worker = (
-            f"{self.username} "
-            f"({self.first_name} {self.last_name})"
-        )
+        worker = self.username
+        if self.first_name and self.last_name:
+            worker += f" ({self.first_name} {self.last_name})"
         if self.position:
             return f"{worker} [{self.position.name}]"
         return worker
