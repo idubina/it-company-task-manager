@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q, When, Value, Case, IntegerField
+from django.db.models import Q, When, Value, Case, IntegerField, Count
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
@@ -113,6 +113,43 @@ class WorkerPositionUpdateView(LoginRequiredMixin, generic.UpdateView):
         return reverse("task-manager:worker-detail", kwargs={"pk": self.object.pk})
 
 
+class WorkerDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = get_user_model()
+    success_url = reverse_lazy("task-manager:worker-list")
+    template_name = "task_manager/worker_confirm_delete.html"
+    context_object_name = "worker"
+
+    def _get_last_member_teams(self, worker):
+        worker_team_ids = worker.teams.values_list("id", flat=True)
+        return Team.objects.filter(id__in=worker_team_ids).annotate(
+            member_count=Count("members", distinct=True)
+        ).filter(member_count=1).order_by("name")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        last_member_teams = self._get_last_member_teams(self.object)
+
+        context["worker_is_last_member_in_any_team"] = bool(last_member_teams)
+        context["worker_last_member_teams"] = last_member_teams
+        context["worker_last_member_teams_count"] = len(last_member_teams)
+        context["worker_last_member_teams_names"] = f"({", ".join([team.name for team in last_member_teams])})"
+        return context
+
+    def form_valid(self, form):
+
+        self.object = self.get_object()
+        last_team_ids = list(self._get_last_member_teams(self.object).values_list("id", flat=True))
+
+        response = super().form_valid(form)
+
+        Team.objects.annotate(member_count=Count("members", distinct=True)).filter(
+            id__in=last_team_ids,
+            member_count=0
+        ).delete()
+
+        return response
+
+
 class TaskListView(LoginRequiredMixin, generic.ListView):
     model = Task
     paginate_by = 5
@@ -216,6 +253,14 @@ class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
         return reverse("task-manager:task-detail", kwargs={"pk": self.object.pk})
 
 
+class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Task
+    success_url = reverse_lazy("task-manager:task-list")
+
+    def get_queryset(self):
+        return Task.objects.filter(project__team__members=self.request.user).distinct()
+
+
 class ProjectListView(LoginRequiredMixin, generic.ListView):
     model = Project
     paginate_by = 5
@@ -284,6 +329,14 @@ class ProjectUpdateView(LoginRequiredMixin, generic.UpdateView):
         return reverse("task-manager:project-detail", kwargs={"pk": self.object.pk})
 
 
+class ProjectDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Project
+    success_url = reverse_lazy("task-manager:project-list")
+
+    def get_queryset(self):
+        return Project.objects.filter(team__members=self.request.user).distinct()
+
+
 class PositionListView(LoginRequiredMixin, generic.ListView):
     model = Position
     paginate_by = 5
@@ -328,6 +381,11 @@ class PositionDetailView(LoginRequiredMixin, generic.DetailView):
         Position.objects
         .prefetch_related("workers")
     )
+
+
+class PositionDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Position
+    success_url = reverse_lazy("task-manager:position-list")
 
 
 class TeamListView(LoginRequiredMixin, generic.ListView):
@@ -404,6 +462,15 @@ class TeamUpdateView(LoginRequiredMixin, generic.UpdateView):
 
     def get_success_url(self):
         return reverse("task-manager:team-detail", kwargs={"pk": self.object.pk})
+
+
+class TeamDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Team
+    success_url = reverse_lazy("task-manager:team-list")
+
+    def get_queryset(self):
+        return Team.objects.filter(members=self.request.user).distinct()
+
 
 class TagListView(LoginRequiredMixin, generic.ListView):
     model = Tag
@@ -490,6 +557,11 @@ class TagCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView
 class TagUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Tag
     fields = "__all__"
+    success_url = reverse_lazy("task-manager:tag-list")
+
+
+class TagDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Tag
     success_url = reverse_lazy("task-manager:tag-list")
 
 
@@ -584,3 +656,9 @@ class TaskTypeUpdateView(LoginRequiredMixin, generic.UpdateView):
     fields = "__all__"
     success_url = reverse_lazy("task-manager:task-type-list")
     template_name = "task_manager/task_type_form.html"
+
+
+class TaskTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = TaskType
+    success_url = reverse_lazy("task-manager:task-type-list")
+    template_name = "task_manager/task_type_confirm_delete.html"

@@ -28,7 +28,14 @@ from task_manager.views import (
     TeamUpdateView,
     TagUpdateView,
     TaskTypeUpdateView,
-    WorkerPositionUpdateView
+    WorkerPositionUpdateView,
+    TeamDeleteView,
+    ProjectDeleteView,
+    TaskDeleteView,
+    WorkerDeleteView,
+    PositionDeleteView,
+    TagDeleteView,
+    TaskTypeDeleteView
 )
 
 
@@ -62,6 +69,14 @@ urlpatterns = [
     path("tasks/task-type/<int:pk>/", TaskTypeDetailView.as_view(), name="task-type-detail"),
     path("tasks/task-type/create/", TaskTypeCreateView.as_view(), name="task-type-create"),
     path("tasks/task-type/<int:pk>/update/", TaskTypeUpdateView.as_view(), name="task-type-update"),
+    path("teams/<int:pk>/delete/", TeamDeleteView.as_view(), name="team-delete"),
+    path("projects/<int:pk>/delete/", ProjectDeleteView.as_view(), name="project-delete"),
+    path("tasks/<int:pk>/delete/", TaskDeleteView.as_view(), name="task-delete"),
+    path("workers/<int:pk>/delete/", WorkerDeleteView.as_view(), name="worker-delete"),
+    path("positions/<int:pk>/delete/", PositionDeleteView.as_view(), name="position-delete"),
+    path("tasks/tags/<int:pk>/delete/", TagDeleteView.as_view(), name="tag-delete"),
+    path("tasks/task-type/<int:pk>/delete/", TaskTypeDeleteView.as_view(), name="task-type-delete"),
+
 ]
 
 
