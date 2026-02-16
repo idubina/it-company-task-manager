@@ -35,7 +35,8 @@ from task_manager.views import (
     WorkerDeleteView,
     PositionDeleteView,
     TagDeleteView,
-    TaskTypeDeleteView
+    TaskTypeDeleteView,
+    change_task_status
 )
 
 
@@ -76,6 +77,11 @@ urlpatterns = [
     path("positions/<int:pk>/delete/", PositionDeleteView.as_view(), name="position-delete"),
     path("tasks/tags/<int:pk>/delete/", TagDeleteView.as_view(), name="tag-delete"),
     path("tasks/task-type/<int:pk>/delete/", TaskTypeDeleteView.as_view(), name="task-type-delete"),
+    path(
+        "tasks/<int:pk>/change-status/",
+        change_task_status,
+        name="task-change-status"
+    )
 
 ]
 

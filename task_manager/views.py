@@ -2,9 +2,10 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q, When, Value, Case, IntegerField, Count
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import generic
+from django.views.decorators.http import require_POST
 
 from task_manager.forms import (
     WorkerUsernameSearchForm,
@@ -662,3 +663,19 @@ class TaskTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = TaskType
     success_url = reverse_lazy("task-manager:task-type-list")
     template_name = "task_manager/task_type_confirm_delete.html"
+
+
+@require_POST
+@login_required
+def change_task_status(request, pk):
+    task = get_object_or_404(
+        Task.objects.select_related("project__team").filter(
+            project__team__members=request.user
+        ),
+        pk=pk,
+    )
+
+    task.is_completed = not task.is_completed
+    task.save(update_fields=["is_completed"])
+
+    return redirect("task-manager:task-detail", pk=task.pk)

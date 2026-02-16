@@ -12,7 +12,8 @@
       </a>
     {% endif %}
   </h1>
-  <p class="lead">
+<div class="d-flex align-items-center flex-wrap">
+  <p class="lead mb-0 mr-2">
     <strong>Type</strong>:{% if task.task_type %} {{ task.task_type }}{% else %} No type{% endif %}
     {% if task.is_completed %}
       <small style="color: green;">(Completed)</small>
@@ -20,6 +21,17 @@
       <small style="color: darkviolet;">(In progress)</small>
     {% endif %}
   </p>
+  {% if task_in_project_user_team %}
+  <form class="mb-0" method="post" action="{% url 'task-manager:task-change-status' task.id %}">
+    {% csrf_token %}
+    {% if task.is_completed %}
+      <button class="btn btn-secondary btn-sm link-to-page" type="submit">Return task in progress</button>
+    {% else %}
+      <button class="btn btn-success btn-sm link-to-page" type="submit">Mark task as completed</button>
+    {% endif %}
+  </form>
+  {% endif %}
+</div>
   <p class="lead"><strong>Project:</strong>
     <a href="{% url 'task-manager:project-detail' pk=task.project.id %}">
       {{ task.project }}
