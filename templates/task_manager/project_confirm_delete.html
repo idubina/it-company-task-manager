@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Delete project?</h1>
+  <p class="lead">Are you sure you want to delete the project: {{ project }}?</p>
+  <p><i>All Tasks in this project will be also deleted!</i></p>
+  <form action="" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Yes" class="btn btn-danger">
+    <a class="btn btn-dark" href="{% url 'task-manager:project-detail' pk=project.id %}">Cancel</a>
+  </form>
+{% endblock %}

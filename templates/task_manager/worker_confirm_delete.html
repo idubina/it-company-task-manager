@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Delete worker?</h1>
+  <p class="lead">Are you sure you want to delete the worker: {{ worker.get_username }}?</p>
+  {% with tc=worker_last_member_teams_count %}
+    {% if worker_is_last_member_in_any_team %}
+      <p>
+        <i>
+          This worker is last member in {{ tc }} team{{ tc|pluralize }} {{ worker_last_member_teams_names }}
+        </i>
+        <br>
+        <i>
+          {% if tc > 1 %}
+            These Teams and all related Tasks, Projects will be also deleted!
+          {% else %}
+            This Team and all related Tasks, Projects will be also deleted!
+          {% endif %}
+        </i>
+      </p>
+    {% endif %}
+  {% endwith %}
+  <form action="" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Yes" class="btn btn-danger">
+    <a class="btn btn-dark" href="{% url 'task-manager:worker-detail' pk=worker.id %}">Cancel</a>
+  </form>
+{% endblock %}

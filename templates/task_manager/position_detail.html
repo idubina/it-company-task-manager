@@ -2,7 +2,10 @@
 
 {% block content %}
   <h1>
-    {{ position }}
+    {{ position }} worker list
+    <a href="{% url 'task-manager:position-delete' pk=position.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
     <a href="{% url 'task-manager:position-update' pk=position.id %}" class="btn btn-secondary link-to-page">
       Update
     </a>
@@ -13,7 +16,10 @@
       <li>
         <h4>
           <a href="{% url 'task-manager:worker-detail' pk=worker.id %}">
-            {{ worker.username }} ({{ worker.first_name }} {{ worker.last_name }})
+            {{ worker.username }}
+            {% if worker.first_name and worker.last_name %}
+              ({{ worker.first_name }} {{ worker.last_name }})
+            {% endif %}
           </a>
         </h4>
       </li>

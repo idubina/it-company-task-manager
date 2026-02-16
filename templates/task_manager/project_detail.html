@@ -4,6 +4,9 @@
   <h1>
     Project: {{ project.name }}
     {% if project_in_user_team %}
+      <a href="{% url 'task-manager:project-delete' pk=project.id %}" class="btn btn-danger link-to-page">
+        Delete
+      </a>
       <a href="{% url 'task-manager:project-update' pk=project.id %}" class="btn btn-secondary link-to-page">
         Update
       </a>

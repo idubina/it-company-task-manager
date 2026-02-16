@@ -4,6 +4,9 @@
   <h1>
     {{ task }}
     {% if task_in_project_user_team %}
+      <a href="{% url 'task-manager:task-delete' pk=task.id %}" class="btn btn-danger link-to-page">
+        Delete
+      </a>
       <a href="{% url 'task-manager:task-update' pk=task.id %}" class="btn btn-secondary link-to-page">
         Update
       </a>
@@ -40,7 +43,14 @@
       {% for assignee in task.assignees.all %}
         <li>
           <a class="lead" href="{% url 'task-manager:worker-detail' pk=assignee.id %}">
-            {{ assignee.username }} ({{ assignee.first_name }} {{ assignee.last_name }}) [{{ assignee.position }}]
+            {{ assignee.username }}
+            {% if assignee.first_name and assignee.last_name %}
+              ({{ assignee.first_name }}
+              {{ assignee.last_name }})
+            {% endif %}
+            {% if assignee.position %}
+              [{{ assignee.position }}]
+            {% endif %}
           </a>
         </li>
       {% endfor %}

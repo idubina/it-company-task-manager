@@ -23,9 +23,27 @@
           <td><a href="{% url 'task-manager:worker-detail' pk=worker.id %}">{{ worker.username }}
             {% if user == worker %} (Me){% endif %}</a>
           </td>
-          <td>{{ worker.first_name }}</td>
-          <td>{{ worker.last_name }}</td>
-          <td>{{ worker.position }}</td>
+          <td>
+            {% if worker.first_name %}
+              {{ worker.first_name }}
+            {% else %}
+              -
+            {% endif %}
+          </td>
+          <td>
+            {% if worker.last_name %}
+              {{ worker.last_name }}
+            {% else %}
+              -
+            {% endif %}
+          </td>
+          <td>
+            {% if worker.position %}
+              {{ worker.position }}
+            {% else %}
+              -
+            {% endif %}
+          </td>
         </tr>
       {% endfor %}
 
