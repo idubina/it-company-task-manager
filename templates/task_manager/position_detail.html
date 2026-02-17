@@ -3,12 +3,14 @@
 {% block content %}
   <h1>
     {{ position }} worker list
-    <a href="{% url 'task-manager:position-delete' pk=position.id %}" class="btn btn-danger link-to-page">
-      Delete
-    </a>
-    <a href="{% url 'task-manager:position-update' pk=position.id %}" class="btn btn-secondary link-to-page">
-      Update
-    </a>
+    {% if user.is_staff %}
+      <a href="{% url 'task-manager:position-delete' pk=position.id %}" class="btn btn-danger link-to-page">
+        Delete
+      </a>
+      <a href="{% url 'task-manager:position-update' pk=position.id %}" class="btn btn-secondary link-to-page">
+        Update
+      </a>
+    {% endif %}
   </h1>
   <hr>
   <ul class="list-unstyled">

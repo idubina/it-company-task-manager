@@ -2,10 +2,12 @@
 {% block content %}
   <h1>
     Position List
-    <a href="{% url 'task-manager:position-create' %}?next={{ request.get_full_path|urlencode }}"
-       class="btn btn-primary link-to-page">
-      +
-    </a>
+    {% if user.is_staff %}
+      <a href="{% url 'task-manager:position-create' %}?next={{ request.get_full_path|urlencode }}"
+         class="btn btn-primary link-to-page">
+        +
+      </a>
+    {% endif %}
   </h1>
   {% if position_list %}
     {% include 'includes/search.html' %}

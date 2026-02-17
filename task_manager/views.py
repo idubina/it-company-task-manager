@@ -25,7 +25,7 @@ from task_manager.forms import (
     TaskTypeForm,
     PositionForm
 )
-from task_manager.mixins import NextUrlRedirectMixin
+from task_manager.mixins import NextUrlRedirectMixin, StaffRequiredMixin
 from task_manager.models import (
     Task,
     Project,
@@ -105,13 +105,13 @@ class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
         return context
 
 
-class WorkerCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
+class WorkerCreateView(LoginRequiredMixin, generic.CreateView):
     model = get_user_model()
     form_class = WorkerCreationForm
     success_url = reverse_lazy("task-manager:worker-list")
 
 
-class WorkerPositionUpdateView(LoginRequiredMixin, generic.UpdateView):
+class WorkerPositionUpdateView(StaffRequiredMixin, generic.UpdateView):
     model = get_user_model()
     form_class = WorkerPositionUpdateForm
 
@@ -119,7 +119,7 @@ class WorkerPositionUpdateView(LoginRequiredMixin, generic.UpdateView):
         return reverse("task-manager:worker-detail", kwargs={"pk": self.object.pk})
 
 
-class WorkerDeleteView(LoginRequiredMixin, generic.DeleteView):
+class WorkerDeleteView(StaffRequiredMixin, generic.DeleteView):
     model = get_user_model()
     success_url = reverse_lazy("task-manager:worker-list")
     template_name = "task_manager/worker_confirm_delete.html"
@@ -369,13 +369,13 @@ class PositionListView(LoginRequiredMixin, generic.ListView):
         return queryset
 
 
-class PositionCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
+class PositionCreateView(StaffRequiredMixin, generic.CreateView):
     model = Position
     form_class = PositionForm
     success_url = reverse_lazy("task-manager:position-list")
 
 
-class PositionUpdateView(LoginRequiredMixin, generic.UpdateView):
+class PositionUpdateView(StaffRequiredMixin, generic.UpdateView):
     model = Position
     form_class = PositionForm
 
@@ -391,7 +391,7 @@ class PositionDetailView(LoginRequiredMixin, generic.DetailView):
     )
 
 
-class PositionDeleteView(LoginRequiredMixin, generic.DeleteView):
+class PositionDeleteView(StaffRequiredMixin, generic.DeleteView):
     model = Position
     success_url = reverse_lazy("task-manager:position-list")
 
@@ -430,7 +430,7 @@ class TeamDetailView(LoginRequiredMixin, generic.DetailView):
         return context
 
 
-class TeamCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
+class TeamCreateView(LoginRequiredMixin, generic.CreateView):
     model = Team
     form_class = TeamCreateForm
     success_url = reverse_lazy("task-manager:team-list")

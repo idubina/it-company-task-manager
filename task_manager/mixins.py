@@ -1,5 +1,6 @@
 from django.shortcuts import resolve_url
 from django.utils.http import url_has_allowed_host_and_scheme
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 class NextUrlRedirectMixin:
@@ -14,3 +15,10 @@ class NextUrlRedirectMixin:
             return next_url
 
         return resolve_url(self.success_url)
+
+
+class StaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
+    raise_exception = True
+
+    def test_func(self):
+        return self.request.user.is_staff
