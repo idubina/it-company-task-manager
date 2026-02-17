@@ -138,7 +138,9 @@ class WorkerDeleteView(LoginRequiredMixin, generic.DeleteView):
         context["worker_is_last_member_in_any_team"] = bool(last_member_teams)
         context["worker_last_member_teams"] = last_member_teams
         context["worker_last_member_teams_count"] = len(last_member_teams)
-        context["worker_last_member_teams_names"] = f"({", ".join([team.name for team in last_member_teams])})"
+        context["worker_last_member_teams_names"] = (
+            f"({', '.join(team.name for team in last_member_teams)})"
+        )
         return context
 
     def form_valid(self, form):
