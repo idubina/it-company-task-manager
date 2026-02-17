@@ -2,9 +2,6 @@
 {% block content %}
   <h1>
     {{ page_title|default:"Task List" }}
-    {% if not page_title %}
-
-    {% endif %}
   </h1>
   {% if task_list %}
     {% include 'includes/search.html' %}
@@ -32,7 +29,7 @@
           </td>
           <td>
             <a href="{% url 'task-manager:task-detail' pk=task.id %}">{{ task.name }}</a>
-            {% if task.tags %}
+            {% if task.tags.count %}
               <p class="mb-0">
                 {% for tag in task.tags.all %}
                   <a href="{% url 'task-manager:tag-detail' pk=tag.id %}" class="text-muted small">#{{ tag }}</a>
@@ -40,9 +37,9 @@
               </p>
             {% endif %}
             {% with ac=task.assignees.count %}
-              <span class="text-muted">
+              <p class="text-muted">
                 {{ ac }} Assignee{{ ac|pluralize }}
-              </span>
+              </p>
             {% endwith %}
           </td>
           <td>
