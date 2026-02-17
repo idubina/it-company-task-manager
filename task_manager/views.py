@@ -711,13 +711,12 @@ class TaskTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
 @login_required
 def change_task_status(request, pk):
     task = get_object_or_404(
-        Task.objects.select_related("project__team").filter(
-            project__team__members=request.user
-        ),
+        Task.objects.select_related("project__team"),
         pk=pk,
     )
 
-    _ensure_team_member(request.user, task.project.team)
+    if not task.project.team.members.filter(pk=request.user.pk).exists():
+        raise PermissionDenied
 
     task.is_completed = not task.is_completed
     task.save(update_fields=["is_completed"])
