@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
-from task_manager.models import Team, Task, Tag, Project, TaskType
+from task_manager.models import Team, Task, Tag, Project, TaskType, Position
 
 
 class WorkerUsernameSearchForm(forms.Form):
@@ -194,6 +194,22 @@ class TagForm(forms.ModelForm):
 class TaskTypeForm(forms.ModelForm):
     class Meta:
         model = TaskType
+        fields = "__all__"
+
+    def clean_name(self):
+        name = self.cleaned_data["name"]
+
+        if len(name) > 30:
+            raise ValidationError(
+                "Task type name is too long (max 30 characters)"
+            )
+
+        return " ".join([word.capitalize() for word in name.split()])
+
+
+class PositionForm(forms.ModelForm):
+    class Meta:
+        model = Position
         fields = "__all__"
 
     def clean_name(self):

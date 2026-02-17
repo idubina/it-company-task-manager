@@ -20,7 +20,10 @@ from task_manager.forms import (
     WorkerPositionUpdateForm,
     TeamCreateForm,
     ProjectForm,
-    TeamUpdateForm, TagForm, TaskTypeForm
+    TeamUpdateForm,
+    TagForm,
+    TaskTypeForm,
+    PositionForm
 )
 from task_manager.mixins import NextUrlRedirectMixin
 from task_manager.models import (
@@ -366,13 +369,13 @@ class PositionListView(LoginRequiredMixin, generic.ListView):
 
 class PositionCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
     model = Position
-    fields = "__all__"
+    form_class = PositionForm
     success_url = reverse_lazy("task-manager:position-list")
 
 
 class PositionUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Position
-    fields = "__all__"
+    form_class = PositionForm
 
     def get_success_url(self):
         return reverse("task-manager:position-detail", kwargs={"pk": self.object.pk})
