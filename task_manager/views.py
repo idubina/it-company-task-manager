@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q, When, Value, Case, IntegerField, Count
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import generic
@@ -681,6 +682,11 @@ def change_task_status(request, pk):
         ),
         pk=pk,
     )
+
+    is_team_member = task.project.team.members.filter(pk=request.user.pk).exists()
+
+    if not is_team_member:
+        return HttpResponseForbidden("You do not have permission to change this task status.")
 
     task.is_completed = not task.is_completed
     task.save(update_fields=["is_completed"])
