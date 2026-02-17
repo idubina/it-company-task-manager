@@ -220,4 +220,4 @@ class PositionForm(forms.ModelForm):
                 "Task type name is too long (max 30 characters)"
             )
 
-        return " ".join([word.capitalize() for word in name.split()])
+        return name
