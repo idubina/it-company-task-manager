@@ -124,6 +124,14 @@ class TaskForm(forms.ModelForm):
             )
         return assignees
 
+    def clean_tags(self):
+        tags = self.cleaned_data["tags"]
+        if tags.count() > 10:
+            raise ValidationError(
+                "You can not select more than 10 tags"
+            )
+        return tags
+
 
 class TeamNameSearchForm(forms.Form):
     name = forms.CharField(
