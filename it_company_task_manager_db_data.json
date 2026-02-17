@@ -269,7 +269,7 @@
     "model": "task_manager.worker",
     "pk": 1,
     "fields": {
-      "password": "pbkdf2_sha256$720000$glV8vw92yZz7$mSWwuDup8aP3/Ttwb7ih87EFAvRbW0XZrWuRtFITokQ=",
+      "password": "pbkdf2_sha256$870000$itcompany2026salt$Xedq4h9Wv9lO3C557qoSWv8YAq9pZrCypcV0+pKsB3Q=",
       "last_login": null,
       "is_superuser": true,
       "username": "admin.user",
@@ -288,7 +288,7 @@
     "model": "task_manager.worker",
     "pk": 2,
     "fields": {
-      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "password": "pbkdf2_sha256$870000$itcompany2026salt$Xedq4h9Wv9lO3C557qoSWv8YAq9pZrCypcV0+pKsB3Q=",
       "last_login": null,
       "is_superuser": false,
       "username": "joyce.byers",
@@ -307,7 +307,7 @@
     "model": "task_manager.worker",
     "pk": 3,
     "fields": {
-      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "password": "pbkdf2_sha256$870000$itcompany2026salt$Xedq4h9Wv9lO3C557qoSWv8YAq9pZrCypcV0+pKsB3Q=",
       "last_login": null,
       "is_superuser": false,
       "username": "jim.hopper",
@@ -326,7 +326,7 @@
     "model": "task_manager.worker",
     "pk": 4,
     "fields": {
-      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "password": "pbkdf2_sha256$870000$itcompany2026salt$Xedq4h9Wv9lO3C557qoSWv8YAq9pZrCypcV0+pKsB3Q=",
       "last_login": null,
       "is_superuser": false,
       "username": "jonathan.byers",
@@ -345,7 +345,7 @@
     "model": "task_manager.worker",
     "pk": 5,
     "fields": {
-      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "password": "pbkdf2_sha256$870000$itcompany2026salt$Xedq4h9Wv9lO3C557qoSWv8YAq9pZrCypcV0+pKsB3Q=",
       "last_login": null,
       "is_superuser": false,
       "username": "dustin.henderson",
@@ -364,7 +364,7 @@
     "model": "task_manager.worker",
     "pk": 6,
     "fields": {
-      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "password": "pbkdf2_sha256$870000$itcompany2026salt$Xedq4h9Wv9lO3C557qoSWv8YAq9pZrCypcV0+pKsB3Q=",
       "last_login": null,
       "is_superuser": false,
       "username": "mike.wheeler",
@@ -383,7 +383,7 @@
     "model": "task_manager.worker",
     "pk": 7,
     "fields": {
-      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "password": "pbkdf2_sha256$870000$itcompany2026salt$Xedq4h9Wv9lO3C557qoSWv8YAq9pZrCypcV0+pKsB3Q=",
       "last_login": null,
       "is_superuser": false,
       "username": "lucas.sinclair",
@@ -402,7 +402,7 @@
     "model": "task_manager.worker",
     "pk": 8,
     "fields": {
-      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "password": "pbkdf2_sha256$870000$itcompany2026salt$Xedq4h9Wv9lO3C557qoSWv8YAq9pZrCypcV0+pKsB3Q=",
       "last_login": null,
       "is_superuser": false,
       "username": "nancy.wheeler",
@@ -421,7 +421,7 @@
     "model": "task_manager.worker",
     "pk": 9,
     "fields": {
-      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "password": "pbkdf2_sha256$870000$itcompany2026salt$Xedq4h9Wv9lO3C557qoSWv8YAq9pZrCypcV0+pKsB3Q=",
       "last_login": null,
       "is_superuser": false,
       "username": "martin.brenner",
@@ -440,7 +440,7 @@
     "model": "task_manager.worker",
     "pk": 10,
     "fields": {
-      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "password": "pbkdf2_sha256$870000$itcompany2026salt$Xedq4h9Wv9lO3C557qoSWv8YAq9pZrCypcV0+pKsB3Q=",
       "last_login": null,
       "is_superuser": false,
       "username": "billy.hargrove",
@@ -459,7 +459,7 @@
     "model": "task_manager.worker",
     "pk": 11,
     "fields": {
-      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "password": "pbkdf2_sha256$870000$itcompany2026salt$Xedq4h9Wv9lO3C557qoSWv8YAq9pZrCypcV0+pKsB3Q=",
       "last_login": null,
       "is_superuser": false,
       "username": "bob.newby",
@@ -478,7 +478,7 @@
     "model": "task_manager.worker",
     "pk": 12,
     "fields": {
-      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "password": "pbkdf2_sha256$870000$itcompany2026salt$Xedq4h9Wv9lO3C557qoSWv8YAq9pZrCypcV0+pKsB3Q=",
       "last_login": null,
       "is_superuser": false,
       "username": "max.mayfield",
@@ -497,7 +497,7 @@
     "model": "task_manager.worker",
     "pk": 13,
     "fields": {
-      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "password": "pbkdf2_sha256$870000$itcompany2026salt$Xedq4h9Wv9lO3C557qoSWv8YAq9pZrCypcV0+pKsB3Q=",
       "last_login": null,
       "is_superuser": false,
       "username": "steve.harrington",
@@ -516,7 +516,7 @@
     "model": "task_manager.worker",
     "pk": 14,
     "fields": {
-      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "password": "pbkdf2_sha256$870000$itcompany2026salt$Xedq4h9Wv9lO3C557qoSWv8YAq9pZrCypcV0+pKsB3Q=",
       "last_login": null,
       "is_superuser": false,
       "username": "robin.buckley",
@@ -535,7 +535,7 @@
     "model": "task_manager.worker",
     "pk": 15,
     "fields": {
-      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "password": "pbkdf2_sha256$870000$itcompany2026salt$Xedq4h9Wv9lO3C557qoSWv8YAq9pZrCypcV0+pKsB3Q=",
       "last_login": null,
       "is_superuser": false,
       "username": "eddie.munson",
@@ -554,7 +554,7 @@
     "model": "task_manager.worker",
     "pk": 16,
     "fields": {
-      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "password": "pbkdf2_sha256$870000$itcompany2026salt$Xedq4h9Wv9lO3C557qoSWv8YAq9pZrCypcV0+pKsB3Q=",
       "last_login": null,
       "is_superuser": false,
       "username": "argyle.california",
@@ -573,7 +573,7 @@
     "model": "task_manager.worker",
     "pk": 17,
     "fields": {
-      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "password": "pbkdf2_sha256$870000$itcompany2026salt$Xedq4h9Wv9lO3C557qoSWv8YAq9pZrCypcV0+pKsB3Q=",
       "last_login": null,
       "is_superuser": false,
       "username": "karen.wheeler",
@@ -592,7 +592,7 @@
     "model": "task_manager.worker",
     "pk": 18,
     "fields": {
-      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "password": "pbkdf2_sha256$870000$itcompany2026salt$Xedq4h9Wv9lO3C557qoSWv8YAq9pZrCypcV0+pKsB3Q=",
       "last_login": null,
       "is_superuser": false,
       "username": "murray.bauman",
@@ -611,7 +611,7 @@
     "model": "task_manager.worker",
     "pk": 19,
     "fields": {
-      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "password": "pbkdf2_sha256$870000$itcompany2026salt$Xedq4h9Wv9lO3C557qoSWv8YAq9pZrCypcV0+pKsB3Q=",
       "last_login": null,
       "is_superuser": false,
       "username": "sam.owens",
@@ -630,7 +630,7 @@
     "model": "task_manager.worker",
     "pk": 20,
     "fields": {
-      "password": "pbkdf2_sha256$320000$N2B8D7rY2V3Y1rX2s8gQ0u$1XQx0sxec5m7xN6xstxR0NZoF1tG6E7R2uQ0mQ8t2P8",
+      "password": "pbkdf2_sha256$870000$itcompany2026salt$Xedq4h9Wv9lO3C557qoSWv8YAq9pZrCypcV0+pKsB3Q=",
       "last_login": null,
       "is_superuser": false,
       "username": "vickie.arcade",
@@ -832,7 +832,8 @@
       "task_type": 2,
       "project": 1,
       "assignees": [
-        19
+        4,
+        13
       ],
       "tags": [
         1,
@@ -854,8 +855,8 @@
       "task_type": 7,
       "project": 1,
       "assignees": [
-        15,
-        19
+        5,
+        7
       ],
       "tags": [
         1,
@@ -876,8 +877,6 @@
       "task_type": 2,
       "project": 1,
       "assignees": [
-        2,
-        9,
         12
       ],
       "tags": [
@@ -900,7 +899,8 @@
       "task_type": 2,
       "project": 1,
       "assignees": [
-        8
+        5,
+        13
       ],
       "tags": [
         3,
@@ -921,9 +921,8 @@
       "task_type": 4,
       "project": 1,
       "assignees": [
-        3,
-        6,
-        18
+        4,
+        13
       ],
       "tags": [
         6,
@@ -943,7 +942,8 @@
       "task_type": 6,
       "project": 1,
       "assignees": [
-        8
+        12,
+        13
       ],
       "tags": [
         11
@@ -962,8 +962,6 @@
       "task_type": 8,
       "project": 2,
       "assignees": [
-        5,
-        9,
         15,
         19
       ],
@@ -985,10 +983,7 @@
       "task_type": 3,
       "project": 2,
       "assignees": [
-        2,
-        3,
-        4,
-        5
+        3
       ],
       "tags": [
         3,
@@ -1029,7 +1024,8 @@
       "task_type": 3,
       "project": 2,
       "assignees": [
-        10
+        1,
+        19
       ],
       "tags": [
         5,
@@ -1052,9 +1048,8 @@
       "task_type": 2,
       "project": 2,
       "assignees": [
-        2,
-        8,
-        10
+        1,
+        3
       ],
       "tags": [
         3,
@@ -1074,8 +1069,8 @@
       "task_type": 8,
       "project": 2,
       "assignees": [
-        9,
-        17
+        1,
+        3
       ],
       "tags": [
         7,
@@ -1098,7 +1093,8 @@
       "task_type": 4,
       "project": 3,
       "assignees": [
-        11
+        3,
+        19
       ],
       "tags": [
         19
@@ -1117,7 +1113,6 @@
       "task_type": 1,
       "project": 3,
       "assignees": [
-        2,
         3
       ],
       "tags": [
@@ -1139,9 +1134,6 @@
       "task_type": 4,
       "project": 3,
       "assignees": [
-        4,
-        7,
-        14,
         18
       ],
       "tags": [
@@ -1164,7 +1156,8 @@
       "task_type": 6,
       "project": 3,
       "assignees": [
-        8
+        18,
+        19
       ],
       "tags": [
         7,
@@ -1185,8 +1178,6 @@
       "project": 3,
       "assignees": [
         1,
-        2,
-        4,
         18
       ],
       "tags": [
@@ -1207,8 +1198,6 @@
       "project": 3,
       "assignees": [
         1,
-        9,
-        13,
         15
       ],
       "tags": [
@@ -1230,8 +1219,6 @@
       "task_type": 1,
       "project": 4,
       "assignees": [
-        2,
-        16,
         20
       ],
       "tags": [
@@ -1274,8 +1261,8 @@
       "task_type": 6,
       "project": 4,
       "assignees": [
-        9,
-        13
+        10,
+        20
       ],
       "tags": [
         10,
@@ -1295,8 +1282,8 @@
       "task_type": 2,
       "project": 4,
       "assignees": [
-        9,
-        17
+        6,
+        20
       ],
       "tags": [
         3,
@@ -1316,7 +1303,8 @@
       "task_type": 5,
       "project": 4,
       "assignees": [
-        18
+        6,
+        10
       ],
       "tags": [
         4,
@@ -1337,9 +1325,8 @@
       "task_type": 4,
       "project": 4,
       "assignees": [
-        7,
-        9,
-        17
+        6,
+        20
       ],
       "tags": [
         2,
@@ -1361,8 +1348,8 @@
       "task_type": 5,
       "project": 5,
       "assignees": [
-        15,
-        18
+        1,
+        19
       ],
       "tags": [
         1,
@@ -1384,8 +1371,8 @@
       "task_type": 7,
       "project": 5,
       "assignees": [
-        2,
-        10
+        1,
+        16
       ],
       "tags": [
         2,
@@ -1406,8 +1393,7 @@
       "task_type": 7,
       "project": 5,
       "assignees": [
-        6,
-        8
+        6
       ],
       "tags": [
         1,
@@ -1427,9 +1413,6 @@
       "task_type": 2,
       "project": 5,
       "assignees": [
-        2,
-        7,
-        8,
         16
       ],
       "tags": [
@@ -1452,9 +1435,8 @@
       "task_type": 5,
       "project": 5,
       "assignees": [
-        13,
-        17,
-        18
+        16,
+        19
       ],
       "tags": [
         1,
@@ -1475,10 +1457,8 @@
       "task_type": 6,
       "project": 5,
       "assignees": [
-        4,
-        13,
-        17,
-        20
+        1,
+        16
       ],
       "tags": [
         1,
@@ -1501,9 +1481,8 @@
       "task_type": 2,
       "project": 6,
       "assignees": [
-        4,
-        11,
-        20
+        9,
+        14
       ],
       "tags": [
         10,
@@ -1524,8 +1503,8 @@
       "task_type": 7,
       "project": 6,
       "assignees": [
-        19,
-        20
+        14,
+        17
       ],
       "tags": [
         1,
@@ -1546,9 +1525,6 @@
       "task_type": 8,
       "project": 6,
       "assignees": [
-        7,
-        15,
-        16,
         17
       ],
       "tags": [
@@ -1569,8 +1545,8 @@
       "task_type": 4,
       "project": 6,
       "assignees": [
-        1,
-        2
+        9,
+        14
       ],
       "tags": [
         3,
@@ -1590,10 +1566,8 @@
       "task_type": 7,
       "project": 6,
       "assignees": [
-        1,
-        5,
-        8,
-        13
+        9,
+        17
       ],
       "tags": [
         14
@@ -1612,7 +1586,8 @@
       "task_type": 4,
       "project": 6,
       "assignees": [
-        15
+        9,
+        14
       ],
       "tags": [
         15,
@@ -1632,10 +1607,8 @@
       "task_type": 7,
       "project": 7,
       "assignees": [
-        6,
-        9,
-        15,
-        16
+        14,
+        20
       ],
       "tags": [
         9,
@@ -1655,9 +1628,8 @@
       "task_type": 6,
       "project": 7,
       "assignees": [
-        3,
-        5,
-        18
+        14,
+        20
       ],
       "tags": [
         8,
@@ -1677,9 +1649,6 @@
       "task_type": 8,
       "project": 7,
       "assignees": [
-        2,
-        7,
-        13,
         14
       ],
       "tags": [
@@ -1703,10 +1672,7 @@
       "task_type": 4,
       "project": 7,
       "assignees": [
-        8,
-        9,
-        14,
-        16
+        14
       ],
       "tags": [
         13
@@ -1725,9 +1691,6 @@
       "task_type": 1,
       "project": 7,
       "assignees": [
-        1,
-        3,
-        19,
         20
       ],
       "tags": [
@@ -1750,8 +1713,6 @@
       "task_type": 7,
       "project": 7,
       "assignees": [
-        3,
-        9,
         14
       ],
       "tags": [
@@ -1774,8 +1735,7 @@
       "task_type": 4,
       "project": 8,
       "assignees": [
-        1,
-        5
+        1
       ],
       "tags": [
         5,
@@ -1795,8 +1755,8 @@
       "task_type": 6,
       "project": 8,
       "assignees": [
-        4,
-        20
+        18,
+        19
       ],
       "tags": [
         4,
@@ -1836,9 +1796,8 @@
       "task_type": 7,
       "project": 8,
       "assignees": [
-        3,
-        11,
-        17
+        1,
+        9
       ],
       "tags": [
         14
@@ -1857,8 +1816,7 @@
       "task_type": 7,
       "project": 8,
       "assignees": [
-        9,
-        17
+        9
       ],
       "tags": [
         9,
@@ -1882,8 +1840,6 @@
       "project": 8,
       "assignees": [
         1,
-        11,
-        13,
         19
       ],
       "tags": [
