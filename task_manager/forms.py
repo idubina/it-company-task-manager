@@ -189,6 +189,16 @@ class ProjectForm(forms.ModelForm):
         model = Project
         fields = ("name", "description")
 
+    def clean_name(self):
+        name = self.cleaned_data["name"]
+
+        if len(name) > 30:
+            raise ValidationError(
+                "Project name is too long (max 30 characters)"
+            )
+
+        return name
+
 
 class TagForm(forms.ModelForm):
     class Meta:
