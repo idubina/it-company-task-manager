@@ -38,6 +38,13 @@ from task_manager.models import (
 )
 
 
+def _ensure_team_member(user, team: Team) -> None:
+    if not user.is_authenticated:
+        raise PermissionDenied
+    if not team.members.filter(pk=user.pk).exists():
+        raise PermissionDenied
+
+
 @login_required
 def index(request):
 
@@ -226,9 +233,10 @@ class TaskCreateView(LoginRequiredMixin, generic.CreateView):
 
     def dispatch(self, request, *args, **kwargs):
         self.project = get_object_or_404(
-            Project.objects.select_related("team").filter(team__members=request.user).distinct(),
+            Project.objects.select_related("team"),
             pk=self.kwargs["project_pk"]
         )
+        _ensure_team_member(request.user, self.project.team)
         return super().dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self):
@@ -249,9 +257,12 @@ class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = TaskForm
 
     def get_queryset(self):
-        return Task.objects.select_related("project", "project__team").filter(
-            project__team__members=self.request.user
-        ).distinct()
+        return Task.objects.select_related("project__team").distinct()
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        _ensure_team_member(request.user, self.object.project.team)
+        return super().dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -267,7 +278,12 @@ class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("task-manager:task-list")
 
     def get_queryset(self):
-        return Task.objects.filter(project__team__members=self.request.user).distinct()
+        return Task.objects.select_related("project__team").distinct()
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        _ensure_team_member(request.user, self.object.project.team)
+        return super().dispatch(request, *args, **kwargs)
 
 
 class ProjectListView(LoginRequiredMixin, generic.ListView):
@@ -313,10 +329,8 @@ class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = ProjectForm
 
     def dispatch(self, request, *args, **kwargs):
-        self.team = get_object_or_404(
-            Team.objects.filter(members=request.user).distinct(),
-            pk=self.kwargs["team_pk"]
-        )
+        self.team = get_object_or_404(Team, pk=self.kwargs["team_pk"])
+        _ensure_team_member(request.user, self.team)
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
@@ -332,7 +346,12 @@ class ProjectUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = ProjectForm
 
     def get_queryset(self):
-        return Project.objects.select_related("team").filter(team__members=self.request.user).distinct()
+        return Project.objects.select_related("team").distinct()
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        _ensure_team_member(request.user, self.object.team)
+        return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
         return reverse("task-manager:project-detail", kwargs={"pk": self.object.pk})
@@ -343,7 +362,12 @@ class ProjectDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("task-manager:project-list")
 
     def get_queryset(self):
-        return Project.objects.filter(team__members=self.request.user).distinct()
+        return Project.objects.select_related("team").distinct()
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        _ensure_team_member(request.user, self.object.team)
+        return super().dispatch(request, *args, **kwargs)
 
 
 class PositionListView(LoginRequiredMixin, generic.ListView):
@@ -448,7 +472,12 @@ class TeamUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = TeamUpdateForm
 
     def get_queryset(self):
-        return Team.objects.prefetch_related("members").filter(members=self.request.user).distinct()
+        return Team.objects.prefetch_related("members").distinct()
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        _ensure_team_member(request.user, self.object)
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         team = self.get_object()
@@ -478,7 +507,12 @@ class TeamDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("task-manager:team-list")
 
     def get_queryset(self):
-        return Team.objects.filter(members=self.request.user).distinct()
+        return Team.objects.distinct()
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        _ensure_team_member(request.user, self.object)
+        return super().dispatch(request, *args, **kwargs)
 
 
 class TagListView(LoginRequiredMixin, generic.ListView):
@@ -683,10 +717,7 @@ def change_task_status(request, pk):
         pk=pk,
     )
 
-    is_team_member = task.project.team.members.filter(pk=request.user.pk).exists()
-
-    if not is_team_member:
-        raise PermissionDenied
+    _ensure_team_member(request.user, task.project.team)
 
     task.is_completed = not task.is_completed
     task.save(update_fields=["is_completed"])
