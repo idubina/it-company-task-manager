@@ -145,6 +145,16 @@ class TeamCreateForm(forms.ModelForm):
         model = Team
         fields = ("name", "members")
 
+    def clean_name(self):
+        name = self.cleaned_data["name"]
+
+        if len(name) > 30:
+            raise ValidationError(
+                "Team name is too long (max 30 characters)"
+            )
+
+        return name
+
 
 class TeamUpdateForm(forms.ModelForm):
     members = forms.ModelMultipleChoiceField(
@@ -162,6 +172,16 @@ class TeamUpdateForm(forms.ModelForm):
         if not members:
             raise forms.ValidationError("Team must have at least one member.")
         return members
+
+    def clean_name(self):
+        name = self.cleaned_data["name"]
+
+        if len(name) > 30:
+            raise ValidationError(
+                "Team name is too long (max 30 characters)"
+            )
+
+        return name
 
 
 class ProjectForm(forms.ModelForm):
@@ -217,7 +237,7 @@ class PositionForm(forms.ModelForm):
 
         if len(name) > 30:
             raise ValidationError(
-                "Task type name is too long (max 30 characters)"
+                "Position name is too long (max 30 characters)"
             )
 
         return name
