@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
-from task_manager.models import Team, Task, Tag, Project
+from task_manager.models import Team, Task, Tag, Project, TaskType
 
 
 class WorkerUsernameSearchForm(forms.Form):
@@ -183,13 +183,25 @@ class TagForm(forms.ModelForm):
                 "Tag can not start with '#'"
             )
 
-        if " " in name:
-            raise ValidationError(
-                "Tag can not have any spaces"
-            )
 
         if len(name) > 20:
             raise ValidationError(
                 "Tag is too long (max 20 characters)"
             )
-        return name.lower()
+        return "-".join([word.lower() for word in name.split()])
+
+
+class TaskTypeForm(forms.ModelForm):
+    class Meta:
+        model = TaskType
+        fields = "__all__"
+
+    def clean_name(self):
+        name = self.cleaned_data["name"]
+
+        if len(name) > 30:
+            raise ValidationError(
+                "Task type name is too long (max 30 characters)"
+            )
+
+        return " ".join([word.capitalize() for word in name.split()])

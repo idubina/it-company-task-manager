@@ -20,7 +20,7 @@ from task_manager.forms import (
     WorkerPositionUpdateForm,
     TeamCreateForm,
     ProjectForm,
-    TeamUpdateForm, TagForm
+    TeamUpdateForm, TagForm, TaskTypeForm
 )
 from task_manager.mixins import NextUrlRedirectMixin
 from task_manager.models import (
@@ -28,7 +28,9 @@ from task_manager.models import (
     Project,
     Worker,
     Team,
-    Position, Tag, TaskType
+    Position,
+    Tag,
+    TaskType
 )
 
 
@@ -647,14 +649,14 @@ class TaskTypeDetailView(LoginRequiredMixin, generic.ListView):
 
 class TaskTypeCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
     model = TaskType
-    fields = "__all__"
+    form_class = TaskTypeForm
     success_url = reverse_lazy("task-manager:task-type-list")
     template_name = "task_manager/task_type_form.html"
 
 
 class TaskTypeUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = TaskType
-    fields = "__all__"
+    form_class = TaskTypeForm
     success_url = reverse_lazy("task-manager:task-type-list")
     template_name = "task_manager/task_type_form.html"
 
