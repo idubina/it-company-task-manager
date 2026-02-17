@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
 
 from task_manager.models import Team, Task, Tag, Project
 
@@ -169,3 +170,26 @@ class ProjectForm(forms.ModelForm):
         fields = ("name", "description")
 
 
+class TagForm(forms.ModelForm):
+    class Meta:
+        model = Tag
+        fields = "__all__"
+
+    def clean_name(self):
+        name = self.cleaned_data["name"]
+
+        if name[0] == "#":
+            raise ValidationError(
+                "Tag can not start with '#'"
+            )
+
+        if " " in name:
+            raise ValidationError(
+                "Tag can not have any spaces"
+            )
+
+        if len(name) > 20:
+            raise ValidationError(
+                "Tag is too long (max 20 characters)"
+            )
+        return name.lower()

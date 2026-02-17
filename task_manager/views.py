@@ -20,7 +20,7 @@ from task_manager.forms import (
     WorkerPositionUpdateForm,
     TeamCreateForm,
     ProjectForm,
-    TeamUpdateForm
+    TeamUpdateForm, TagForm
 )
 from task_manager.mixins import NextUrlRedirectMixin
 from task_manager.models import (
@@ -551,13 +551,13 @@ class TagDetailView(LoginRequiredMixin, generic.ListView):
 
 class TagCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
     model = Tag
-    fields = "__all__"
+    form_class = TagForm
     success_url = reverse_lazy("task-manager:tag-list")
 
 
 class TagUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Tag
-    fields = "__all__"
+    form_class = TagForm
     success_url = reverse_lazy("task-manager:tag-list")
 
 
