@@ -168,7 +168,7 @@ class TeamUpdateForm(forms.ModelForm):
     members = forms.ModelMultipleChoiceField(
         queryset=get_user_model().objects.all().order_by("username"),
         widget=forms.CheckboxSelectMultiple,
-        required=True
+        required=False
     )
 
     class Meta:
