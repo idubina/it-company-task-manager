@@ -1,24 +1,55 @@
-{% extends "base.html" %}
+{% extends "layouts/base-auth.html" %}
+{% load static %}
 {% load crispy_forms_filters %}
 
 {% block content %}
+  <div class="login-page">
+    <div class="login-wrapper">
+      <div class="login-card">
+        <div class="row g-0">
+          <div class="col-lg-6">
+            <div class="login-left">
+              <img
+                  src="{% static 'assets/images/login.jpg' %}"
+                  alt="Login illustration"
+                  class="login-illustration-full"
+              >
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="login-right">
+              <h1 class="login-title">Login</h1>
 
-{% if form.errors %}
-  <p>Your username and password didn't match. Please try again.</p>
-{% endif %}
+              {% if form.errors %}
+                <div class="alert-soft-danger">
+                  Your username and password didn't match. Please try again.
+                </div>
+              {% endif %}
 
-<h1>Login</h1>
+              {% if next %}
+                <div class="alert-soft-info">
+                  Please login to see this page.
+                </div>
+              {% endif %}
 
-{% if next %}
-  <p>Please login to see this page.</p>
-{% endif %}
+              <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                {{ form|crispy }}
 
-<form method="post" action="{% url 'login' %}">
-  {% csrf_token %}
-  {{ form|crispy }}
+                <div class="d-grid mt-3">
+                  <input type="submit" value="Login" class="btn btn-dark-clean"/>
+                </div>
 
-  <input type="submit" value="Login" class="btn btn-primary" />
-  <input type="hidden" name="next" value="{{ next }}" />
-</form>
+                <input type="hidden" name="next" value="{{ next }}"/>
+              </form>
 
+              <p class="login-footer-note">
+                Use your account credentials to access the page.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

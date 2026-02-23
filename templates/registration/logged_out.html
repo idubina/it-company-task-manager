@@ -1,7 +1,30 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
 
 {% block content %}
-  <p class="lead">Logged out!</p>
+  <div class="dashboard-wrapper py-4 px-2 px-md-3">
+    <div class="row justify-content-center align-items-center" style="min-height: 70vh;">
+      <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+        <div class="card dashboard-card">
+          <div class="card-body p-4 p-md-5 text-center">
+            <div class="logout-icon-wrap mb-3">
+              <i class="bi bi-box-arrow-right logout-icon"></i>
+            </div>
 
-  <a class="lead" href="{% url 'login' %}">Click here to login again.</a>
+            <h1 class="dashboard-title mb-2">You have been logged out</h1>
+            <p class="dashboard-subtitle mb-4">
+              Your session has ended successfully.
+            </p>
+
+            <a href="{% url 'login' %}" class="btn btn-dark-clean">
+              Login again
+            </a>
+
+            <p class="login-footer-note mt-4 mb-0">
+              Thanks for using IT Task Manager.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
