@@ -1,8 +1,13 @@
 {% load crispy_forms_filters %}
 {% if search_form %}
-<form method="get" action="" class="form-inline">
-  {{ search_form|crispy }}
-  <input type="submit" value="🔎" class="btn btn-secondary">
-</form>
-<br>
+  <form method="get" action="" class="task-search-form">
+    <div class="task-search-row">
+      <div class="task-search-fields">
+        {{ search_form|crispy }}
+      </div>
+      <button type="submit" class="btn btn-dark task-search-btn" aria-label="Search">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </form>
 {% endif %}

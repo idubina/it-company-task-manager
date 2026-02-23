@@ -1,66 +1,114 @@
 {% extends "layouts/base.html" %}
-{% block content %}
-  <h1>
-    {{ page_title|default:"Task List" }}
-  </h1>
-  {% if task_list %}
-    {% include 'includes/search.html' %}
-    <table class="table">
-      <tr>
-        <th class="task_type-col">Type</th>
-        <th class="task-col">Task</th>
-        <th>Status</th>
-        <th>Priority</th>
-        <th>Deadline</th>
-        <th>Project</th>
-      </tr>
-      {% for task in task_list %}
-        <tr>
-          <td>
-            {% with task_type=task.task_type %}
-              {% if task_type %}
-                <a href="{% url 'task-manager:task-type-detail' pk=task.task_type.id %}">
-                  {{ task.task_type }}
-                </a>
-              {% else %}
-                -
-              {% endif %}
-            {% endwith %}
-          </td>
-          <td>
-            <a href="{% url 'task-manager:task-detail' pk=task.id %}">{{ task.name }}</a>
-            {% if task.tags.count %}
-              <p class="mb-0">
-                {% for tag in task.tags.all %}
-                  <a href="{% url 'task-manager:tag-detail' pk=tag.id %}" class="text-muted small">#{{ tag }}</a>
-                {% endfor %}
-              </p>
-            {% endif %}
-            {% with ac=task.assignees.count %}
-              <p class="text-muted">
-                {{ ac }} Assignee{{ ac|pluralize }}
-              </p>
-            {% endwith %}
-          </td>
-          <td>
-            {% if task.is_completed %}
-              <span style="color: green">Completed</span>
-            {% else %}
-              <span style="color: darkviolet">In progress</span>
-            {% endif %}
-          </td>
-          <td>{{ task.priority }}</td>
-          <td>{% if task.deadline %}{{ task.deadline }}{% else %}-{% endif %}</td>
-          <td>
-            {% if task.project %}<a href="{% url 'task-manager:project-detail' pk=task.project.id %}">
-              {{ task.project }}
-            </a>{% else %}-{% endif %}
-          </td>
-        </tr>
-      {% endfor %}
 
-    </table>
-  {% else %}
-    <p class="lead">{{ empty_message|default:"There are no tasks in the manager." }}</p>
-  {% endif %}
+{% block content %}
+  <div class="dashboard-wrapper py-4 px-2 px-md-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <h1 class="dashboard-title mb-1">{{ page_title|default:"Task List" }}</h1>
+        <p class="dashboard-subtitle mb-0">All tasks overview</p>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      {% if task_list %}
+        <div class="dashboard-card-header px-3 pt-3 pb-2">
+          {% include "includes/search.html" %}
+        </div>
+
+        <div class="table-responsive px-3 pb-3">
+          <table class="table dashboard-table task-dashboard-table mb-0">
+            <thead>
+            <tr>
+              <th class="task_type-col">Type</th>
+              <th class="task-col">Task</th>
+              <th>Status</th>
+              <th>Priority</th>
+              <th>Deadline</th>
+              <th>Project</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for task in task_list %}
+              <tr>
+                <td>
+                  {% with task_type=task.task_type %}
+                    {% if task_type %}
+                      <a href="{% url 'task-manager:task-type-detail' pk=task.task_type.id %}" class="table-link">
+                        {{ task.task_type }}
+                      </a>
+                    {% else %}
+                      <span class="text-muted">—</span>
+                    {% endif %}
+                  {% endwith %}
+                </td>
+
+                <td>
+                  <a href="{% url 'task-manager:task-detail' pk=task.id %}" class="task-row-link">
+                    {{ task.name }}
+                  </a>
+
+                  {% if task.tags.count %}
+                    <p class="mb-0 mt-1">
+                      {% for tag in task.tags.all %}
+                        <a href="{% url 'task-manager:tag-detail' pk=tag.id %}" class="task-tag-link">#{{ tag }}</a>
+                      {% endfor %}
+                    </p>
+                  {% endif %}
+
+                  {% with ac=task.assignees.count %}
+                    <p class="task-assignees-meta mb-0 mt-1">
+                      {{ ac }} Assignee{{ ac|pluralize }}
+                    </p>
+                  {% endwith %}
+                </td>
+
+                <td>
+                  {% if task.is_completed %}
+                    <span class="task-status-pill task-status-done">Completed</span>
+                  {% else %}
+                    <span class="task-status-pill task-status-progress">In progress</span>
+                  {% endif %}
+                </td>
+
+                <td>
+                  {% if task.priority %}
+                    <span class="table-chip table-chip-priority">{{ task.priority }}</span>
+                  {% else %}
+                    <span class="text-muted">—</span>
+                  {% endif %}
+                </td>
+
+                <td>
+                  {% if task.deadline %}
+                    <span class="task-date">{{ task.deadline|date:"d M Y" }}</span>
+                  {% else %}
+                    <span class="text-muted">—</span>
+                  {% endif %}
+                </td>
+
+                <td>
+                  {% if task.project %}
+                    <a href="{% url 'task-manager:project-detail' pk=task.project.id %}" class="table-link">
+                      {{ task.project }}
+                    </a>
+                  {% else %}
+                    <span class="text-muted">—</span>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+      {% else %}
+        <div class="p-3">
+          <div class="task-empty-state">
+            {{ empty_message|default:"There are no tasks in the manager." }}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}
