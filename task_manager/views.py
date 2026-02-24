@@ -586,7 +586,7 @@ class TagDetailView(LoginRequiredMixin, generic.ListView):
         context = super().get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
         context["search_form"] = TaskNameSearchForm(initial={"name": name})
-        context["page_title"] = f"Task with tag: {self.tag.name}"
+        context["page_title"] = f"Task with tag: #{self.tag.name}"
         context["empty_message"] = "There are no tasks with this tag."
         return context
 
