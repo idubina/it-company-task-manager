@@ -4,8 +4,14 @@
   <div class="dashboard-wrapper py-4 px-2 px-md-3">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <div>
-        <h1 class="dashboard-title mb-1">{{ page_title|default:"Task List" }}</h1>
-        <p class="dashboard-subtitle mb-0">All tasks overview</p>
+        <h1 class="dashboard-title mb-1">
+          <i class="bi bi-list-check page-title-icon"></i>
+          {{ page_title|default:"Task List" }}
+        </h1>
+        {% if page_title %}
+        {% else %}
+          <p class="dashboard-subtitle mb-0">All tasks overview</p>
+        {% endif %}
       </div>
     </div>
 

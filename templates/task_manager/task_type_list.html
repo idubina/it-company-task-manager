@@ -1,46 +1,71 @@
 {% extends "layouts/base.html" %}
 
 {% block content %}
-  <h1>
-    Task Type List
-    <a href="{% url 'task-manager:task-type-create' %}?next={{ request.get_full_path|urlencode }}"
-       class="btn btn-primary link-to-page">
-      +
-    </a>
-  </h1>
+  <div class="dashboard-wrapper py-4 px-2 px-md-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <h1 class="dashboard-title mb-1">
+          <i class="bi bi-diagram-3 page-title-icon"></i>
+          Task Type List
+        </h1>
+        <p class="dashboard-subtitle mb-0">All task types overview</p>
+      </div>
 
-  {% if task_type_list %}
-    {% include 'includes/search.html' %}
-    <table class="table">
-      <tr>
-        <th>Task Type</th>
-        <th>Update</th>
-        <th>Delete</th>
-      </tr>
+      <a href="{% url 'task-manager:task-type-create' %}?next={{ request.get_full_path|urlencode }}"
+         class="btn btn-sm btn-add-soft">
+        Add type
+      </a>
+    </div>
 
-      {% for task_type in task_type_list %}
-        <tr>
-          <td>
-            <a href="{% url 'task-manager:task-type-detail' pk=task_type.id %}">
-              {{ task_type }}
-            </a>
-          </td>
-          <td>
-            <a href="{% url 'task-manager:task-type-update' pk=task_type.id %}">
-              Update
-            </a>
-          </td>
-          <td>
-            <a style="color: red"
-               href="{% url 'task-manager:task-type-delete' pk=task_type.id %}">
-              Delete
-            </a>
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
+    <div class="dashboard-card">
+      {% if task_type_list %}
+        <div class="dashboard-card-header px-3 pt-3 pb-2">
+          {% include "includes/search.html" %}
+        </div>
 
-  {% else %}
-    <p class="lead">There are no task types in the manager.</p>
-  {% endif %}
+        <div class="table-responsive px-3 pb-3">
+          <table class="table dashboard-table task-dashboard-table mb-0">
+            <thead>
+              <tr>
+                <th>Task Type</th>
+                <th class="text-center">Update</th>
+                <th class="text-center">Delete</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for task_type in task_type_list %}
+                <tr>
+                  <td>
+                    <a href="{% url 'task-manager:task-type-detail' pk=task_type.id %}" class="task-row-link">
+                      {{ task_type }}
+                    </a>
+                  </td>
+
+                  <td class="text-center">
+                    <a href="{% url 'task-manager:task-type-update' pk=task_type.id %}"
+                       class="btn btn-outline-secondary btn-sm">
+                      Update
+                    </a>
+                  </td>
+
+                  <td class="text-center">
+                    <a href="{% url 'task-manager:task-type-delete' pk=task_type.id %}"
+                       class="btn btn-outline-danger btn-sm">
+                      Delete
+                    </a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+      {% else %}
+        <div class="p-3">
+          <div class="task-empty-state">There are no task types in the manager.</div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}

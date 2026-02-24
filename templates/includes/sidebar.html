@@ -31,9 +31,24 @@
     <div class="sidebar-section-title">Navigation</div>
     <div>
       <ul class="sidebar-nav list-unstyled">
-        <li><a class="sidebar-link" href="{% url 'task-manager:index' %}">Home</a></li>
-        <li><a class="sidebar-link" href="{% url 'task-manager:team-list' %}">Teams</a></li>
-        <li><a class="sidebar-link" href="{% url 'task-manager:project-list' %}">Projects</a></li>
+        <li>
+          <a class="sidebar-link" href="{% url 'task-manager:index' %}">
+            <i class="bi bi-grid-1x2 mr-2"></i>Home
+          </a>
+        </li>
+
+        <li>
+          <a class="sidebar-link" href="{% url 'task-manager:team-list' %}">
+            <i class="bi bi-people mr-2"></i>Teams
+          </a>
+        </li>
+
+        <li>
+          <a class="sidebar-link" href="{% url 'task-manager:project-list' %}">
+            <i class="bi bi-folder mr-2"></i>Projects
+          </a>
+        </li>
+
         <li class="mb-1">
           <a class="sidebar-link d-flex justify-content-between align-items-center"
              data-toggle="collapse"
@@ -41,7 +56,7 @@
              role="button"
              aria-expanded="{% if current_url == 'task-list' or current_url == 'task-type-list' or current_url == 'tag-list' %}true{% else %}false{% endif %}"
              aria-controls="tasksSubmenu">
-            <span>Tasks</span>
+            <span><i class="bi bi-list-check mr-2"></i>Tasks</span>
             <span class="submenu-caret">▾</span>
           </a>
 
@@ -50,18 +65,19 @@
               id="tasksSubmenu">
             <a class="sidebar-sublink {% if current_url == 'task-list' %}active{% endif %}"
                href="{% url 'task-manager:task-list' %}">
-              All tasks
+              <i class="bi bi-check2-square mr-2"></i>All tasks
             </a>
 
             <a class="sidebar-sublink {% if current_url == 'task-type-list' %}active{% endif %}"
                href="{% url 'task-manager:task-type-list' %}">
-              All task types
+              <i class="bi bi-diagram-3 mr-2"></i>All task types
             </a>
 
             <a class="sidebar-sublink {% if current_url == 'tag-list' %}active{% endif %}"
                href="{% url 'task-manager:tag-list' %}">
-              All task tags
+              <i class="bi bi-tags mr-2"></i>All task tags
             </a>
+
           </div>
         </li>
         <li class="mb-1">
@@ -71,7 +87,7 @@
              role="button"
              aria-expanded="{% if current_url == 'worker-list' or current_url == 'position-list' %}true{% else %}false{% endif %}"
              aria-controls="workersSubmenu">
-            <span>Workers</span>
+            <span><i class="bi bi-person-badge mr-2"></i>Workers</span>
             <span class="submenu-caret">▾</span>
           </a>
 
@@ -80,13 +96,14 @@
               id="workersSubmenu">
             <a class="sidebar-sublink {% if current_url == 'worker-list' %}active{% endif %}"
                href="{% url 'task-manager:worker-list' %}">
-              All workers
+              <i class="bi bi-people-fill mr-2"></i>All workers
             </a>
 
             <a class="sidebar-sublink {% if current_url == 'position-list' %}active{% endif %}"
                href="{% url 'task-manager:position-list' %}">
-              All positions
+              <i class="bi bi-briefcase mr-2"></i>All positions
             </a>
+
           </div>
         </li>
       </ul>

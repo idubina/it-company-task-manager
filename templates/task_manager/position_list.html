@@ -1,31 +1,54 @@
 {% extends "layouts/base.html" %}
+
 {% block content %}
-  <h1>
-    Position List
-    {% if user.is_staff %}
-      <a href="{% url 'task-manager:position-create' %}?next={{ request.get_full_path|urlencode }}"
-         class="btn btn-primary link-to-page">
-        +
-      </a>
-    {% endif %}
-  </h1>
-  {% if position_list %}
-    {% include 'includes/search.html' %}
-    <div class="list-group">
-      {% for position in position_list %}
-        <div class="list-group-item">
-          <h3 class="mb-0">
-            <a href="{% url 'task-manager:position-detail' pk=position.id %}">
-              {{ position }}
-            </a>
-          </h3>
-          {% with wc=position.workers.count %}
-            <p class="lead mb-0">{{ wc }} worker{{ wc|pluralize }}</p>
-          {% endwith %}
-        </div>
-      {% endfor %}
+  <div class="dashboard-wrapper py-4 px-2 px-md-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <h1 class="dashboard-title mb-1">
+          <i class="bi bi-briefcase page-title-icon"></i>
+          Position List
+        </h1>
+        <p class="dashboard-subtitle mb-0">All positions overview</p>
+      </div>
+
+      {% if user.is_staff %}
+        <a href="{% url 'task-manager:position-create' %}?next={{ request.get_full_path|urlencode }}"
+           class="btn btn-sm btn-add-soft">
+          Add position
+        </a>
+      {% endif %}
     </div>
-  {% else %}
-    <p class="lead">There are no positions in the manager.</p>
-  {% endif %}
+
+    <div class="dashboard-card">
+      {% if position_list %}
+        <div class="dashboard-card-header px-3 pt-3 pb-2">
+          {% include "includes/search.html" %}
+        </div>
+
+        <div class="p-3">
+          <div class="project-list-wrap">
+            {% for position in position_list %}
+              <div class="project-list-item">
+                <h3 class="project-list-title mb-1">
+                  <a href="{% url 'task-manager:position-detail' pk=position.id %}" class="project-list-link">
+                    {{ position }}
+                  </a>
+                </h3>
+
+                {% with wc=position.workers.count %}
+                  <p class="project-list-description mb-0">
+                    <span class="project-task-count">{{ wc }} worker{{ wc|pluralize }}</span>
+                  </p>
+                {% endwith %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% else %}
+        <div class="p-3">
+          <div class="task-empty-state">There are no positions in the manager.</div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}
