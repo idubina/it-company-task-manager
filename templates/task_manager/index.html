@@ -12,9 +12,9 @@
 
     <div class="row">
       <div class="col-12 col-sm-6 col-lg-6 mb-3">
-        <div class="card dashboard-card dashboard-card-lg h-100">
+        <div class="card dashboard-card dashboard-card-lg dashboard-stat-card dashboard-stat-card-team h-100">
           <div class="card-body text-center d-flex flex-column justify-content-center">
-            <i class="bi bi-people dashboard-icon mb-3"></i>
+            <i class="bi bi-people dashboard-icon dashboard-stat-icon mb-3"></i>
             <p class="stat-label mb-2">Teams</p>
             <h2 class="stat-value-lg mb-0">{{ num_teams }}</h2>
           </div>
@@ -22,9 +22,9 @@
       </div>
 
       <div class="col-12 col-sm-6 col-lg-6 mb-3">
-        <div class="card dashboard-card dashboard-card-lg h-100">
+        <div class="card dashboard-card dashboard-card-lg dashboard-stat-card dashboard-stat-card-project h-100">
           <div class="card-body text-center d-flex flex-column justify-content-center">
-            <i class="bi bi-folder dashboard-icon mb-3"></i>
+            <i class="bi bi-folder dashboard-icon dashboard-stat-icon mb-3"></i>
             <p class="stat-label mb-2">Projects</p>
             <h2 class="stat-value-lg mb-0">{{ num_projects }}</h2>
           </div>
@@ -32,9 +32,9 @@
       </div>
 
       <div class="col-12 col-sm-6 col-lg-4 mb-3">
-        <div class="card dashboard-card dashboard-card-lg h-100">
+        <div class="card dashboard-card dashboard-card-lg dashboard-stat-card dashboard-stat-card-task h-100">
           <div class="card-body text-center d-flex flex-column justify-content-center">
-            <i class="bi bi-list-check dashboard-icon mb-3"></i>
+            <i class="bi bi-list-check dashboard-icon dashboard-stat-icon mb-3"></i>
             <p class="stat-label mb-2">Tasks</p>
             <h2 class="stat-value-lg mb-0">{{ num_tasks }}</h2>
           </div>
@@ -42,9 +42,9 @@
       </div>
 
       <div class="col-12 col-sm-6 col-lg-4 mb-3">
-        <div class="card dashboard-card dashboard-card-lg h-100">
+        <div class="card dashboard-card dashboard-card-lg dashboard-stat-card dashboard-stat-card-worker h-100">
           <div class="card-body text-center d-flex flex-column justify-content-center">
-            <i class="bi bi-person-badge dashboard-icon mb-3"></i>
+            <i class="bi bi-person-badge dashboard-icon dashboard-stat-icon mb-3"></i>
             <p class="stat-label mb-2">Workers</p>
             <h2 class="stat-value-lg mb-0">{{ num_workers }}</h2>
           </div>
@@ -52,15 +52,57 @@
       </div>
 
       <div class="col-12 col-sm-6 col-lg-4 mb-3">
-        <div class="card dashboard-card dashboard-card-lg h-100">
+        <div class="card dashboard-card dashboard-card-lg dashboard-stat-card dashboard-stat-card-position h-100">
           <div class="card-body text-center d-flex flex-column justify-content-center">
-            <i class="bi bi-briefcase dashboard-icon mb-3"></i>
+            <i class="bi bi-briefcase dashboard-icon dashboard-stat-icon mb-3"></i>
             <p class="stat-label mb-2">Positions</p>
             <h2 class="stat-value-lg mb-0">{{ num_positions }}</h2>
           </div>
         </div>
       </div>
-      
+    </div>
+
+    <div class="dashboard-actions-section mt-2 mt-md-3">
+      <div class="row">
+        <div class="col-12 col-md-4 mb-3">
+          <a href="{% url 'task-manager:team-create' %}?next={{ request.get_full_path|urlencode }}"
+             class="dashboard-action-card dashboard-action-card-warm">
+            <div class="dashboard-action-plus">
+              <i class="bi bi-plus-lg"></i>
+            </div>
+            <div class="dashboard-action-content">
+              <h3 class="dashboard-action-title mb-2">Add team</h3>
+              <p class="dashboard-action-text mb-0">Create a new team and start organizing members.</p>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-12 col-md-4 mb-3">
+          <a href="{% url 'task-manager:project-create-select-team' %}?next={{ request.get_full_path|urlencode }}"
+             class="dashboard-action-card dashboard-action-card-warm">
+            <div class="dashboard-action-plus">
+              <i class="bi bi-plus-lg"></i>
+            </div>
+            <div class="dashboard-action-content">
+              <h3 class="dashboard-action-title mb-2">Add project</h3>
+              <p class="dashboard-action-text mb-0">Choose a team and create a project inside it.</p>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-12 col-md-4 mb-3">
+          <a href="{% url 'task-manager:task-create-select-team' %}?next={{ request.get_full_path|urlencode }}"
+             class="dashboard-action-card dashboard-action-card-warm">
+            <div class="dashboard-action-plus">
+              <i class="bi bi-plus-lg"></i>
+            </div>
+            <div class="dashboard-action-content">
+              <h3 class="dashboard-action-title mb-2">Add task</h3>
+              <p class="dashboard-action-text mb-0">Select a team and project, then create a task.</p>
+            </div>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 {% endblock %}

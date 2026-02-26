@@ -18,16 +18,21 @@
           </div>
           <div class="col-lg-6">
             <div class="login-right">
-              <h1 class="login-title">Login</h1>
+              <h1 class="login-title">
+                <i class="bi bi-box-arrow-in-right login-title-icon"></i>
+                Login
+              </h1>
 
               {% if form.errors %}
                 <div class="alert-soft-danger">
+                  <i class="bi bi-exclamation-circle mr-2"></i>
                   Your username and password didn't match. Please try again.
                 </div>
               {% endif %}
 
               {% if next %}
                 <div class="alert-soft-info">
+                  <i class="bi bi-info-circle mr-2"></i>
                   Please login to see this page.
                 </div>
               {% endif %}
@@ -44,6 +49,7 @@
               </form>
 
               <p class="login-footer-note">
+                <i class="bi bi-shield-check mr-1"></i>
                 Use your account credentials to access the page.
               </p>
             </div>
