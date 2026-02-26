@@ -1,0 +1,53 @@
+{% extends "layouts/base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <div class="dashboard-wrapper py-4 px-2 px-md-3">
+    <div class="dashboard-card">
+      <div class="card-body p-3 p-md-4">
+        <div class="mb-3">
+          <h1 class="dashboard-title mb-1">
+            <i class="bi bi-check2-square page-title-icon"></i>
+            Create task — Step 2 of 2
+          </h1>
+          <p class="dashboard-subtitle mb-1">Choose a project</p>
+          <p class="mb-0 step-selected-meta">
+            <span class="detail-label">Selected team:</span> {{ team.name }}
+          </p>
+        </div>
+
+        <div class="task-detail-section">
+          {% if not has_projects %}
+            <div class="alert alert-light border mb-3 step-alert">
+              This team has no projects yet. Create a project first to continue.
+            </div>
+          {% endif %}
+
+          <form method="post" novalidate class="dashboard-form">
+            {% csrf_token %}
+            {{ form.project|as_crispy_field }}
+            <input type="hidden" name="next" value="{{ request.GET.next|default:'' }}">
+
+            <div class="mb-3">
+              <a href="{% url 'task-manager:project-create' team_pk=team.pk %}?next={{ request.get_full_path|urlencode }}"
+                 class="btn btn-sm btn-add-soft">
+                Add new project
+              </a>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+              <a href="{% url 'task-manager:task-create-select-team' %}"
+                 class="btn btn-sm btn-outline-secondary mb-2 mb-sm-0">
+                Back
+              </a>
+
+              <button type="submit" class="btn btn-sm btn-add-soft" {% if not has_projects %}disabled{% endif %}>
+                Next
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

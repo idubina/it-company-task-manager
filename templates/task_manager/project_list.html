@@ -10,6 +10,10 @@
         </h1>
         <p class="dashboard-subtitle mb-0">All projects overview</p>
       </div>
+      <a href="{% url 'task-manager:project-create-select-team' %}?next={{ request.get_full_path|urlencode }}"
+         class="btn btn-sm btn-add-soft">
+        Add project
+      </a>
     </div>
 
     <div class="dashboard-card">

@@ -24,7 +24,9 @@ from task_manager.forms import (
     TeamUpdateForm,
     TagForm,
     TaskTypeForm,
-    PositionForm
+    PositionForm,
+    ChooseTeamForm,
+    ChooseProjectForm
 )
 from task_manager.mixins import NextUrlRedirectMixin, StaffRequiredMixin
 from task_manager.models import (
@@ -249,7 +251,7 @@ class TaskCreateView(LoginRequiredMixin, generic.CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("task-manager:project-detail", kwargs={"pk": self.project.pk})
+        return reverse("task-manager:task-detail", kwargs={"pk": self.object.pk})
 
 
 class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
@@ -324,7 +326,7 @@ class ProjectDetailView(LoginRequiredMixin, generic.DetailView):
         return context
 
 
-class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
+class ProjectCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
     model = Project
     form_class = ProjectForm
 
@@ -338,7 +340,12 @@ class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("task-manager:team-detail", kwargs={"pk": self.team.pk})
+        next_url = self.request.POST.get("next")
+
+        if next_url:
+            return next_url
+
+        return reverse("task-manager:project-detail", kwargs={"pk": self.object.pk})
 
 
 class ProjectUpdateView(LoginRequiredMixin, generic.UpdateView):
@@ -455,7 +462,7 @@ class TeamDetailView(LoginRequiredMixin, generic.DetailView):
         return context
 
 
-class TeamCreateView(LoginRequiredMixin, generic.CreateView):
+class TeamCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
     model = Team
     form_class = TeamCreateForm
     success_url = reverse_lazy("task-manager:team-list")
@@ -465,6 +472,14 @@ class TeamCreateView(LoginRequiredMixin, generic.CreateView):
         if self.object.members.count() == 0:
             self.object.members.add(self.request.user)
         return response
+
+    def get_success_url(self):
+        next_url = self.request.POST.get("next")
+
+        if next_url:
+            return next_url
+
+        return reverse("task-manager:team-detail", kwargs={"pk": self.object.pk})
 
 
 class TeamUpdateView(LoginRequiredMixin, generic.UpdateView):
@@ -722,3 +737,76 @@ def change_task_status(request, pk):
     task.save(update_fields=["is_completed"])
 
     return redirect("task-manager:task-detail", pk=task.pk)
+
+
+class TaskCreateSelectTeamView(LoginRequiredMixin, generic.FormView):
+    form_class = ChooseTeamForm
+    template_name = "task_manager/task_choose_team.html"
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context["has_teams"] = Team.objects.filter(members=self.request.user).exists()
+        return context
+
+    def form_valid(self, form):
+        team = form.cleaned_data["team"]
+        return redirect(
+            f"{reverse('task-manager:task-create-select-project')}?team={team.pk}"
+        )
+
+
+class TaskCreateSelectProjectView(LoginRequiredMixin, generic.FormView):
+    form_class = ChooseProjectForm
+    template_name = "task_manager/task_choose_project.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        team_id = request.GET.get("team")
+
+        if not team_id:
+            return redirect("task-manager:task-create-select-team")
+
+        self.team = get_object_or_404(Team, pk=team_id)
+        _ensure_team_member(request.user, self.team)
+
+        return super().dispatch(request, *args, **kwargs)
+
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["team"] = self.team
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super(). get_context_data()
+        context["team"] = self.team
+        context["has_projects"] = Project.objects.filter(team=self.team).exists()
+        return context
+
+    def form_valid(self, form):
+        project = form.cleaned_data["project"]
+        return redirect("task-manager:task-create", project_pk=project.id)
+
+
+
+class ProjectCreateSelectTeamView(LoginRequiredMixin, generic.FormView):
+    form_class = ChooseTeamForm
+    template_name = "task_manager/project_choose_team.html"
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["has_teams"] = Team.objects.filter(members=self.request.user).exists()
+        return context
+
+    def form_valid(self, form):
+        team = form.cleaned_data["team"]
+        return redirect("task-manager:project-create", team_pk=team.id)

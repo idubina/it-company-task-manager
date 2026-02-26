@@ -13,6 +13,12 @@
           <p class="dashboard-subtitle mb-0">All tasks overview</p>
         {% endif %}
       </div>
+      {% if not page_title %}
+        <a href="{% url 'task-manager:task-create-select-team' %}?next={{ request.get_full_path|urlencode }}"
+           class="btn btn-sm btn-add-soft">
+          Add task
+        </a>
+      {% endif %}
     </div>
 
     <div class="dashboard-card">

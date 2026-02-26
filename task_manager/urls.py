@@ -36,7 +36,10 @@ from task_manager.views import (
     PositionDeleteView,
     TagDeleteView,
     TaskTypeDeleteView,
-    change_task_status
+    change_task_status,
+    TaskCreateSelectTeamView,
+    TaskCreateSelectProjectView,
+    ProjectCreateSelectTeamView
 )
 
 
@@ -47,10 +50,13 @@ urlpatterns = [
     path("workers/<int:pk>/update-position", WorkerPositionUpdateView.as_view(), name="worker-update-position"),
     path("workers/create/", WorkerCreateView.as_view(), name="worker-create"),
     path("tasks/", TaskListView.as_view(), name="task-list"),
+    path("tasks/create/select-team/", TaskCreateSelectTeamView.as_view(), name="task-create-select-team"),
+    path("tasks/create/select-project/", TaskCreateSelectProjectView.as_view(), name="task-create-select-project"),
     path("tasks/<int:pk>/", TaskDetailView.as_view(), name="task-detail"),
     path("projects/<int:project_pk>/tasks/create/", TaskCreateView.as_view(), name="task-create"),
     path("tasks/<int:pk>/update/", TaskUpdateView.as_view(), name="task-update"),
     path("projects/", ProjectListView.as_view(), name="project-list"),
+    path("projects/create/select-team/", ProjectCreateSelectTeamView.as_view(), name="project-create-select-team"),
     path("projects/<int:pk>/", ProjectDetailView.as_view(), name="project-detail"),
     path("teams/<int:team_pk>/projects/create/", ProjectCreateView.as_view(), name="project-create"),
     path("projects/<int:pk>/update/", ProjectUpdateView.as_view(), name="project-update"),

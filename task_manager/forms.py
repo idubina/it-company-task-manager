@@ -192,6 +192,20 @@ class TeamUpdateForm(forms.ModelForm):
         return name
 
 
+class ChooseTeamForm(forms.Form):
+    team = forms.ModelChoiceField(
+        queryset=Team.objects.none(),
+        required=True,
+        empty_label="Choose a team"
+    )
+
+    def __init__(self, *args, user=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields["team"].queryset = Team.objects.filter(members=user)
+
+
+
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
@@ -206,6 +220,19 @@ class ProjectForm(forms.ModelForm):
             )
 
         return name
+
+
+class ChooseProjectForm(forms.Form):
+    project = forms.ModelChoiceField(
+        queryset=Project.objects.none(),
+        required=True,
+        empty_label="Choose a project"
+    )
+
+    def __init__(self, *args, team=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        if team:
+            self.fields["project"].queryset = Project.objects.filter(team=team)
 
 
 class TagForm(forms.ModelForm):

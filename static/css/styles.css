@@ -1142,3 +1142,14 @@ a[aria-expanded="true"] .submenu-caret {
   text-align: center;
   opacity: 0.95;
 }
+
+.step-alert {
+  border-radius: 10px;
+  color: #6b7280;
+  background: #f8fafc;
+}
+
+.step-selected-meta {
+  color: #374151;
+  font-size: 0.9rem;
+}
