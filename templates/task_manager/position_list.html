@@ -35,11 +35,11 @@
                   </a>
                 </h3>
 
-                {% with wc=position.workers.count %}
-                  <p class="project-list-description mb-0">
-                    <span class="project-task-count">{{ wc }} worker{{ wc|pluralize }}</span>
-                  </p>
-                {% endwith %}
+                <p class="project-list-description mb-0">
+                  <span
+                      class="project-task-count">{{ position.worker_count }} worker{{ position.worker_count|pluralize }}
+                  </span>
+                </p>
               </div>
             {% endfor %}
           </div>

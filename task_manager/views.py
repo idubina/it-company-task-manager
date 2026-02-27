@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
-from django.db.models import Q, When, Value, Case, IntegerField, Count
+from django.db.models import Q, When, Value, Case, IntegerField, Count, Prefetch
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import generic
@@ -82,7 +82,11 @@ class WorkerListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = super().get_queryset().order_by("id")
+        queryset = (
+            super()
+            .get_queryset()
+            .select_related("position")
+        )
         form = WorkerUsernameSearchForm(self.request.GET)
         if form.is_valid():
             return queryset.filter(
@@ -218,7 +222,10 @@ class TaskDetailView(LoginRequiredMixin, generic.DetailView):
     queryset = (
         Task.objects
         .select_related("task_type", "project", "project__team")
-        .prefetch_related("tags", "assignees")
+        .prefetch_related(
+            "tags",
+            Prefetch("assignees", queryset=Worker.objects.select_related("position"))
+        )
     )
 
     def get_context_data(self, **kwargs):
@@ -303,7 +310,11 @@ class ProjectListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = (
+            Project.objects
+            .select_related("team")
+            .annotate(task_count=Count("tasks", distinct=True))
+        )
         form = ProjectNameSearchForm(self.request.GET)
         if form.is_valid():
             return queryset.filter(
@@ -392,7 +403,9 @@ class PositionListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = Position.objects.annotate(
+            worker_count=Count("workers", distinct=True)
+        )
         form = PositionNameSearchForm(self.request.GET)
         if form.is_valid():
             return queryset.filter(
@@ -443,7 +456,9 @@ class TeamListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = Team.objects.prefetch_related("members")
+        queryset = Team.objects.annotate(
+            member_count=Count("members", distinct=True)
+        )
         form = TeamNameSearchForm(self.request.GET)
         if form.is_valid():
             return queryset.filter(
@@ -454,7 +469,10 @@ class TeamListView(LoginRequiredMixin, generic.ListView):
 
 class TeamDetailView(LoginRequiredMixin, generic.DetailView):
     model = Team
-    queryset = Team.objects.prefetch_related("members", "projects")
+    queryset = Team.objects.prefetch_related(
+        Prefetch("members", queryset=Worker.objects.select_related("position")),
+        "projects",
+    )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

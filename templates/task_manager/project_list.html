@@ -39,10 +39,10 @@
                       {{ project.team }}
                     </a>
 
-                    {% with tc=project.tasks.count %}
-                      <span class="project-meta-divider">•</span>
-                      <span class="project-task-count">{{ tc }} task{{ tc|pluralize }}</span>
-                    {% endwith %}
+                    <span class="project-meta-divider">•</span>
+                    <span
+                        class="project-task-count">{{ project.task_count }} task{{ project.task_count|pluralize }}
+                    </span>
                   </div>
 
                   {% if project.description %}

@@ -33,11 +33,11 @@
                   </a>
                 </h3>
 
-                {% with mc=team.members.count %}
-                  <p class="project-list-description mb-0">
-                    <span class="project-task-count">{{ mc }} member{{ mc|pluralize }}</span>
-                  </p>
-                {% endwith %}
+                <p class="project-list-description mb-0">
+                  <span
+                      class="project-task-count">{{ team.member_count }} member{{ team.member_count|pluralize }}
+                  </span>
+                </p>
               </div>
             {% endfor %}
           </div>
