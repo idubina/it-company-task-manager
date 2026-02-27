@@ -58,7 +58,10 @@ class BaseAccessTestCase(TestCase):
 class Forbidden403Tests(BaseAccessTestCase):
     def test_non_member_gets_403_on_project_update(self):
         self.login(self.member_b)
-        url = reverse("task-manager:project-update", kwargs={"pk": self.project_a.pk})
+        url = reverse(
+            "task-manager:project-update",
+            kwargs={"pk": self.project_a.pk}
+        )
 
         response = self.client.get(url)
 
@@ -67,7 +70,10 @@ class Forbidden403Tests(BaseAccessTestCase):
 
     def test_non_member_gets_403_on_project_delete(self):
         self.login(self.outsider)
-        url = reverse("task-manager:project-delete", kwargs={"pk": self.project_a.pk})
+        url = reverse(
+            "task-manager:project-delete",
+            kwargs={"pk": self.project_a.pk}
+        )
 
         response = self.client.post(url)
 
@@ -76,7 +82,10 @@ class Forbidden403Tests(BaseAccessTestCase):
 
     def test_non_member_gets_403_on_change_task_status(self):
         self.login(self.member_b)
-        url = reverse("task-manager:task-change-status", kwargs={"pk": self.task_a.pk})
+        url = reverse(
+            "task-manager:task-change-status",
+            kwargs={"pk": self.task_a.pk}
+        )
 
         response = self.client.post(url)
 
@@ -85,7 +94,10 @@ class Forbidden403Tests(BaseAccessTestCase):
 
     def test_non_staff_gets_403_on_worker_delete(self):
         self.login(self.member_a)
-        url = reverse("task-manager:worker-delete", kwargs={"pk": self.member_b.pk})
+        url = reverse(
+            "task-manager:worker-delete",
+            kwargs={"pk": self.member_b.pk}
+        )
 
         response = self.client.get(url)
 
@@ -94,7 +106,10 @@ class Forbidden403Tests(BaseAccessTestCase):
 
     def test_team_member_can_change_task_status(self):
         self.login(self.member_a)
-        url = reverse("task-manager:task-change-status", kwargs={"pk": self.task_a.pk})
+        url = reverse(
+            "task-manager:task-change-status",
+            kwargs={"pk": self.task_a.pk}
+        )
 
         response = self.client.post(url)
 

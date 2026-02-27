@@ -2,7 +2,10 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
-from django.db.models import Q, When, Value, Case, IntegerField, Count, Prefetch
+from django.db.models import (
+    Q, When, Value, Case,
+    IntegerField, Count, Prefetch
+)
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import generic
@@ -100,9 +103,9 @@ class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
 
     def get_queryset(self):
         return (
-        Worker.objects
-        .select_related("position")
-        .prefetch_related("teams")
+            Worker.objects
+            .select_related("position")
+            .prefetch_related("teams")
         )
 
     def get_context_data(self, **kwargs):
@@ -130,7 +133,10 @@ class WorkerPositionUpdateView(StaffRequiredMixin, generic.UpdateView):
     form_class = WorkerPositionUpdateForm
 
     def get_success_url(self):
-        return reverse("task-manager:worker-detail", kwargs={"pk": self.object.pk})
+        return reverse(
+            "task-manager:worker-detail",
+            kwargs={"pk": self.object.pk}
+        )
 
 
 class WorkerDeleteView(StaffRequiredMixin, generic.DeleteView):
@@ -160,11 +166,17 @@ class WorkerDeleteView(StaffRequiredMixin, generic.DeleteView):
     def form_valid(self, form):
 
         self.object = self.get_object()
-        last_team_ids = list(self._get_last_member_teams(self.object).values_list("id", flat=True))
+        last_team_ids = list(
+            self._get_last_member_teams(self.object)
+            .values_list("id", flat=True)
+        )
 
         response = super().form_valid(form)
 
-        Team.objects.annotate(member_count=Count("members", distinct=True)).filter(
+        Team.objects.annotate(
+            member_count=Count(
+                "members", distinct=True)
+        ).filter(
             id__in=last_team_ids,
             member_count=0
         ).delete()
@@ -203,9 +215,18 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
                     )
                     .annotate(
                         search_rank=Case(
-                            When(name__icontains=query, then=Value(1)),
-                            When(task_type__name__icontains=query, then=Value(2)),
-                            When(tags__name__icontains=query, then=Value(3)),
+                            When(
+                                name__icontains=query,
+                                then=Value(1)
+                            ),
+                            When(
+                                task_type__name__icontains=query,
+                                then=Value(2)
+                            ),
+                            When(
+                                tags__name__icontains=query,
+                                then=Value(3)
+                            ),
                             default=Value(4),
                             output_field=IntegerField(),
                         )
@@ -224,15 +245,20 @@ class TaskDetailView(LoginRequiredMixin, generic.DetailView):
         .select_related("task_type", "project", "project__team")
         .prefetch_related(
             "tags",
-            Prefetch("assignees", queryset=Worker.objects.select_related("position"))
+            Prefetch(
+                "assignees",
+                queryset=Worker.objects.select_related("position")
+            )
         )
     )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["task_in_project_user_team"] = self.object.project.team.members.filter(
-            pk=self.request.user.pk
-        ).exists()
+        context["task_in_project_user_team"] = (
+            self.object.project.team.members.filter(
+                pk=self.request.user.pk
+            ).exists()
+        )
         return context
 
 
@@ -258,7 +284,10 @@ class TaskCreateView(LoginRequiredMixin, generic.CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("task-manager:task-detail", kwargs={"pk": self.object.pk})
+        return reverse(
+            "task-manager:task-detail",
+            kwargs={"pk": self.object.pk}
+        )
 
 
 class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
@@ -279,7 +308,10 @@ class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
         return kwargs
 
     def get_success_url(self):
-        return reverse("task-manager:task-detail", kwargs={"pk": self.object.pk})
+        return reverse(
+            "task-manager:task-detail",
+            kwargs={"pk": self.object.pk}
+        )
 
 
 class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
@@ -329,15 +361,25 @@ class ProjectDetailView(LoginRequiredMixin, generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["tasks_in_progress"] = self.object.tasks.filter(is_completed=False)
-        context["tasks_completed"] = self.object.tasks.filter(is_completed=True)
-        context["project_in_user_team"] = self.object.team.members.filter(
-            pk=self.request.user.pk
-        ).exists()
+        context["tasks_in_progress"] = (
+            self.object.tasks.filter(is_completed=False)
+        )
+        context["tasks_completed"] = (
+            self.object.tasks.filter(is_completed=True)
+        )
+        context["project_in_user_team"] = (
+            self.object.team.members.filter(
+                pk=self.request.user.pk
+            ).exists()
+        )
         return context
 
 
-class ProjectCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
+class ProjectCreateView(
+    LoginRequiredMixin,
+    NextUrlRedirectMixin,
+    generic.CreateView
+):
     model = Project
     form_class = ProjectForm
 
@@ -356,7 +398,10 @@ class ProjectCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.Create
         if next_url:
             return next_url
 
-        return reverse("task-manager:project-detail", kwargs={"pk": self.object.pk})
+        return reverse(
+            "task-manager:project-detail",
+            kwargs={"pk": self.object.pk}
+        )
 
 
 class ProjectUpdateView(LoginRequiredMixin, generic.UpdateView):
@@ -372,7 +417,10 @@ class ProjectUpdateView(LoginRequiredMixin, generic.UpdateView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse("task-manager:project-detail", kwargs={"pk": self.object.pk})
+        return reverse(
+            "task-manager:project-detail",
+            kwargs={"pk": self.object.pk}
+        )
 
 
 class ProjectDeleteView(LoginRequiredMixin, generic.DeleteView):
@@ -425,7 +473,10 @@ class PositionUpdateView(StaffRequiredMixin, generic.UpdateView):
     form_class = PositionForm
 
     def get_success_url(self):
-        return reverse("task-manager:position-detail", kwargs={"pk": self.object.pk})
+        return reverse(
+            "task-manager:position-detail",
+            kwargs={"pk": self.object.pk}
+        )
 
 
 class PositionDetailView(LoginRequiredMixin, generic.DetailView):
@@ -470,17 +521,28 @@ class TeamListView(LoginRequiredMixin, generic.ListView):
 class TeamDetailView(LoginRequiredMixin, generic.DetailView):
     model = Team
     queryset = Team.objects.prefetch_related(
-        Prefetch("members", queryset=Worker.objects.select_related("position")),
+        Prefetch(
+            "members",
+            queryset=Worker.objects.select_related("position")
+        ),
         "projects",
     )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["user_in_team"] = self.object.members.filter(pk=self.request.user.pk).exists()
+        context["user_in_team"] = (
+            self.object.members.filter(
+                pk=self.request.user.pk
+            ).exists()
+        )
         return context
 
 
-class TeamCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
+class TeamCreateView(
+    LoginRequiredMixin,
+    NextUrlRedirectMixin,
+    generic.CreateView
+):
     model = Team
     form_class = TeamCreateForm
     success_url = reverse_lazy("task-manager:team-list")
@@ -497,7 +559,10 @@ class TeamCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateVie
         if next_url:
             return next_url
 
-        return reverse("task-manager:team-detail", kwargs={"pk": self.object.pk})
+        return reverse(
+            "task-manager:team-detail",
+            kwargs={"pk": self.object.pk}
+        )
 
 
 class TeamUpdateView(LoginRequiredMixin, generic.UpdateView):
@@ -532,7 +597,10 @@ class TeamUpdateView(LoginRequiredMixin, generic.UpdateView):
         return response
 
     def get_success_url(self):
-        return reverse("task-manager:team-detail", kwargs={"pk": self.object.pk})
+        return reverse(
+            "task-manager:team-detail",
+            kwargs={"pk": self.object.pk}
+        )
 
 
 class TeamDeleteView(LoginRequiredMixin, generic.DeleteView):
@@ -602,9 +670,18 @@ class TagDetailView(LoginRequiredMixin, generic.ListView):
                     )
                     .annotate(
                         search_rank=Case(
-                            When(name__icontains=query, then=Value(1)),
-                            When(task_type__name__icontains=query, then=Value(2)),
-                            When(tags__name__icontains=query, then=Value(3)),
+                            When(
+                                name__icontains=query,
+                                then=Value(1)
+                            ),
+                            When(
+                                task_type__name__icontains=query,
+                                then=Value(2)
+                            ),
+                            When(
+                                tags__name__icontains=query,
+                                then=Value(3)
+                            ),
                             default=Value(4),
                             output_field=IntegerField(),
                         )
@@ -625,7 +702,11 @@ class TagDetailView(LoginRequiredMixin, generic.ListView):
         return context
 
 
-class TagCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
+class TagCreateView(
+    LoginRequiredMixin,
+    NextUrlRedirectMixin,
+    generic.CreateView
+):
     model = Tag
     form_class = TagForm
     success_url = reverse_lazy("task-manager:tag-list")
@@ -648,7 +729,6 @@ class TaskTypeListView(LoginRequiredMixin, generic.ListView):
     template_name = "task_manager/task_type_list.html"
     paginate_by = 5
 
-
     def get_context_data(
         self, *, object_list=None, **kwargs
     ):
@@ -658,7 +738,6 @@ class TaskTypeListView(LoginRequiredMixin, generic.ListView):
             initial={"name": name}
         )
         return context
-
 
     def get_queryset(self):
         queryset = TaskType.objects
@@ -699,9 +778,18 @@ class TaskTypeDetailView(LoginRequiredMixin, generic.ListView):
                     )
                     .annotate(
                         search_rank=Case(
-                            When(name__icontains=query, then=Value(1)),
-                            When(task_type__name__icontains=query, then=Value(2)),
-                            When(tags__name__icontains=query, then=Value(3)),
+                            When(
+                                name__icontains=query,
+                                then=Value(1)
+                            ),
+                            When(
+                                task_type__name__icontains=query,
+                                then=Value(2)
+                            ),
+                            When(
+                                tags__name__icontains=query,
+                                then=Value(3)
+                            ),
                             default=Value(4),
                             output_field=IntegerField(),
                         )
@@ -722,7 +810,11 @@ class TaskTypeDetailView(LoginRequiredMixin, generic.ListView):
         return context
 
 
-class TaskTypeCreateView(LoginRequiredMixin, NextUrlRedirectMixin, generic.CreateView):
+class TaskTypeCreateView(
+    LoginRequiredMixin,
+    NextUrlRedirectMixin,
+    generic.CreateView
+):
     model = TaskType
     form_class = TaskTypeForm
     success_url = reverse_lazy("task-manager:task-type-list")
@@ -770,13 +862,19 @@ class TaskCreateSelectTeamView(LoginRequiredMixin, generic.FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
-        context["has_teams"] = Team.objects.filter(members=self.request.user).exists()
+        context["has_teams"] = (
+            Team.objects.filter(
+                members=self.request.user
+            ).exists()
+        )
         return context
 
     def form_valid(self, form):
         team = form.cleaned_data["team"]
         return redirect(
-            f"{reverse('task-manager:task-create-select-project')}?team={team.pk}"
+            f"{reverse(
+                'task-manager:task-create-select-project'
+            )}?team={team.pk}"
         )
 
 
@@ -795,7 +893,6 @@ class TaskCreateSelectProjectView(LoginRequiredMixin, generic.FormView):
 
         return super().dispatch(request, *args, **kwargs)
 
-
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs["team"] = self.team
@@ -804,13 +901,16 @@ class TaskCreateSelectProjectView(LoginRequiredMixin, generic.FormView):
     def get_context_data(self, **kwargs):
         context = super(). get_context_data()
         context["team"] = self.team
-        context["has_projects"] = Project.objects.filter(team=self.team).exists()
+        context["has_projects"] = (
+            Project.objects.filter(
+                team=self.team
+            ).exists()
+        )
         return context
 
     def form_valid(self, form):
         project = form.cleaned_data["project"]
         return redirect("task-manager:task-create", project_pk=project.id)
-
 
 
 class ProjectCreateSelectTeamView(LoginRequiredMixin, generic.FormView):
@@ -824,7 +924,11 @@ class ProjectCreateSelectTeamView(LoginRequiredMixin, generic.FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["has_teams"] = Team.objects.filter(members=self.request.user).exists()
+        context["has_teams"] = (
+            Team.objects.filter(
+                members=self.request.user
+            ).exists()
+        )
         return context
 
     def form_valid(self, form):

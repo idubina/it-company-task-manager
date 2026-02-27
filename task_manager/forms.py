@@ -38,7 +38,9 @@ class TaskNameSearchForm(forms.Form):
         max_length=255,
         required=False,
         label="",
-        widget=forms.TextInput(attrs={"placeholder": "name, type, or tag...",})
+        widget=forms.TextInput(
+            attrs={"placeholder": "name, type, or tag...", }
+        )
     )
 
 
@@ -97,6 +99,7 @@ class TaskForm(forms.ModelForm):
         ),
         input_formats=["%Y-%m-%dT%H:%M"],
     )
+
     class Meta:
         model = Task
         fields = (
@@ -125,11 +128,16 @@ class TaskForm(forms.ModelForm):
         if not self.project:
             return assignees
 
-        team_member_ids = set(self.project.team.members.values_list("id", flat=True))
-        invalid = [u.username for u in assignees if u.id not in team_member_ids]
+        team_member_ids = set(
+            self.project.team.members.values_list("id", flat=True)
+        )
+        invalid = [
+            u.username for u in assignees if u.id not in team_member_ids
+        ]
         if invalid:
             raise forms.ValidationError(
-                f"Only team members can be assignees. Invalid: {', '.join(invalid)}"
+                f"Only team members can be assignees. "
+                f"Invalid: {', '.join(invalid)}"
             )
         return assignees
 
@@ -146,7 +154,7 @@ class TaskForm(forms.ModelForm):
 
         if deadline and deadline < timezone.now():
             raise forms.ValidationError(
-                f"Please choose a future date and time."
+                "Please choose a future date and time."
             )
         return deadline
 
@@ -223,7 +231,6 @@ class ChooseTeamForm(forms.Form):
             self.fields["team"].queryset = Team.objects.filter(members=user)
 
 
-
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
@@ -265,7 +272,6 @@ class TagForm(forms.ModelForm):
             raise ValidationError(
                 "Tag can not start with '#'"
             )
-
 
         if len(name) > 20:
             raise ValidationError(

@@ -1,7 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-from task_manager.models import *
-
+from task_manager.models import Position, Team, Project, TaskType, Task, Tag
 
 User = get_user_model()
 
@@ -17,6 +16,7 @@ TASK_TYPE_NAME = "Task Type"
 TASK_NAME = "Task"
 TAG_NAME = "Tag"
 POSITION_NAME = "Position"
+
 
 class ModelStrClass(TestCase):
 
@@ -50,7 +50,7 @@ class ModelStrClass(TestCase):
         cls.project = Project.objects.create(name=PROJECT_NAME, team=cls.team)
         cls.task_type = TaskType.objects.create(name=TASK_TYPE_NAME)
         cls.task = Task.objects.create(name=TASK_NAME, project=cls.project)
-        cls.tag =Tag.objects.create(name=TAG_NAME)
+        cls.tag = Tag.objects.create(name=TAG_NAME)
 
     def test_worker_full_data_str(self):
         self.assertEqual(

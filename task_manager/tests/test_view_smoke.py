@@ -10,7 +10,10 @@ User = get_user_model()
 class SmokeViewTests(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.member = User.objects.create(username="member", password="pass12345")
+        cls.member = User.objects.create(
+            username="member",
+            password="pass12345"
+        )
         cls.team = Team.objects.create(name="Team")
         cls.team.members.add(cls.member)
 
@@ -42,7 +45,6 @@ class SmokeViewTests(TestCase):
                     200,
                     msg=f"{page_name} returned {resp.status_code}"
                 )
-
 
     def test_details_return_200_for_team_member(self):
         detail_pages_data = {
@@ -81,14 +83,16 @@ class SmokeViewTests(TestCase):
                     detail_page["user_context"],
                     resp.context,
                     msg=(
-                        f'Missing "{detail_page["user_context"]}" in context for '
+                        f'Missing '
+                        f'"{detail_page["user_context"]}" in context for '
                         f'{detail_page["page_name"]} (pk={detail_page["pk"]}).'
                     ),
                 )
                 self.assertTrue(
                     resp.context[detail_page["user_context"]],
                     msg=(
-                        f'Context flag "{detail_page["user_context"]}" is False for '
+                        f'Context flag '
+                        f'"{detail_page["user_context"]}" is False for '
                         f'{detail_page["page_name"]} (pk={detail_page["pk"]}).'
                     ),
                 )
