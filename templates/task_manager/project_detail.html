@@ -1,5 +1,6 @@
 {% extends "layouts/base.html" %}
 
+{% block subtitle %}Project: {{ project }} - {% endblock %}
 {% block content %}
   <div class="dashboard-wrapper py-4 px-2 px-md-3">
     <div class="dashboard-card">
@@ -42,7 +43,8 @@
         </div>
 
         <div class="task-detail-section">
-          <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3">
+          <div
+              class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3">
             <h6 class="section-title mb-2 mb-md-0">Tasks</h6>
 
             {% if project_in_user_team %}
@@ -57,7 +59,10 @@
             <div class="col-12 col-lg-6 mb-3 mb-lg-0">
               <div class="project-task-column h-100">
                 <div class="project-task-column-header">
-                  <span class="task-status-pill task-status-progress">In progress</span>
+                  <span class="task-status-pill task-status-progress">
+                    <i class="bi bi-hourglass-split mr-2"></i>
+                    In progress
+                  </span>
                 </div>
 
                 <ul class="list-unstyled mb-0">
@@ -77,7 +82,10 @@
             <div class="col-12 col-lg-6">
               <div class="project-task-column h-100">
                 <div class="project-task-column-header">
-                  <span class="task-status-pill task-status-done">Completed</span>
+                  <span class="task-status-pill task-status-done">
+                     <i class="bi bi-check2-circle mr-2"></i>
+                    Completed
+                  </span>
                 </div>
 
                 <ul class="list-unstyled mb-0">

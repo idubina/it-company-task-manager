@@ -1,6 +1,7 @@
 {% extends "layouts/base.html" %}
 {% load crispy_forms_filters %}
 
+{% block subtitle %}{{ object|yesno:"Update, Create" }} Task - {% endblock %}
 {% block content %}
   <div class="dashboard-wrapper py-4 px-2 px-md-3">
     <div class="dashboard-card">

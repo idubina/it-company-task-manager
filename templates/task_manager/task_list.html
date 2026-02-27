@@ -1,5 +1,6 @@
 {% extends "layouts/base.html" %}
 
+{% block subtitle %}All {{ sub_title|default:"Tasks" }} - {% endblock %}
 {% block content %}
   <div class="dashboard-wrapper py-4 px-2 px-md-3">
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -77,9 +78,15 @@
 
                 <td>
                   {% if task.is_completed %}
-                    <span class="task-status-pill task-status-done">Completed</span>
+                    <span class="task-status-pill task-status-done">
+                    <i class="bi bi-check2-circle mr-2"></i>
+                      Completed
+                    </span>
                   {% else %}
-                    <span class="task-status-pill task-status-progress">In progress</span>
+                    <span class="task-status-pill task-status-progress">
+                    <i class="bi bi-hourglass-split mr-2"></i>
+                      In progress
+                    </span>
                   {% endif %}
                 </td>
 

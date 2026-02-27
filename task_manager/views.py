@@ -619,8 +619,9 @@ class TagDetailView(LoginRequiredMixin, generic.ListView):
         context = super().get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
         context["search_form"] = TaskNameSearchForm(initial={"name": name})
-        context["page_title"] = f"Task with tag: #{self.tag.name}"
+        context["page_title"] = f"Tasks with tag: #{self.tag.name}"
         context["empty_message"] = "There are no tasks with this tag."
+        context["sub_title"] = context["page_title"].title()
         return context
 
 
@@ -715,8 +716,9 @@ class TaskTypeDetailView(LoginRequiredMixin, generic.ListView):
         context = super().get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
         context["search_form"] = TaskNameSearchForm(initial={"name": name})
-        context["page_title"] = f"Task with task type: {self.task_type.name}"
+        context["page_title"] = f"Tasks with task type: {self.task_type.name}"
         context["empty_message"] = "There are no tasks with this task type."
+        context["sub_title"] = context["page_title"].title()
         return context
 
 

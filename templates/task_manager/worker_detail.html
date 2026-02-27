@@ -1,5 +1,6 @@
 {% extends "layouts/base.html" %}
 
+{% block subtitle %}Worker: {{ worker.username }} - {% endblock %}
 {% block content %}
   <div class="dashboard-wrapper py-4 px-2 px-md-3">
     <div class="dashboard-card">
@@ -71,7 +72,10 @@
           <div class="col-12 col-lg-4 mb-3 mb-lg-0">
             <div class="task-detail-section h-100">
               <div class="d-flex justify-content-between align-items-center mb-2">
-                <h6 class="section-title mb-0">Tasks in progress</h6>
+                <h6 class="section-title mb-0">
+                  <i class="bi bi-hourglass-split mr-2"></i>
+                  Tasks in progress
+                </h6>
                 <span class="task-status-pill task-status-progress">{{ tasks_in_progress|length }}</span>
               </div>
 
@@ -92,7 +96,10 @@
           <div class="col-12 col-lg-4 mb-3 mb-lg-0">
             <div class="task-detail-section h-100">
               <div class="d-flex justify-content-between align-items-center mb-2">
-                <h6 class="section-title mb-0">Completed tasks</h6>
+                <h6 class="section-title mb-0">
+                  <i class="bi bi-check2-circle mr-2"></i>
+                  Completed tasks
+                </h6>
                 <span class="task-status-pill task-status-done">{{ tasks_completed|length }}</span>
               </div>
 
@@ -113,7 +120,10 @@
           <div class="col-12 col-lg-4">
             <div class="task-detail-section h-100">
               <div class="d-flex justify-content-between align-items-center mb-2">
-                <h6 class="section-title mb-0">Teams</h6>
+                <h6 class="section-title mb-0">
+                  <i class="bi bi-people mr-2"></i>
+                  Teams
+                </h6>
                 <span class="table-chip table-chip-muted">{{ teams.all|length }}</span>
               </div>
 
