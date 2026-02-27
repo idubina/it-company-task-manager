@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 from task_manager.models import Team, Task, Tag, Project, TaskType, Position
 
@@ -88,6 +89,14 @@ class TaskForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple,
         required=False
     )
+    deadline = forms.DateTimeField(
+        required=False,
+        widget=forms.DateTimeInput(
+            attrs={"type": "datetime-local"},
+            format="%Y-%m-%dT%H:%M",
+        ),
+        input_formats=["%Y-%m-%dT%H:%M"],
+    )
     class Meta:
         model = Task
         fields = (
@@ -131,6 +140,15 @@ class TaskForm(forms.ModelForm):
                 "You can not select more than 10 tags"
             )
         return tags
+
+    def clean_deadline(self):
+        deadline = self.cleaned_data.get("deadline")
+
+        if deadline and deadline < timezone.now():
+            raise forms.ValidationError(
+                f"Please choose a future date and time."
+            )
+        return deadline
 
 
 class TeamNameSearchForm(forms.Form):
