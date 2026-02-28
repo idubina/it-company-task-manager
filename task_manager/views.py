@@ -871,11 +871,8 @@ class TaskCreateSelectTeamView(LoginRequiredMixin, generic.FormView):
 
     def form_valid(self, form):
         team = form.cleaned_data["team"]
-        return redirect(
-            f"{reverse(
-                'task-manager:task-create-select-project'
-            )}?team={team.pk}"
-        )
+        url = reverse("task-manager:task-create-select-project")
+        return redirect(f"{url}?team={team.pk}")
 
 
 class TaskCreateSelectProjectView(LoginRequiredMixin, generic.FormView):
