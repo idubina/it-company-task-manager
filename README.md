@@ -1,38 +1,50 @@
 # IT Company Task Manager
 
-Django portfolio project for managing development workflow in an IT company.  
-The app supports workers, positions, teams, projects, tasks, assignees, priorities, and tags.
+Django portfolio project for managing development workflow in an IT company.
+
+The application helps manage workers, teams, projects, and tasks, and includes access control, validation, search, pagination, and task assignment logic.
 
 ---
 
 ## Table of Contents
 
-- [About](#about)
+- [Overview](#overview)
 - [Features](#features)
+- [Business Logic](#business-logic)
 - [Tech Stack](#tech-stack)
 - [Database Schema](#database-schema)
+- [Screenshots](#screenshots)
 - [Setup and Run](#setup-and-run)
 - [Load Fixture Data](#load-fixture-data)
+- [Running Tests](#running-tests)
 - [Admin Access](#admin-access)
 - [Author](#author)
 
 
 ---
 
-## About
+## Overview
 
-This project is a task manager for IT teams.  
-It allows teams to organize work by projects, assign tasks to workers, track deadlines and completion status, and classify tasks with tags and task types.
+This project was built as a Django portfolio application that simulates internal workflow management in an IT company.
+
+It allows users to manage:
+
+- workers and their positions
+- teams and team members
+- projects linked to specific teams
+- tasks with assignees, priorities, deadlines, task types, and tags
+
+The project also includes custom business rules to make the application closer to a real-world management system rather than a basic CRUD app.
 
 ---
 
 ## Features
 
 - Custom user model: `Worker` (based on `AbstractUser`)
-- Worker positions (`Position`)
-- Teams with members (`Team`)
-- Projects linked to teams (`Project`)
-- Tasks with:
+- Worker and position management
+- Team management with assigned members
+- Project management linked to specific teams
+- Task management with:
   - name and description
   - deadline (`DateTime`)
   - completion status
@@ -40,7 +52,27 @@ It allows teams to organize work by projects, assign tasks to workers, track dea
   - task type (`TaskType`)
   - assignees (Many-to-Many with workers)
   - tags (Many-to-Many with `Tag`)
-- Django Admin support for managing all entities
+- Search across list pages
+- Pagination for list views
+- User-specific list pages such as **My teams** and **My projects**
+- Visual markers for user-related teams and projects
+- Staff-only access for selected management pages
+- Multi-step creation flow for projects and tasks
+- Django Admin support
+- Custom 403 and 404 error pages
+- Query optimization with `select_related`, `prefetch_related`, and `annotate`
+
+---
+
+## Business Logic
+
+- Only team members can be assigned to tasks within their project
+- Only allowed users can manage protected project and task data
+- When a worker is removed from a team, they are removed from related task assignees
+- A team must keep at least one member during update
+- A task deadline cannot be set in the past
+- Validation prevents invalid task assignments and inconsistent updates
+- Search pages show clear empty-state messages when no results are found
 
 ---
 
@@ -50,12 +82,14 @@ It allows teams to organize work by projects, assign tasks to workers, track dea
 - Django
 - SQLite (default database)
 - Django Admin
+- Bootstrap 4
+- Django Crispy Forms
 
 ---
 
 ## Database Schema
 
-> ER diagram
+![Database schema](docs/db-schema.png)
 
 ### Current model relationships (short)
 
@@ -69,13 +103,47 @@ It allows teams to organize work by projects, assign tasks to workers, track dea
 
 ---
 
+## Screenshots
+
+### Dashboard
+Main page with quick stats and navigation.
+
+![Dashboard](docs/screenshots/dashboard.png)
+
+### Team List
+Teams page with search, pagination, and **My Team** labels.
+
+![Team List](docs/screenshots/team-list.png)
+
+### Project List
+Projects page with search, team info, and task counters.
+
+![Project List](docs/screenshots/project-list.png)
+
+### Task List
+Tasks page with search, status, priority, deadlines, and pagination.
+
+![Task List](docs/screenshots/task-list.png)
+
+### Task Detail
+Task details page with tags, assignees, priority, and status actions.
+
+![Task Detail](docs/screenshots/task-detail.png)
+
+### Create Worker
+Form page for creating a new worker.
+
+![Create Worker](docs/screenshots/create-worker.png)
+
+---
+
 ## Setup and Run
 
 ### 1) Clone repository
 
 ```bash
 git clone https://github.com/idubina/it-company-task-manager.git
-cd it_company_task_manager
+cd it-company-task-manager
 ```
 
 ### 2) Create virtual environment
@@ -122,8 +190,9 @@ python manage.py runserver
 ```
 
 By default, Django runs at:
-- App: http://127.0.0.1:8000/
-- Admin: http://127.0.0.1:8000/admin/
+
+- App: `http://127.0.0.1:8000/`
+- Admin: `http://127.0.0.1:8000/admin/`
 
 ---
 
@@ -135,23 +204,37 @@ To load prepared test data:
 python manage.py loaddata it_company_task_manager_db_data.json
 ```
 
+This fixture can be used for quick local testing and project review.
+
+---
+
+## Running Tests
+
+This project includes tests for core application behavior, including validations, permissions, and main views.
+
+Run tests with:
+
+```bash
+python manage.py test
+```
+
 ---
 
 ## Admin Access
 
-After loading data from fixture you can use following superuser:
+After loading fixture data, you can use the following superuser:
   - Login: `admin.user`
   - Password: `1qazcde3`
 
 > This account is for local demo purposes only.  
 > Do not use these credentials in production.
 
-or create another one by yourself:
+Or create another superuser manually:
 
 ```bash
 python manage.py createsuperuser
 ```
-Feel free to add more data using admin panel, if needed.
+You can also add more test data through the Django admin panel if needed.
 
 ---
 
@@ -159,4 +242,4 @@ Feel free to add more data using admin panel, if needed.
 
 **Illia Dubina**
 
-GitHub: https://github.com/idubina
+GitHub: [idubina](https://github.com/idubina)
