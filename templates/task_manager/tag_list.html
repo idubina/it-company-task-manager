@@ -19,10 +19,10 @@
     </div>
 
     <div class="dashboard-card">
+      <div class="dashboard-card-header px-3 pt-3 pb-2">
+        {% include "includes/search.html" %}
+      </div>
       {% if tag_list %}
-        <div class="dashboard-card-header px-3 pt-3 pb-2">
-          {% include "includes/search.html" %}
-        </div>
 
         <div class="table-responsive px-3 pb-3">
           <table class="table dashboard-table task-dashboard-table mb-0">
@@ -64,7 +64,13 @@
 
       {% else %}
         <div class="p-3">
-          <div class="task-empty-state">There are no task tags in the manager.</div>
+          <div class="task-empty-state">
+            {% if search_query %}
+              No tags match your search.
+            {% else %}
+              There are no task tags in the manager.
+            {% endif %}
+          </div>
         </div>
       {% endif %}
     </div>

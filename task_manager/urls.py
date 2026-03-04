@@ -39,7 +39,9 @@ from task_manager.views import (
     change_task_status,
     TaskCreateSelectTeamView,
     TaskCreateSelectProjectView,
-    ProjectCreateSelectTeamView
+    ProjectCreateSelectTeamView,
+    UserTeamListView,
+    UserProjectListView
 )
 
 
@@ -85,6 +87,11 @@ urlpatterns = [
     ),
     path("projects/", ProjectListView.as_view(), name="project-list"),
     path(
+        "projects/my-projects/",
+        UserProjectListView.as_view(),
+        name="user-project-list"
+    ),
+    path(
         "projects/create/select-team/",
         ProjectCreateSelectTeamView.as_view(),
         name="project-create-select-team"
@@ -121,6 +128,11 @@ urlpatterns = [
         name="position-update"
     ),
     path("teams/", TeamListView.as_view(), name="team-list"),
+    path(
+        "teams/my-teams/",
+        UserTeamListView.as_view(),
+        name="user-team-list"
+    ),
     path(
         "teams/create/",
         TeamCreateView.as_view(),

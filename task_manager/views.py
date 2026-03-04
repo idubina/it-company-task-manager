@@ -82,6 +82,7 @@ class WorkerListView(LoginRequiredMixin, generic.ListView):
         context["search_form"] = WorkerUsernameSearchForm(
             initial={"username": username}
         )
+        context["search_query"] = username
         return context
 
     def get_queryset(self):
@@ -194,6 +195,7 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
         context = super(TaskListView, self).get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
         context["search_form"] = TaskNameSearchForm(initial={"name": name})
+        context["search_query"] = name
         return context
 
     def get_queryset(self):
@@ -339,12 +341,54 @@ class ProjectListView(LoginRequiredMixin, generic.ListView):
         context["search_form"] = ProjectNameSearchForm(
             initial={"name": name}
         )
+        context["search_query"] = name
+        context["page_title"] = "All projects"
+        context["is_user_projects_page"] = False
+        context["user_team_ids"] = set(
+            self.request.user.teams.values_list("id", flat=True)
+        )
         return context
 
     def get_queryset(self):
         queryset = (
             Project.objects
             .select_related("team")
+            .annotate(task_count=Count("tasks", distinct=True))
+        )
+        form = ProjectNameSearchForm(self.request.GET)
+        if form.is_valid():
+            return queryset.filter(
+                name__icontains=form.cleaned_data["name"]
+            )
+        return queryset
+
+
+class UserProjectListView(LoginRequiredMixin, generic.ListView):
+    model = Project
+    paginate_by = 5
+    template_name = "task_manager/project_list.html"
+
+    def get_context_data(
+        self, *, object_list=None, **kwargs
+    ):
+        context = super(UserProjectListView, self).get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = ProjectNameSearchForm(
+            initial={"name": name}
+        )
+        context["search_query"] = name
+        context["page_title"] = "My projects"
+        context["is_user_projects_page"] = True
+        context["user_team_ids"] = set(
+            self.request.user.teams.values_list("id", flat=True)
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = (
+            Project.objects
+            .select_related("team")
+            .filter(team__members=self.request.user)
             .annotate(task_count=Count("tasks", distinct=True))
         )
         form = ProjectNameSearchForm(self.request.GET)
@@ -448,6 +492,7 @@ class PositionListView(LoginRequiredMixin, generic.ListView):
         context["search_form"] = PositionNameSearchForm(
             initial={"name": name}
         )
+        context["search_query"] = name
         return context
 
     def get_queryset(self):
@@ -504,11 +549,49 @@ class TeamListView(LoginRequiredMixin, generic.ListView):
         context["search_form"] = TeamNameSearchForm(
             initial={"name": name}
         )
+        context["search_query"] = name
+        context["page_title"] = f"All teams"
+        context["is_user_team_page"] = False
         return context
 
     def get_queryset(self):
         queryset = Team.objects.annotate(
             member_count=Count("members", distinct=True)
+        )
+        form = TeamNameSearchForm(self.request.GET)
+        if form.is_valid():
+            return queryset.filter(
+                name__icontains=form.cleaned_data["name"]
+            )
+        return queryset
+
+
+class UserTeamListView(LoginRequiredMixin, generic.ListView):
+    model = Team
+    paginate_by = 5
+    template_name = "task_manager/team_list.html"
+
+    def get_context_data(
+        self, *, object_list=None, **kwargs
+    ):
+        context = super(UserTeamListView, self).get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = TeamNameSearchForm(
+            initial={"name": name}
+        )
+        context["search_query"] = name
+        context["page_title"] = f"My teams"
+        context["is_user_team_page"] = True
+        return context
+
+    def get_queryset(self):
+        queryset = (
+            Team.objects
+            .filter(members=self.request.user)
+            .annotate(
+                member_count=Count("members", distinct=True)
+            )
+            .prefetch_related("members")
         )
         form = TeamNameSearchForm(self.request.GET)
         if form.is_valid():
@@ -628,6 +711,7 @@ class TagListView(LoginRequiredMixin, generic.ListView):
         context["search_form"] = TagNameSearchForm(
             initial={"name": name}
         )
+        context["search_query"] = name
         return context
 
     def get_queryset(self):
@@ -699,6 +783,7 @@ class TagDetailView(LoginRequiredMixin, generic.ListView):
         context["page_title"] = f"Tasks with tag: #{self.tag.name}"
         context["empty_message"] = "There are no tasks with this tag."
         context["sub_title"] = context["page_title"].title()
+        context["search_query"] = name
         return context
 
 
@@ -737,6 +822,7 @@ class TaskTypeListView(LoginRequiredMixin, generic.ListView):
         context["search_form"] = TaskTypeNameSearchForm(
             initial={"name": name}
         )
+        context["search_query"] = name
         return context
 
     def get_queryset(self):
@@ -807,6 +893,7 @@ class TaskTypeDetailView(LoginRequiredMixin, generic.ListView):
         context["page_title"] = f"Tasks with task type: {self.task_type.name}"
         context["empty_message"] = "There are no tasks with this task type."
         context["sub_title"] = context["page_title"].title()
+        context["search_query"] = name
         return context
 
 

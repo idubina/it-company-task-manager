@@ -19,52 +19,58 @@
     </div>
 
     <div class="dashboard-card">
+      <div class="dashboard-card-header px-3 pt-3 pb-2">
+        {% include "includes/search.html" %}
+      </div>
       {% if task_type_list %}
-        <div class="dashboard-card-header px-3 pt-3 pb-2">
-          {% include "includes/search.html" %}
-        </div>
 
         <div class="table-responsive px-3 pb-3">
           <table class="table dashboard-table task-dashboard-table mb-0">
             <thead>
-              <tr>
-                <th>Task Type</th>
-                <th class="text-center">Update</th>
-                <th class="text-center">Delete</th>
-              </tr>
+            <tr>
+              <th>Task Type</th>
+              <th class="text-center">Update</th>
+              <th class="text-center">Delete</th>
+            </tr>
             </thead>
 
             <tbody>
-              {% for task_type in task_type_list %}
-                <tr>
-                  <td>
-                    <a href="{% url 'task-manager:task-type-detail' pk=task_type.id %}" class="task-row-link">
-                      {{ task_type }}
-                    </a>
-                  </td>
+            {% for task_type in task_type_list %}
+              <tr>
+                <td>
+                  <a href="{% url 'task-manager:task-type-detail' pk=task_type.id %}" class="task-row-link">
+                    {{ task_type }}
+                  </a>
+                </td>
 
-                  <td class="text-center">
-                    <a href="{% url 'task-manager:task-type-update' pk=task_type.id %}"
-                       class="btn btn-outline-secondary btn-sm">
-                      Update
-                    </a>
-                  </td>
+                <td class="text-center">
+                  <a href="{% url 'task-manager:task-type-update' pk=task_type.id %}"
+                     class="btn btn-outline-secondary btn-sm">
+                    Update
+                  </a>
+                </td>
 
-                  <td class="text-center">
-                    <a href="{% url 'task-manager:task-type-delete' pk=task_type.id %}"
-                       class="btn btn-outline-danger btn-sm">
-                      Delete
-                    </a>
-                  </td>
-                </tr>
-              {% endfor %}
+                <td class="text-center">
+                  <a href="{% url 'task-manager:task-type-delete' pk=task_type.id %}"
+                     class="btn btn-outline-danger btn-sm">
+                    Delete
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
             </tbody>
           </table>
         </div>
 
       {% else %}
         <div class="p-3">
-          <div class="task-empty-state">There are no task types in the manager.</div>
+          <div class="task-empty-state">
+            {% if search_query %}
+              No task types match your search.
+            {% else %}
+              There are no task types in the manager.
+            {% endif %}
+          </div>
         </div>
       {% endif %}
     </div>
