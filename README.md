@@ -146,13 +146,21 @@ git clone https://github.com/idubina/it-company-task-manager.git
 cd it-company-task-manager
 ```
 
-### 2) Create virtual environment
+### 2) Environment variables
+
+Create a `.env` file in the project root (next to `manage.py`) and add:
+
+DJANGO_SECRET_KEY=your-secret-key
+
+> `.env` is ignored by Git and should not be committed.
+
+### 3) Create virtual environment
 
 ```bash
 python -m venv venv
 ```
 
-### 3) Activate virtual environment
+### 4) Activate virtual environment
 
 **macOS / Linux**
 
@@ -171,19 +179,19 @@ venv\Scripts\Activate.ps1
 venv\Scripts\activate.bat
 ```
 
-### 4) Install dependencies
+### 5) Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 5) Apply migrations
+### 6) Apply migrations
 
 ```bash
 python manage.py migrate
 ```
 
-### 6) Run development server
+### 7) Run development server
 
 ```bash
 python manage.py runserver
