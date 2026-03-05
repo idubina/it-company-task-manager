@@ -39,104 +39,108 @@
         </li>
       {% endif %}
     </ul>
+    {% if user.is_authenticated %}
+      <div class="sidebar-section-title">
+        <i class="bi bi-compass mr-2"></i>
+        Navigation
+      </div>
 
-    <div class="sidebar-section-title">
-      <i class="bi bi-compass mr-2"></i>
-      Navigation
-    </div>
+      <div>
+        <ul class="sidebar-nav list-unstyled">
+          <li>
+            <a class="sidebar-link {% if current_url == 'index' %}active{% endif %}"
+               href="{% url 'task-manager:index' %}">
+              <i class="bi bi-grid-1x2 mr-2"></i>
+              Home
+            </a>
+          </li>
 
-    <div>
-      <ul class="sidebar-nav list-unstyled">
-        <li>
-          <a class="sidebar-link {% if current_url == 'index' %}active{% endif %}" href="{% url 'task-manager:index' %}">
-            <i class="bi bi-grid-1x2 mr-2"></i>
-            Home
-          </a>
-        </li>
+          <li>
+            <a class="sidebar-link {% if current_url == 'team-list' or current_url == 'team-detail' or current_url == 'team-create' or current_url == 'team-update' or current_url == 'team-delete' %}active{% endif %}"
+               href="{% url 'task-manager:team-list' %}">
+              <i class="bi bi-people mr-2"></i>
+              Teams
+            </a>
+          </li>
 
-        <li>
-          <a class="sidebar-link {% if current_url == 'team-list' or current_url == 'team-detail' or current_url == 'team-create' or current_url == 'team-update' or current_url == 'team-delete' %}active{% endif %}"
-             href="{% url 'task-manager:team-list' %}">
-            <i class="bi bi-people mr-2"></i>
-            Teams
-          </a>
-        </li>
+          <li>
+            <a class="sidebar-link {% if current_url == 'project-list' or current_url == 'project-detail' or current_url == 'project-create' or current_url == 'project-create-select-team' or current_url == 'project-update' or current_url == 'project-delete' %}active{% endif %}"
+               href="{% url 'task-manager:project-list' %}">
+              <i class="bi bi-folder mr-2"></i>
+              Projects
+            </a>
+          </li>
 
-        <li>
-          <a class="sidebar-link {% if current_url == 'project-list' or current_url == 'project-detail' or current_url == 'project-create' or current_url == 'project-create-select-team' or current_url == 'project-update' or current_url == 'project-delete' %}active{% endif %}"
-             href="{% url 'task-manager:project-list' %}">
-            <i class="bi bi-folder mr-2"></i>
-            Projects
-          </a>
-        </li>
-
-        <li class="mb-1">
-          <a class="sidebar-link d-flex justify-content-between align-items-center {% if current_url == 'task-list' or current_url == 'task-detail' or current_url == 'task-create' or current_url == 'task-create-select-team' or current_url == 'task-create-select-project' or current_url == 'task-update' or current_url == 'task-delete' or current_url == 'task-type-list' or current_url == 'task-type-detail' or current_url == 'task-type-create' or current_url == 'task-type-update' or current_url == 'task-type-delete' or current_url == 'tag-list' or current_url == 'tag-detail' or current_url == 'tag-create' or current_url == 'tag-update' or current_url == 'tag-delete' %}active{% endif %}"
-             data-toggle="collapse"
-             href="#tasksSubmenu"
-             role="button"
-             aria-expanded="{% if current_url == 'task-list' or current_url == 'task-detail' or current_url == 'task-create' or current_url == 'task-create-select-team' or current_url == 'task-create-select-project' or current_url == 'task-update' or current_url == 'task-delete' or current_url == 'task-type-list' or current_url == 'task-type-detail' or current_url == 'task-type-create' or current_url == 'task-type-update' or current_url == 'task-type-delete' or current_url == 'tag-list' or current_url == 'tag-detail' or current_url == 'tag-create' or current_url == 'tag-update' or current_url == 'tag-delete' %}true{% else %}false{% endif %}"
-             aria-controls="tasksSubmenu">
+          <li class="mb-1">
+            <a class="sidebar-link d-flex justify-content-between align-items-center {% if current_url == 'task-list' or current_url == 'task-detail' or current_url == 'task-create' or current_url == 'task-create-select-team' or current_url == 'task-create-select-project' or current_url == 'task-update' or current_url == 'task-delete' or current_url == 'task-type-list' or current_url == 'task-type-detail' or current_url == 'task-type-create' or current_url == 'task-type-update' or current_url == 'task-type-delete' or current_url == 'tag-list' or current_url == 'tag-detail' or current_url == 'tag-create' or current_url == 'tag-update' or current_url == 'tag-delete' %}active{% endif %}"
+               data-toggle="collapse"
+               href="#tasksSubmenu"
+               role="button"
+               aria-expanded="{% if current_url == 'task-list' or current_url == 'task-detail' or current_url == 'task-create' or current_url == 'task-create-select-team' or current_url == 'task-create-select-project' or current_url == 'task-update' or current_url == 'task-delete' or current_url == 'task-type-list' or current_url == 'task-type-detail' or current_url == 'task-type-create' or current_url == 'task-type-update' or current_url == 'task-type-delete' or current_url == 'tag-list' or current_url == 'tag-detail' or current_url == 'tag-create' or current_url == 'tag-update' or current_url == 'tag-delete' %}true{% else %}false{% endif %}"
+               aria-controls="tasksSubmenu">
             <span>
               <i class="bi bi-list-check mr-2"></i>
               Tasks
             </span>
-            <span class="submenu-caret">▾</span>
-          </a>
-
-          <div class="collapse sidebar-submenu mt-1 {% if current_url == 'task-list' or current_url == 'task-detail' or current_url == 'task-create' or current_url == 'task-create-select-team' or current_url == 'task-create-select-project' or current_url == 'task-update' or current_url == 'task-delete' or current_url == 'task-type-list' or current_url == 'task-type-detail' or current_url == 'task-type-create' or current_url == 'task-type-update' or current_url == 'task-type-delete' or current_url == 'tag-list' or current_url == 'tag-detail' or current_url == 'tag-create' or current_url == 'tag-update' or current_url == 'tag-delete' %}show{% endif %}"
-               id="tasksSubmenu">
-            <a class="sidebar-sublink {% if current_url == 'task-list' or current_url == 'task-detail' or current_url == 'task-create' or current_url == 'task-create-select-team' or current_url == 'task-create-select-project' or current_url == 'task-update' or current_url == 'task-delete' %}active{% endif %}"
-               href="{% url 'task-manager:task-list' %}">
-              <i class="bi bi-check2-square mr-2"></i>
-              All tasks
+              <span class="submenu-caret">▾</span>
             </a>
 
-            <a class="sidebar-sublink {% if current_url == 'task-type-list' or current_url == 'task-type-detail' or current_url == 'task-type-create' or current_url == 'task-type-update' or current_url == 'task-type-delete' %}active{% endif %}"
-               href="{% url 'task-manager:task-type-list' %}">
-              <i class="bi bi-diagram-3 mr-2"></i>
-              All task types
-            </a>
+            <div
+                class="collapse sidebar-submenu mt-1 {% if current_url == 'task-list' or current_url == 'task-detail' or current_url == 'task-create' or current_url == 'task-create-select-team' or current_url == 'task-create-select-project' or current_url == 'task-update' or current_url == 'task-delete' or current_url == 'task-type-list' or current_url == 'task-type-detail' or current_url == 'task-type-create' or current_url == 'task-type-update' or current_url == 'task-type-delete' or current_url == 'tag-list' or current_url == 'tag-detail' or current_url == 'tag-create' or current_url == 'tag-update' or current_url == 'tag-delete' %}show{% endif %}"
+                id="tasksSubmenu">
+              <a class="sidebar-sublink {% if current_url == 'task-list' or current_url == 'task-detail' or current_url == 'task-create' or current_url == 'task-create-select-team' or current_url == 'task-create-select-project' or current_url == 'task-update' or current_url == 'task-delete' %}active{% endif %}"
+                 href="{% url 'task-manager:task-list' %}">
+                <i class="bi bi-check2-square mr-2"></i>
+                All tasks
+              </a>
 
-            <a class="sidebar-sublink {% if current_url == 'tag-list' or current_url == 'tag-detail' or current_url == 'tag-create' or current_url == 'tag-update' or current_url == 'tag-delete' %}active{% endif %}"
-               href="{% url 'task-manager:tag-list' %}">
-              <i class="bi bi-tags mr-2"></i>
-              All task tags
-            </a>
-          </div>
-        </li>
+              <a class="sidebar-sublink {% if current_url == 'task-type-list' or current_url == 'task-type-detail' or current_url == 'task-type-create' or current_url == 'task-type-update' or current_url == 'task-type-delete' %}active{% endif %}"
+                 href="{% url 'task-manager:task-type-list' %}">
+                <i class="bi bi-diagram-3 mr-2"></i>
+                All task types
+              </a>
 
-        <li class="mb-1">
-          <a class="sidebar-link d-flex justify-content-between align-items-center {% if current_url == 'worker-list' or current_url == 'worker-detail' or current_url == 'worker-create' or current_url == 'worker-delete' or current_url == 'worker-update-position' or current_url == 'position-list' or current_url == 'position-detail' or current_url == 'position-create' or current_url == 'position-update' or current_url == 'position-delete' %}active{% endif %}"
-             data-toggle="collapse"
-             href="#workersSubmenu"
-             role="button"
-             aria-expanded="{% if current_url == 'worker-list' or current_url == 'worker-detail' or current_url == 'worker-create' or current_url == 'worker-delete' or current_url == 'worker-update-position' or current_url == 'position-list' or current_url == 'position-detail' or current_url == 'position-create' or current_url == 'position-update' or current_url == 'position-delete' %}true{% else %}false{% endif %}"
-             aria-controls="workersSubmenu">
+              <a class="sidebar-sublink {% if current_url == 'tag-list' or current_url == 'tag-detail' or current_url == 'tag-create' or current_url == 'tag-update' or current_url == 'tag-delete' %}active{% endif %}"
+                 href="{% url 'task-manager:tag-list' %}">
+                <i class="bi bi-tags mr-2"></i>
+                All task tags
+              </a>
+            </div>
+          </li>
+
+          <li class="mb-1">
+            <a class="sidebar-link d-flex justify-content-between align-items-center {% if current_url == 'worker-list' or current_url == 'worker-detail' or current_url == 'worker-create' or current_url == 'worker-delete' or current_url == 'worker-update-position' or current_url == 'position-list' or current_url == 'position-detail' or current_url == 'position-create' or current_url == 'position-update' or current_url == 'position-delete' %}active{% endif %}"
+               data-toggle="collapse"
+               href="#workersSubmenu"
+               role="button"
+               aria-expanded="{% if current_url == 'worker-list' or current_url == 'worker-detail' or current_url == 'worker-create' or current_url == 'worker-delete' or current_url == 'worker-update-position' or current_url == 'position-list' or current_url == 'position-detail' or current_url == 'position-create' or current_url == 'position-update' or current_url == 'position-delete' %}true{% else %}false{% endif %}"
+               aria-controls="workersSubmenu">
             <span>
               <i class="bi bi-person-badge mr-2"></i>
               Workers
             </span>
-            <span class="submenu-caret">▾</span>
-          </a>
-
-          <div class="collapse sidebar-submenu mt-1 {% if current_url == 'worker-list' or current_url == 'worker-detail' or current_url == 'worker-create' or current_url == 'worker-delete' or current_url == 'worker-update-position' or current_url == 'position-list' or current_url == 'position-detail' or current_url == 'position-create' or current_url == 'position-update' or current_url == 'position-delete' %}show{% endif %}"
-               id="workersSubmenu">
-            <a class="sidebar-sublink {% if current_url == 'worker-list' or current_url == 'worker-detail' or current_url == 'worker-create' or current_url == 'worker-delete' or current_url == 'worker-update-position' %}active{% endif %}"
-               href="{% url 'task-manager:worker-list' %}">
-              <i class="bi bi-people-fill mr-2"></i>
-              All workers
+              <span class="submenu-caret">▾</span>
             </a>
 
-            <a class="sidebar-sublink {% if current_url == 'position-list' or current_url == 'position-detail' or current_url == 'position-create' or current_url == 'position-update' or current_url == 'position-delete' %}active{% endif %}"
-               href="{% url 'task-manager:position-list' %}">
-              <i class="bi bi-briefcase mr-2"></i>
-              All positions
-            </a>
-          </div>
-        </li>
-      </ul>
-    </div>
+            <div
+                class="collapse sidebar-submenu mt-1 {% if current_url == 'worker-list' or current_url == 'worker-detail' or current_url == 'worker-create' or current_url == 'worker-delete' or current_url == 'worker-update-position' or current_url == 'position-list' or current_url == 'position-detail' or current_url == 'position-create' or current_url == 'position-update' or current_url == 'position-delete' %}show{% endif %}"
+                id="workersSubmenu">
+              <a class="sidebar-sublink {% if current_url == 'worker-list' or current_url == 'worker-detail' or current_url == 'worker-create' or current_url == 'worker-delete' or current_url == 'worker-update-position' %}active{% endif %}"
+                 href="{% url 'task-manager:worker-list' %}">
+                <i class="bi bi-people-fill mr-2"></i>
+                All workers
+              </a>
+
+              <a class="sidebar-sublink {% if current_url == 'position-list' or current_url == 'position-detail' or current_url == 'position-create' or current_url == 'position-update' or current_url == 'position-delete' %}active{% endif %}"
+                 href="{% url 'task-manager:position-list' %}">
+                <i class="bi bi-briefcase mr-2"></i>
+                All positions
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    {% endif %}
 
     <div class="sidebar-footer-note">
       <div class="sidebar-footer-line">
