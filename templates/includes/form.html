@@ -1,0 +1,7 @@
+{% load crispy_forms_filters %}
+<form action="" method="post" novalidate class="dashboard-form">
+  {% csrf_token %}
+  {{ form|crispy }}
+  <input type="hidden" name="next" value="{{ request.GET.next|default:'' }}">
+  <button type="submit" class="btn btn-sm btn-add-soft">Submit</button>
+</form>

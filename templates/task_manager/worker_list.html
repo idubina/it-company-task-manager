@@ -1,0 +1,96 @@
+{% extends "layouts/base.html" %}
+
+{% block subtitle %}All Workers - {% endblock %}
+{% block content %}
+  <div class="dashboard-wrapper py-4 px-2 px-md-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <h1 class="dashboard-title mb-1">
+          <i class="bi bi-person-badge page-title-icon"></i>
+          Worker List
+        </h1>
+        <p class="dashboard-subtitle mb-0">All workers overview</p>
+      </div>
+
+      <a href="{% url 'task-manager:worker-create' %}?next={{ request.get_full_path|urlencode }}"
+         class="btn btn-sm btn-add-soft">
+        Add worker
+      </a>
+    </div>
+
+    <div class="dashboard-card">
+      <div class="dashboard-card-header px-3 pt-3 pb-2">
+        {% include "includes/search.html" %}
+      </div>
+      {% if worker_list %}
+
+        <div class="table-responsive px-3 pb-3">
+          <table class="table dashboard-table task-dashboard-table mb-0">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>First name</th>
+              <th>Last name</th>
+              <th>Position</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for worker in worker_list %}
+              <tr>
+                <td>
+                  <span class="worker-id-chip">{{ worker.id }}</span>
+                </td>
+
+                <td>
+                  <a href="{% url 'task-manager:worker-detail' pk=worker.id %}" class="task-row-link">
+                    {{ worker.username }}
+                  </a>
+                  {% if user == worker %}
+                    <span class="worker-me-badge">Me</span>
+                  {% endif %}
+                </td>
+
+                <td>
+                  {% if worker.first_name %}
+                    {{ worker.first_name }}
+                  {% else %}
+                    <span class="text-muted">—</span>
+                  {% endif %}
+                </td>
+
+                <td>
+                  {% if worker.last_name %}
+                    {{ worker.last_name }}
+                  {% else %}
+                    <span class="text-muted">—</span>
+                  {% endif %}
+                </td>
+
+                <td>
+                  {% if worker.position %}
+                    <span class="table-chip table-chip-muted">{{ worker.position }}</span>
+                  {% else %}
+                    <span class="text-muted">—</span>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="p-3">
+          <div class="task-empty-state">
+            {% if search_query %}
+              No workers match your search.
+            {% else %}
+              There are no workers in the manager.
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

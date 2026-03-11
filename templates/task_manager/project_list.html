@@ -1,0 +1,104 @@
+{% extends "layouts/base.html" %}
+
+{% block subtitle %}{{ page_title|default:"Project list" }} - {% endblock %}
+
+{% block content %}
+  <div class="dashboard-wrapper py-4 px-2 px-md-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <h1 class="dashboard-title mb-1">
+          <i class="bi bi-folder page-title-icon"></i>
+          {{ page_title|default:"Project list" }}
+        </h1>
+        <p class="dashboard-subtitle mb-0">
+          {% if is_user_projects_page %}
+            My projects overview
+          {% else %}
+            All projects overview
+          {% endif %}
+        </p>
+      </div>
+
+      <div>
+        <a href="{% url 'task-manager:project-create-select-team' %}?next={{ request.get_full_path|urlencode }}"
+           class="btn btn-sm btn-add-soft">
+          Add project
+        </a>
+
+        {% if is_user_projects_page %}
+          <a href="{% url 'task-manager:project-list' %}"
+             class="btn btn-outline-secondary btn-sm">
+            All Projects
+          </a>
+        {% else %}
+          <a href="{% url 'task-manager:user-project-list' %}"
+             class="btn btn-success btn-sm">
+            My Projects
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <div class="dashboard-card-header px-3 pt-3 pb-2">
+        {% include "includes/search.html" %}
+      </div>
+
+      {% if project_list %}
+        <div class="p-3">
+          <div class="project-list-wrap">
+            {% for project in project_list %}
+              <div class="project-list-item">
+                <div class="project-list-main">
+                  <h3 class="project-list-title mb-1">
+                    <a href="{% url 'task-manager:project-detail' pk=project.id %}"
+                       class="project-list-link">
+                      {{ project }}
+                    </a>
+                  </h3>
+
+                  <div class="project-list-meta mb-2">
+                    <span class="detail-label">Team:</span>
+                    <a href="{% url 'task-manager:team-detail' pk=project.team.id %}"
+                       class="table-link">
+                      {{ project.team }}
+                    </a>
+
+                    {% if project.team_id in user_team_ids %}
+                      <span class="worker-me-badge">My Team</span>
+                    {% endif %}
+
+                    <span class="project-meta-divider">•</span>
+                    <span class="project-task-count">
+                      {{ project.task_count }} task{{ project.task_count|pluralize }}
+                    </span>
+                  </div>
+
+                  {% if project.description %}
+                    <p class="project-list-description mb-0">{{ project.description }}</p>
+                  {% else %}
+                    <p class="project-list-description project-list-description-empty mb-0">
+                      No description
+                    </p>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% else %}
+        <div class="p-3">
+          <div class="task-empty-state">
+            {% if search_query %}
+              No projects match your search.
+            {% elif is_user_projects_page %}
+              You have no projects yet.
+            {% else %}
+              There are no projects in the manager.
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

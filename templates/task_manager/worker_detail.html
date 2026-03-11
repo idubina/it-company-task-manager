@@ -1,0 +1,148 @@
+{% extends "layouts/base.html" %}
+
+{% block subtitle %}Worker: {{ worker.username }} - {% endblock %}
+{% block content %}
+  <div class="dashboard-wrapper py-4 px-2 px-md-3">
+    <div class="dashboard-card">
+      <div class="card-body p-3 p-md-4">
+
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start mb-3">
+          <div class="mb-2 mb-md-0">
+            <h1 class="dashboard-title mb-1">
+              <i class="bi bi-person-circle page-title-icon"></i>
+              Username: {{ worker.username }}
+              {% if user == worker %}
+                <span class="worker-me-badge">Me</span>
+              {% endif %}
+            </h1>
+            <p class="dashboard-subtitle mb-0">Worker overview</p>
+          </div>
+
+          {% if user.is_staff %}
+            <div class="task-detail-actions">
+              <a href="{% url 'task-manager:worker-update-position' pk=worker.id %}"
+                 class="btn btn-outline-secondary btn-sm">
+                Update position
+              </a>
+              <a href="{% url 'task-manager:worker-delete' pk=worker.id %}" class="btn btn-danger btn-sm">
+                Delete
+              </a>
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="task-detail-section mb-3">
+          <div class="row task-detail-grid">
+            <div class="col-12 col-md-4 mb-2 mb-md-0">
+              <p class="mb-0">
+                <span class="detail-label">First name:</span>
+                {% if worker.first_name %}
+                  <span>{{ worker.first_name }}</span>
+                {% else %}
+                  <span class="text-muted">—</span>
+                {% endif %}
+              </p>
+            </div>
+
+            <div class="col-12 col-md-4 mb-2 mb-md-0">
+              <p class="mb-0">
+                <span class="detail-label">Last name:</span>
+                {% if worker.last_name %}
+                  <span>{{ worker.last_name }}</span>
+                {% else %}
+                  <span class="text-muted">—</span>
+                {% endif %}
+              </p>
+            </div>
+
+            <div class="col-12 col-md-4">
+              <p class="mb-0">
+                <span class="detail-label">Position:</span>
+                {% if worker.position %}
+                  <span class="table-chip table-chip-muted">{{ worker.position }}</span>
+                {% else %}
+                  <span class="text-muted">—</span>
+                {% endif %}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row task-detail-grid">
+          <div class="col-12 col-lg-4 mb-3 mb-lg-0">
+            <div class="task-detail-section h-100">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="section-title mb-0">
+                  <i class="bi bi-hourglass-split mr-2"></i>
+                  Tasks in progress
+                </h6>
+                <span class="task-status-pill task-status-progress">{{ tasks_in_progress|length }}</span>
+              </div>
+
+              <ul class="list-unstyled mb-0">
+                {% for task in tasks_in_progress %}
+                  <li class="project-task-row">
+                    <a class="project-task-link" href="{% url 'task-manager:task-detail' pk=task.id %}">
+                      {{ task }}
+                    </a>
+                  </li>
+                {% empty %}
+                  <li class="project-task-empty">No tasks in progress.</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-4 mb-3 mb-lg-0">
+            <div class="task-detail-section h-100">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="section-title mb-0">
+                  <i class="bi bi-check2-circle mr-2"></i>
+                  Completed tasks
+                </h6>
+                <span class="task-status-pill task-status-done">{{ tasks_completed|length }}</span>
+              </div>
+
+              <ul class="list-unstyled mb-0">
+                {% for task in tasks_completed %}
+                  <li class="project-task-row">
+                    <a class="project-task-link" href="{% url 'task-manager:task-detail' pk=task.id %}">
+                      {{ task }}
+                    </a>
+                  </li>
+                {% empty %}
+                  <li class="project-task-empty">No completed tasks.</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-4">
+            <div class="task-detail-section h-100">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="section-title mb-0">
+                  <i class="bi bi-people mr-2"></i>
+                  Teams
+                </h6>
+                <span class="table-chip table-chip-muted">{{ teams.all|length }}</span>
+              </div>
+
+              <ul class="list-unstyled mb-0">
+                {% for team in teams.all %}
+                  <li class="project-task-row">
+                    <a class="project-task-link" href="{% url 'task-manager:team-detail' pk=team.id %}">
+                      {{ team }}
+                    </a>
+                  </li>
+                {% empty %}
+                  <li class="project-task-empty">This user has no team.</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}
