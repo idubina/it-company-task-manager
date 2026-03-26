@@ -4,7 +4,7 @@ Django portfolio project for managing workers, teams, projects, and tasks inside
 
 ## Live Demo
 
-- App: `https://it-company-task-manager-se9a.onrender.com/`
+- App: `https://it-company-tm.onrender.com/`
 
 Production uses PostgreSQL and is deployed on Render.
 
